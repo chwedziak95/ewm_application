@@ -2,12 +2,14 @@ package com.kc6379.zarzadaniemagazynem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
-public class ZarzadanieMagazynemApplication {
+@EnableAsync
+public class ZarzadzanieMagazynemApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ZarzadanieMagazynemApplication.class, args);
+        SpringApplication.run(ZarzadzanieMagazynemApplication.class, args);
     }
 
 }
