@@ -50,7 +50,7 @@ export class SignupComponent implements OnInit {
           { queryParams: { registered: 'true' } });
       }, error => {
         console.log(error);
-        this.toastr.error('Registration Failed! Please try again');
+        this.toastr.error('Rejestracja nie powiodła się, proszę spróbować ponownie.');
       });
   }
   
