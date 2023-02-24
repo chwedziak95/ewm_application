@@ -1,4 +1,4 @@
-package com.kc6379.zarzadaniemagazynem.config;
+package com.kc6379.zarzadaniemagazynem.security;
 
 import com.kc6379.zarzadaniemagazynem.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebSecurity
@@ -23,12 +24,13 @@ public class SecurityConfig {
         http
                 .csrf()
                 .disable()
-                .authorizeHttpRequests()
+                .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/api/v1/auth/**")
                 .permitAll()
+                .requestMatchers("/v3/**", "/swagger-ui/**", "/v2/**", "/webjars/**", "/swagger-resources/**")
+                .permitAll()
                 .anyRequest()
-                .authenticated()
-                .and()
+                .authenticated())
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
