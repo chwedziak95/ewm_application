@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int statusId;
+    private Long statusId;
 
-    private String statusName;
+    private String name;
 }

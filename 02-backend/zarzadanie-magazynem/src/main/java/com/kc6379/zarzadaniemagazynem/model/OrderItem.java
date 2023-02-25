@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrdersItem {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ordersItemId;
+    private Long orderItemId;
     @Nullable
     @ManyToOne(
             fetch = FetchType.LAZY
@@ -24,7 +24,7 @@ public class OrdersItem {
             name = "ordersId",
             referencedColumnName = "ordersId"
     )
-    private Orders ordersId;
+    private Orders orders;
     @Nullable
     @ManyToOne(
             fetch = FetchType.LAZY
@@ -42,5 +42,5 @@ public class OrdersItem {
             referencedColumnName = "materialId"
     )
     private Material materialId;
-    private Long quantity;
+    private Integer quantity;
 }

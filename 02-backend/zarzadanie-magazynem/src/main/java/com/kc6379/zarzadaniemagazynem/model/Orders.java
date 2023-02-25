@@ -5,10 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.w3c.dom.stylesheets.LinkStyle;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
-import java.util.Date;
-import java.util.List;
 
 @Data
 @Entity
@@ -19,13 +19,40 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ordersId;
-    private String ordersNumber;
-    private Date expectedDeliveryDate;
-    private String ordersComment;
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
-            mappedBy = "ordersId"
+    private String orderNumber;
+    private Instant orderDate;
+    private Instant deliveryDate;
+    private String comment;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "vendorId",
+            referencedColumnName = "vendorId"
     )
-    private List<OrdersItem> items;
+    private Vendor vendor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "userId",
+            referencedColumnName = "userId"
+    )
+    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "statusId",
+            referencedColumnName = "statusId"
+    )
+    private Status status;
+    @OneToMany(
+            mappedBy = "orders"
+    )
+    private Set<OrderItem> orderItems = new HashSet<>();
+
+    public void add(OrderItem orderItem) {
+        if (orderItem != null) {
+            if (orderItems == null) {
+                orderItems = new HashSet<>();
+            }
+            orderItems.add(orderItem);
+            orderItem.setOrders(this);
+        }
+    }
 }

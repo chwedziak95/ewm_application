@@ -32,7 +32,7 @@ public class RolesController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RolesDto> getRoles(@PathVariable Integer id){
+    public ResponseEntity<RolesDto> getRoles(@PathVariable Long id){
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(rolesService.getRoles(id));

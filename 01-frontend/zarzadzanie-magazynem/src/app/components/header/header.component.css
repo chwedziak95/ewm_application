@@ -1,22 +1,27 @@
-header{
+header {
     border-radius: 1px solid;
-}
-.reddit-icon-svg{
+  }
+  
+  .reddit-icon-svg {
     height: 50px;
     padding: 8px 8px 8px 0;
     width: 50px;
-}
-
-.reddit-text{        
+  }
+  
+  .reddit-text {
     font-weight: 700;
     height: 50px;
-    width: 50px;    
-}
-.logo{
+    width: 50px;
+  }
+  
+  .logo {
     text-decoration: none;
-}
-
-.login, .signup{    
+  }
+  
+  .login,
+  .signup {
+    /* add margin-right for space to the right */
+    margin-right: 16px;
     background-color: transparent;
     border-color: #0079D3;
     color: #0079D3;
@@ -27,20 +32,26 @@ header{
     text-align: center;
     letter-spacing: 1px;
     text-decoration: none;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 700;
     letter-spacing: .5px;
     line-height: 24px;
     text-transform: uppercase;
     padding: 3px 16px;
-    opacity: 1;  
-}
-.signup{
+    opacity: 1;
+  }
+  
+  .signup {
     background-color: #0079D3;
     border-color: #0079D3;
     color: aliceblue;
-}
-
-.signup:hover{
+  }
+  
+  .signup:hover {
     opacity: 0.6;
-}
+  }
+  
+  .d-flex.justify-content-end {
+    justify-content: flex-end;
+  }
+  

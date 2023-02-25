@@ -5,14 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
- * A DTO for the {@link com.kc6379.zarzadaniemagazynem.model.Roles} entity
+ * A DTO for the {@link com.kc6379.zarzadaniemagazynem.model.Status} entity
  */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class RolesDto {
-    private Long roleId;
+public class StatusDto implements Serializable {
+    private Long statusId;
     private String name;
 }

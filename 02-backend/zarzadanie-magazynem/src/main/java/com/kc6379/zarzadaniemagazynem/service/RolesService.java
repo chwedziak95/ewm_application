@@ -36,7 +36,7 @@ public class RolesService {
                 .collect(toList());
     }
 
-    public RolesDto getRoles(Integer id) {
+    public RolesDto getRoles(Long id) {
         Roles roles = rolesRepository.findByRoleId(id)
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono roli o ID - " + id));
         return rolesMapper.mapRolesToDto(roles);

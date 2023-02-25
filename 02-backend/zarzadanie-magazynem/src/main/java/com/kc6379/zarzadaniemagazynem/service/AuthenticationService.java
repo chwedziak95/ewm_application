@@ -105,6 +105,17 @@ public class AuthenticationService {
                 .build();
     }
 
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return null;
+        }
+        String email = authentication.getName();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new EwmAppException("Nie znaleziono użytkownika o adresie email: " + email));
+    }
+
+
     public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
         refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
         var user = userRepository.findByEmail(refreshTokenRequest.getUsername())

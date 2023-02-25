@@ -1,9 +1,6 @@
 package com.kc6379.zarzadaniemagazynem.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +9,8 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -45,6 +44,20 @@ public class Vendor {
     @NotBlank(message = "Nazwa banku dostawcy jest wymagana")
     private String vendorBankName;
     private Instant vendorCreated;
+    @OneToMany(
+            mappedBy = "vendor"
+    )
+    private Set<Orders> orders = new HashSet<>();
+
+    public void add(Orders order) {
+        if (order != null) {
+            if (orders == null) {
+                orders = new HashSet<>();
+            }
+            orders.add(order);
+            order.setVendor(this);
+        }
+    }
 
 
 }

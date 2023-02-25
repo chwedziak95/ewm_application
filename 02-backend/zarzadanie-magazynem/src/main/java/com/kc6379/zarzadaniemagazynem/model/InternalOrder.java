@@ -1,13 +1,13 @@
 package com.kc6379.zarzadaniemagazynem.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -20,4 +20,7 @@ public class InternalOrder {
     private Long internalOrderId;
 
     private String pickUpLocation;
+
+    @OneToMany(mappedBy = "internalOrderId")
+    private Set<OrderItem> items = new HashSet<>();
 }
