@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-
 @Data
 @Entity
 @Builder
@@ -24,12 +23,6 @@ public class Orders {
     private Instant orderDate;
     private Date deliveryDate;
     private String comment;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "vendorId",
-            referencedColumnName = "vendorId"
-    )
-    private Vendor vendor;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "userId",

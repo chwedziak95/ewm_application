@@ -37,4 +37,22 @@ class MailService {
             throw new EwmAppException("Wystąpił problem podczas wysyłania wiadomości email do " + notificationEmail.getRecipient(), e);
         }
     }
+
+    @Async
+    void sendOrderItemToVendor(NotificationEmail notificationEmail) {
+        MimeMessagePreparator messagePreparator = mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setFrom("ewmapp@email.com");
+            messageHelper.setTo(notificationEmail.getRecipient());
+            messageHelper.setSubject(notificationEmail.getSubject());
+            messageHelper.setText(mailContentBuilder.build(notificationEmail.getBody()));
+        };
+        try {
+            mailSender.send(messagePreparator);
+            log.info("Wysłano zamówienie do dostawcy!");
+        } catch (MailException e) {
+            log.error("Wystąpił problem podczas wysyłania wiadomości email ", e);
+            throw new EwmAppException("Wystąpił problem podczas wysyłania wiadomości email do " + notificationEmail.getRecipient(), e);
+        }
+    }
 }

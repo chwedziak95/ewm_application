@@ -44,20 +44,4 @@ public class Vendor {
     @NotBlank(message = "Nazwa banku dostawcy jest wymagana")
     private String vendorBankName;
     private Instant vendorCreated;
-    @OneToMany(
-            mappedBy = "vendor"
-    )
-    private Set<Orders> orders = new HashSet<>();
-
-    public void add(Orders order) {
-        if (order != null) {
-            if (orders == null) {
-                orders = new HashSet<>();
-            }
-            orders.add(order);
-            order.setVendor(this);
-        }
-    }
-
-
 }

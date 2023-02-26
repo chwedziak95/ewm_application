@@ -10,6 +10,8 @@ import java.util.Optional;
 
 public interface MaterialRepository extends JpaRepository<Material, Long> {
 
+    Optional<Material> findByMaterialId(Long materialId);
+
     Optional<Material> findByMaterialName(String materialName);
 
     List<Material> findAllByMaterialCategory(Category materialCategory);

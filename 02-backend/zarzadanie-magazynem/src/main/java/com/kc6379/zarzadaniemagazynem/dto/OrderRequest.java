@@ -14,7 +14,6 @@ public class OrderRequest {
     private Long ordersId;
     private String orderNumber;
     private String comment;
-    private Long vendor;
     private List<OrderItemRequest> orderItems;
 
 }

@@ -10,13 +10,11 @@ import org.mapstruct.MappingTarget;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @Mapper(componentModel = "spring", uses = {VendorMapper.class})
 public interface OrdersMapper {
 
-    @Mapping(source = "ordersRequest.vendor", target = "vendor.vendorId")
     @Mapping(source = "user", target = "user.userId")
     @Mapping(source = "status", target = "status.statusId")
     @Mapping(source = "ordersRequest.orderItems", target = "orderItems")
@@ -25,18 +23,10 @@ public interface OrdersMapper {
     @Mapping(source = "orderNumber", target = "orderNumber")
     Orders toEntity(OrderRequest ordersRequest, Long user, Long status, String orderNumber);
 
-/*
-    List<OrdersDto> toOrdersDtoList(List<Orders> ordersList);
-
-//    @Mapping(source = "status.name", target = "name")
-//    OrdersDto toDto(Orders orders);
-*/
-
     @AfterMapping
     default void linkOrderItems(@MappingTarget Orders orders) {
         orders.getOrderItems().forEach(orderItem -> orderItem.setOrders(orders));
     }
-
 
     @Mapping(source = "materialId", target = "materialId.materialId")
 
