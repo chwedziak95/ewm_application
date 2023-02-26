@@ -4,6 +4,7 @@ import com.kc6379.zarzadaniemagazynem.dto.MaterialDto;
 import com.kc6379.zarzadaniemagazynem.dto.MaterialResponse;
 import com.kc6379.zarzadaniemagazynem.service.MaterialService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,8 @@ public class MaterialController {
 
     @GetMapping
     public ResponseEntity<List<MaterialResponse>> getAllMaterials(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Access-Control-Allow-Origin", "*");
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(materialService.getAll());

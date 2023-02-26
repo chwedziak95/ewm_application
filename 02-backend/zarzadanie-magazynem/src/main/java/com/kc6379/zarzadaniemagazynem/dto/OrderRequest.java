@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
+import java.util.Set;
 
 
 @Data
@@ -14,6 +15,6 @@ public class OrderRequest {
     private Long ordersId;
     private String orderNumber;
     private String comment;
-    private List<OrderItemRequest> orderItems;
+    private Set<OrderItemRequest> orderItems;
 
 }

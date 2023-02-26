@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,13 +16,13 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 @Builder
-public class OrdersResponse implements Serializable {
+public class OrdersResponse {
     private Long ordersId;
     private String orderNumber;
     private Instant orderDate;
-    private Date deliveryDate;
+    private Instant deliveryDate;
     private String comment;
     private UserEqDto user;
     private StatusDto status;
-    private Set<OrderItemDto> orderItems = new HashSet<>();
+    private Set<OrderItemDto> orderItems;
 }

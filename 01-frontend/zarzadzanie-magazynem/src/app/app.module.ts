@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { MaterialListComponent } from './components/material-list/material-list.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MaterialService } from './services/material.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HeaderComponent,
     LoginComponent,
     SignupComponent,
-    MaterialListComponent
+    MaterialListComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +32,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ToastrModule.forRoot(),
     FontAwesomeModule,
   ],
-  providers: [],
+  providers: [MaterialService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

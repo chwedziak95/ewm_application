@@ -29,4 +29,10 @@ public class OrderController {
                 .status(HttpStatus.OK)
                 .body(orderService.getAll());
     }
+
+    @PostMapping("/delivery/{ordersId}")
+    public ResponseEntity<Void> deliveryOrder(@PathVariable Long ordersId){
+        orderService.deliveryOrder(ordersId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

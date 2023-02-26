@@ -1,1 +1,19 @@
-<p>material-list works!</p>
+<table class="table">
+
+    <thead class="table-dark">
+        <tr>
+            <th>Numer materiału</th>
+            <th>Nazwa</th>
+            <th>Stan magazynowy</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let material of material$">
+            <td class="align-middle">{{ material.materialNumber}}</td>
+            <td class="align-middle">{{ material.materialName | currency:'USD'}}</td>
+            <td class="align-middle">{{ material.materialQuantity}}</td>
+        </tr>
+
+    </tbody>
+</table>
