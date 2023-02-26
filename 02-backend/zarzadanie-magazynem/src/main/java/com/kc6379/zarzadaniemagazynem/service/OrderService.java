@@ -1,8 +1,6 @@
 package com.kc6379.zarzadaniemagazynem.service;
 
-import com.kc6379.zarzadaniemagazynem.dto.OrderItemRequest;
-import com.kc6379.zarzadaniemagazynem.dto.OrderRequest;
-import com.kc6379.zarzadaniemagazynem.dto.OrdersDto;
+import com.kc6379.zarzadaniemagazynem.dto.*;
 import com.kc6379.zarzadaniemagazynem.exceptions.EwmAppException;
 import com.kc6379.zarzadaniemagazynem.mapper.OrdersMapper;
 import com.kc6379.zarzadaniemagazynem.model.OrderItem;
@@ -18,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -31,6 +30,7 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
     private final AuthenticationService authenticationService;
     private final OrdersMapper ordersMapper;
+
     public void save(OrderRequest orderRequest){
         Status status = statusRepository.findByStatusId(1L).orElseThrow(() -> new EwmAppException("Nie znaleziono statusu o id"));
         String number = generateOrderNumber();
@@ -38,14 +38,6 @@ public class OrderService {
         orderRepository.save(orders);
         saveOrderItems(orderRequest.getOrderItems(), orders);
     }
-
-    @Transactional
-    public List<OrdersDto> getAllOrders() {
-        List<Orders> ordersList = orderRepository.findAll();
-        return ordersMapper.toOrdersDtoList(ordersList);
-    }
-
-
     public void saveOrderItems(List<OrderItemRequest> orderItemRequests, Orders orders) {
         List<OrderItem> orderItems = ordersMapper.toOrderItemEntities(orderItemRequests);
         for (OrderItem orderItem : orderItems) {
@@ -53,7 +45,6 @@ public class OrderService {
             orderItemRepository.save(orderItem);
         }
     }
-
     private String generateOrderNumber() {
         return UUID.randomUUID().toString();
     }

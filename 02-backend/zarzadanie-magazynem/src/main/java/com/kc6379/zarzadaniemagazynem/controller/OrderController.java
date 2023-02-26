@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/orders")
 @AllArgsConstructor
 public class OrderController {
-
     private final OrderService orderService;
 
     @PostMapping
@@ -20,9 +19,4 @@ public class OrderController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<Void> getAllOrders(){
-        orderService.getAllOrders();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

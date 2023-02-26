@@ -25,15 +25,6 @@ public class OrderItem {
             referencedColumnName = "ordersId"
     )
     private Orders orders;
-    @Nullable
-    @ManyToOne(
-            fetch = FetchType.LAZY
-    )
-    @JoinColumn(
-            name = "internalOrderId",
-            referencedColumnName = "internalOrderId"
-    )
-    private InternalOrder internalOrderId;
     @ManyToOne(
             fetch = FetchType.LAZY
     )

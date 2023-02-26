@@ -5,11 +5,10 @@ import com.kc6379.zarzadaniemagazynem.model.Material;
 import com.kc6379.zarzadaniemagazynem.dto.MaterialResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public abstract class MaterialMapper {
-
-
     public abstract MaterialResponse toDto(Material material);
 
     @Mapping(source = "materialCategory", target = "materialCategory.categoryId")

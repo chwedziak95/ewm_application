@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +22,7 @@ public class Orders {
     private Long ordersId;
     private String orderNumber;
     private Instant orderDate;
-    private Instant deliveryDate;
+    private Date deliveryDate;
     private String comment;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(

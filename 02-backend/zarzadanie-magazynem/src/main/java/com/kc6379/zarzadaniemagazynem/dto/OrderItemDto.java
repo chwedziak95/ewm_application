@@ -2,10 +2,7 @@ package com.kc6379.zarzadaniemagazynem.dto;
 
 import com.kc6379.zarzadaniemagazynem.dto.MaterialResponse;
 import com.kc6379.zarzadaniemagazynem.model.OrderItem;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -14,9 +11,10 @@ import java.io.Serializable;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-public class OrderItemDto implements Serializable {
+@Data
+@Builder
+public class OrderItemDto{
+    private Long orderItemId;
     private MaterialResponse materialId;
     private Integer quantity;
 }

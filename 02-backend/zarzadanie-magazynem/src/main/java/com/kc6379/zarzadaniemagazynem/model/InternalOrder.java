@@ -20,7 +20,4 @@ public class InternalOrder {
     private Long internalOrderId;
 
     private String pickUpLocation;
-
-    @OneToMany(mappedBy = "internalOrderId")
-    private Set<OrderItem> items = new HashSet<>();
 }
