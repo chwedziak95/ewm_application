@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@Mapper(componentModel = "spring", uses = {VendorMapper.class})
+@Mapper(componentModel = "spring")
 public interface OrdersMapper {
 
     @Mapping(source = "user", target = "user.userId")
@@ -29,11 +29,11 @@ public interface OrdersMapper {
     }
 
     @Mapping(source = "materialId", target = "materialId.materialId")
-
     OrderItem toOrderItemEntity(OrderItemRequest orderItemRequest);
 
     List<OrderItem> toOrderItemEntities(List<OrderItemRequest> orderItemRequest);
     @Mapping(source = "materialId.materialId", target = "materialId")
     OrderItemRequest toOrderItemDto(OrderItem orderItem);
     List<OrderItemRequest> toOrderItemDtos(List<OrderItem> orderItems);
+    OrdersResponse toDto(Orders orders);
 }

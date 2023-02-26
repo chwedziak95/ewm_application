@@ -1,6 +1,7 @@
 package com.kc6379.zarzadaniemagazynem.controller;
 
 import com.kc6379.zarzadaniemagazynem.dto.OrderRequest;
+import com.kc6379.zarzadaniemagazynem.dto.OrdersResponse;
 import com.kc6379.zarzadaniemagazynem.model.Orders;
 import com.kc6379.zarzadaniemagazynem.service.OrderService;
 import lombok.AllArgsConstructor;
@@ -23,10 +24,9 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Orders>> getAll(){
+    public ResponseEntity<List<OrdersResponse>> getAll(){
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(orderService.getAll());
     }
-
 }

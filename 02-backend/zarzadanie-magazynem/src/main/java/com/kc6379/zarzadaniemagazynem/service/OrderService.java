@@ -47,8 +47,12 @@ public class OrderService {
         }
     }
 
-    public List<Orders> getAll() {
-        return orderRepository.findAll();
+    @Transactional
+    public List<OrdersResponse> getAll(){
+        return orderRepository.findAll()
+                .stream()
+                .map(ordersMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     private void sendOrderItemToVendor(OrderItem orderItem, Orders orders) {
