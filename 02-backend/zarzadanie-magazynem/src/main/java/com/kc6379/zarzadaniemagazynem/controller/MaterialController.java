@@ -28,8 +28,6 @@ public class MaterialController {
 
     @GetMapping
     public ResponseEntity<List<MaterialResponse>> getAllMaterials(){
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Access-Control-Allow-Origin", "*");
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(materialService.getAll());

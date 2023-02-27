@@ -1,0 +1,44 @@
+<div style="overflow: auto">
+    <table class="table">
+      <thead class="table-dark">
+        <tr>
+          <th>Nazwa</th>
+          <th>E-mail</th>
+          <th>Telefon Kontaktowy</th>
+          <th>NIP</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>
+            <input type="text" class="form-control" [(ngModel)]="vendorNameFilter" />
+          </th>
+          <th>
+            <input type="text" class="form-control" [(ngModel)]="vendorEmailFilter" />
+          </th>
+          <th>
+            <input type="text" class="form-control" [(ngModel)]="vendorPhoneFilter" />
+          </th>
+          <th>
+            <input type="text" class="form-control" [(ngModel)]="vendorNipFilter" />
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vendor of vendor$ | filterBy: { 
+            vendorName: vendorNameFilter,
+            vendorEmail: vendorEmailFilter,
+            vendorPhone: vendorPhoneFilter,
+            vendorNip: vendorNipFilter
+          }">
+          <td class="align-middle">{{ vendor.vendorName }}</td>
+          <td class="align-middle">{{ vendor.vendorEmail }}</td>
+          <td class="align-middle">{{ vendor.vendorPhone }}</td>
+          <td class="align-middle">{{ vendor.vendorNip }}</td>
+          <td class="align-middle"></td>
+        </tr>
+      </tbody>
+      
+    </table>
+  </div>
+  

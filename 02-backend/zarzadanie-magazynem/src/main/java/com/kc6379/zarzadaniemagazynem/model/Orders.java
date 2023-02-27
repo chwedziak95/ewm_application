@@ -22,6 +22,7 @@ public class Orders {
     private Instant orderDate;
     private Instant deliveryDate;
     private String comment;
+    private Double orderTotal;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "userId",

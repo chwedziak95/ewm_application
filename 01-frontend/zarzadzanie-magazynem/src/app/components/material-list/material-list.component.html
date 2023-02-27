@@ -1,19 +1,67 @@
-<table class="table">
-
+<div style="overflow: auto">
+  <table class="table">
     <thead class="table-dark">
-        <tr>
-            <th>Numer materiału</th>
-            <th>Nazwa</th>
-            <th>Stan magazynowy</th>
-        </tr>
+      <tr>
+        <th>Numer materiału</th>
+        <th>Nazwa</th>
+        <th>Stan magazynowy</th>
+        <th>Kategoria</th>
+        <th>Dostawca</th>
+        <th>
+        </th>
+      </tr>
+      <tr>
+        <th>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="materialNumberFilter"
+          />
+        </th>
+        <th>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="materialNameFilter"
+          />
+        </th>
+        <th></th>
+        <th>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="materialCategoryFilter"
+          />
+        </th>
+        <th>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="materialVendorFilter"
+          />
+        </th>
+        <th></th>
+      </tr>
     </thead>
-
     <tbody>
-        <tr *ngFor="let material of material$">
-            <td class="align-middle">{{ material.materialNumber}}</td>
-            <td class="align-middle">{{ material.materialName | currency:'USD'}}</td>
-            <td class="align-middle">{{ material.materialQuantity}}</td>
-        </tr>
-
+      <tr
+        *ngFor="
+          let material of material$
+            | filterBy
+              : {
+                  materialNumber: materialNumberFilter,
+                  materialName: materialNameFilter,
+                  materialCategory: { name: materialCategoryFilter },
+                  materialVendor: { vendorName: materialVendorFilter }
+                }
+        "
+      >
+        <td class="align-middle">{{ material.materialNumber }}</td>
+        <td class="align-middle">{{ material.materialName }}</td>
+        <td class="align-middle">{{ material.materialQuantity }}</td>
+        <td class="align-middle">{{ material.materialCategory.name }}</td>
+        <td class="align-middle">{{ material.materialVendor.vendorName }}</td>
+      </tr>
     </tbody>
-</table>
+  </table>
+</div>

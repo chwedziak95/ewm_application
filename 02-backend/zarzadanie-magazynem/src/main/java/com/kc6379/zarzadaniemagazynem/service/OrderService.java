@@ -8,7 +8,6 @@ import com.kc6379.zarzadaniemagazynem.model.*;
 import com.kc6379.zarzadaniemagazynem.repository.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,10 +40,22 @@ public class OrderService {
     public void save(OrderRequest orderRequest){
         Status status = statusRepository.findByStatusId(1L).orElseThrow(() -> new EwmAppException("Nie znaleziono statusu o id"));
         String number = generateOrderNumber();
-        Orders orders = ordersMapper.toEntity(orderRequest, authenticationService.getCurrentUser().getUserId() ,status.getStatusId(),number);
+        Double total = countTotal(orderRequest.getOrderItems());
+        Orders orders = ordersMapper.toEntity(orderRequest, authenticationService.getCurrentUser().getUserId() ,status.getStatusId(),number, total);
         orderRepository.save(orders);
         saveOrderItems(orderRequest.getOrderItems(), orders);
     }
+
+    private Double countTotal(Set<OrderItemRequest> orderItemRequests) {
+        Set<OrderItem> orderItems = ordersMapper.toOrderItemEntities(orderItemRequests);
+        Double total = 0.0;
+        for (OrderItem orderItem : orderItems) {
+            Material material = materialRepository.findByMaterialId(orderItem.getOrderItemId()).orElseThrow(() -> new EwmAppException("Nie znaleziono materiału o id"));
+            total += material.getMaterialPrice() * orderItem.getQuantity();
+        }
+        return total;
+    }
+
     public void saveOrderItems(Set<OrderItemRequest> orderItemRequests, Orders orders) {
         Set<OrderItem> orderItems = ordersMapper.toOrderItemEntities(orderItemRequests);
         for (OrderItem orderItem : orderItems) {

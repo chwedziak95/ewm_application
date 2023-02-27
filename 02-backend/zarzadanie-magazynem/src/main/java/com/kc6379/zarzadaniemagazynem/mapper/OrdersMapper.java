@@ -19,7 +19,8 @@ public interface OrdersMapper {
     @Mapping(target = "orderDate", expression = "java(java.time.Instant.now())")
     @Mapping(target = "deliveryDate", ignore = true)
     @Mapping(source = "orderNumber", target = "orderNumber")
-    Orders toEntity(OrderRequest ordersRequest, Long user, Long status, String orderNumber);
+    @Mapping(source = "total", target = "orderTotal")
+    Orders toEntity(OrderRequest ordersRequest, Long user, Long status, String orderNumber, Double total);
 
     @AfterMapping
     default void linkOrderItems(@MappingTarget Orders orders) {

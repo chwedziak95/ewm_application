@@ -1,4 +1,52 @@
-<app-header></app-header>
-<div class="container">
-  <router-outlet></router-outlet>
+<div class="page-wrapper">
+
+  <!-- MENU SIDEBAR-->
+  <aside class="menu-sidebar d-none d-lg-block">
+    <div class="logo">
+      <a routerLink="/material">
+        <img src="assets/images/logo.png" alt="ewmapp" class="img-responsive">
+      </a>
+    </div>
+
+    <app-sidebar-menu></app-sidebar-menu>
+
+  </aside>
+  <!-- END MENU SIDEBAR-->
+
+  <div class="page-container">
+    <!-- HEADER DESKTOP-->
+    <header class="header-desktop">
+      <div class="section-content section-content-p30">
+        <div class="container-fluid">
+          <div class="header-wrap">
+            <div class="header-content-title">
+              <h1 class="header-title">
+                Aplikacja wspomagająca zarządzanie magazynem
+              </h1>
+            </div>
+            <div class="flex-grow-1 d-flex justify-content-end">
+              <a routerLink="/signup" class="signup mr-2">Rejestracja</a>
+              <a routerLink="/login" class="login mr-2">Logowanie</a>
+            </div>
+          </div>
+          <div class="account-wrap"></div>
+        </div>
+      </div>
+    </header>
+    <!-- END HEADER DESKTOP-->
+
+    <!-- MAIN CONTENT-->
+    <router-outlet></router-outlet>
+
+  </div>
 </div>
+
+<!-- ENDS PAGE CONTAINER -->
+
+<footer>
+  <ul>
+    <li><a href="#">About Us</a></li>
+    <li><a href="#">Contact Us</a></li>
+    <li><a href="#">Help</a></li>
+  </ul>
+</footer>

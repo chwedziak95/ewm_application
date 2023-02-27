@@ -19,6 +19,7 @@ import java.util.Set;
 public class OrdersResponse {
     private Long ordersId;
     private String orderNumber;
+    private Double orderTotal;
     private Instant orderDate;
     private Instant deliveryDate;
     private String comment;
