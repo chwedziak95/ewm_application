@@ -5,7 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+
 import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,8 +23,9 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ordersId;
     private String orderNumber;
-    private Instant orderDate;
-    private Instant deliveryDate;
+    @CreatedDate
+    private LocalDate orderDate;
+    private LocalDate deliveryDate;
     private String comment;
     private Double orderTotal;
     @ManyToOne(fetch = FetchType.LAZY)

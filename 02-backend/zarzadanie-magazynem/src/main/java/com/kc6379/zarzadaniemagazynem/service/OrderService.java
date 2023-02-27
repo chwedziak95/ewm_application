@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -50,7 +52,8 @@ public class OrderService {
         Set<OrderItem> orderItems = ordersMapper.toOrderItemEntities(orderItemRequests);
         Double total = 0.0;
         for (OrderItem orderItem : orderItems) {
-            Material material = materialRepository.findByMaterialId(orderItem.getOrderItemId()).orElseThrow(() -> new EwmAppException("Nie znaleziono materiału o id"));
+            Material material = materialRepository.findByMaterialId(orderItem.getMaterialId().getMaterialId())
+                    .orElseThrow(() -> new EwmAppException(" Podczas przeliczania Nie znaleziono materiału o id"));
             total += material.getMaterialPrice() * orderItem.getQuantity();
         }
         return total;
@@ -96,7 +99,7 @@ public class OrderService {
 
     public void deliveryOrder(Long ordersId) {
         orderResponse.setOrdersId(ordersId);
-        orderResponse.setDeliveryDate(Instant.now());
+        orderResponse.setDeliveryDate(LocalDate.now());
         Orders orders = orderRepository.findByOrdersId(ordersId)
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono zamówienia o id" + ordersId));
         if (orders.getDeliveryDate() != null ){

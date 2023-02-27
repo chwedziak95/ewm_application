@@ -56,11 +56,12 @@
                 }
         "
       >
-        <td class="align-middle">{{ material.materialNumber }}</td>
+      <a [routerLink]="['/material', material.materialId]"><td class="align-middle">{{ material.materialNumber }}</td></a>
         <td class="align-middle">{{ material.materialName }}</td>
         <td class="align-middle">{{ material.materialQuantity }}</td>
         <td class="align-middle">{{ material.materialCategory.name }}</td>
         <td class="align-middle">{{ material.materialVendor.vendorName }}</td>
+        <td><button (click)="addToCart(material)" class="btn btn-primary btn-sm">+</button><button class="btn btn-primary btn-sm">-</button></td>
       </tr>
     </tbody>
   </table>

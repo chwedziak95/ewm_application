@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Material } from 'src/app/common/material/material';
 import { MaterialService } from 'src/app/services/material.service';
 import { FilterByPipe } from 'src/app/pipes/filter-by.pipe';
+import { CartService } from 'src/app/services/cart.service';
+import { CartItem } from 'src/app/common/cart-item';
 
 @Component({
   selector: 'app-material-list',
@@ -17,7 +19,8 @@ export class MaterialListComponent implements OnInit{
   materialVendorFilter: string = ''; // Zmienna do przechowywania wartości filtrowania po dostawcy materiału
 
   material$: Array<Material> = [];
-  constructor(private materialService: MaterialService) { 
+  constructor(private materialService: MaterialService,
+              private cartService: CartService) { 
     this.materialService.getAll().subscribe( material =>{
       this.material$ = material;
     })
@@ -25,7 +28,13 @@ export class MaterialListComponent implements OnInit{
 
   ngOnInit() : void{
   }
-    
+
+  addToCart(material: Material){
+    console.log(`Dodano do koszyka: ${material.materialId}`);    
+
+    const cartItem = new CartItem(material);
+
+    this.cartService.addToCart(cartItem);
   }
 
-
+}

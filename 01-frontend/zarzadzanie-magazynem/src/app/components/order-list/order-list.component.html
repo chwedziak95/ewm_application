@@ -1,1 +1,57 @@
-<p>order-list works!</p>
+<div style="overflow: auto">
+    <table class="table">
+      <thead class="table-dark">
+        <tr>
+          <th>Numer zamówienia</th>
+          <th>Data zamówienia</th>
+          <th>Data przyjęcia</th>
+          <th>Kwota zamówienia</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="orderNumberFilter"
+            />
+          </th>
+          <th>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="orderDateFilter"
+            />
+          </th>
+          <th></th>
+          <th>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="orderStatusFilter"
+            />
+          </th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let orders of orders$
+              | filterBy
+                : {
+                    orderNumber: orderNumberFilter,
+                    orderDate: orderDateFilter,
+                    status: { name: orderStatusFilter }
+                  }
+          "
+        >
+          <td class="align-middle">{{ orders.orderNumber }}</td>
+          <td class="align-middle">{{ orders.orderDate }}</td>
+          <td class="align-middle">{{ orders.deliveryDate }}</td>
+          <td class="align-middle">{{ orders.orderTotal | currency:'PLN'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
