@@ -18,6 +18,7 @@ public class MaterialResponse {
     private String materialName;
     private Double materialPrice;
     private Integer materialQuantity;
+    private String unitOfMeasure;
     private String materialEAN;
     private Instant materialCreated;
     private Long materialSafetyStock;

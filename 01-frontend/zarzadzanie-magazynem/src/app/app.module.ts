@@ -9,7 +9,7 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { MaterialListComponent } from './components/material-list/material-list.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MaterialService } from './services/material.service';
 import { RouterModule, Routes } from '@angular/router';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
@@ -21,9 +21,18 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { CartStatusComponent } from './components/cart-status/cart-status.component';
 import { MaterialDetailsComponent } from './components/material-details/material-details.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
+import { CartDetailsComponent } from './components/cart-details/cart-details.component';
+import { CategoryService } from './services/category.service';
+import { UserService } from './services/user.service';
+import { VendorService } from './services/vendor.service';
+import { OrderService } from './services/order.service';
+import { OrderItemsService } from './services/order-items.service';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 
 const routes: Routes = [
-  {path: 'orders-details', component: OrderDetailsComponent},
+  {path: 'cart-details', component: CartDetailsComponent},
+  {path: 'order-details', component: OrderDetailsComponent},
   {path: 'orders', component: OrderListComponent},
   {path: 'vendor', component: VendorListComponent},
   {path: 'material/:materialId', component: MaterialDetailsComponent},
@@ -46,7 +55,8 @@ const routes: Routes = [
     UserListComponent,
     CartStatusComponent,
     MaterialDetailsComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    CartDetailsComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -60,7 +70,18 @@ const routes: Routes = [
     FormsModule
   ],
   exports: [RouterModule],
-  providers: [MaterialService],
+  providers: [
+    MaterialService, 
+    CategoryService, 
+    UserService, 
+    VendorService,
+    OrderService,
+    OrderItemsService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas, far);
+  }
+}

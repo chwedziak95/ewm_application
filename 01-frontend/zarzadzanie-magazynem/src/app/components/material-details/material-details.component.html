@@ -1,0 +1,154 @@
+<div class="detail-section">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-6">
+        <table class="table table-striped table-bordered table-hover">
+          <tbody>
+            <tr>
+              <th>Numer materiału</th>
+              <td>{{ material.materialNumber }}</td>
+            </tr>
+            <tr>
+              <th>Producent</th>
+              <td>{{ material.materialManufacturer }}</td>
+            </tr>
+            <tr>
+              <th>Nazwa</th>
+              <td>
+                <input
+                  [(ngModel)]="material.materialName"
+                  [disabled]="!isEditMode"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>Cena</th>
+              <td>
+                <input
+                  [(ngModel)]="material.materialPrice"
+                  [disabled]="!isEditMode"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>Ilość</th>
+              <td>
+                <input
+                  [(ngModel)]="material.materialQuantity"
+                  [disabled]="!isEditMode"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>Jednostka miary</th>
+              <td>
+                <input
+                  [(ngModel)]="material.unitOfMeasure"
+                  [disabled]="!isEditMode"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>EAN</th>
+              <td>{{ material.materialEAN }}</td>
+            </tr>
+            <tr>
+              <th>Data utworzenia</th>
+              <td>{{ material.materialCreated | date }}</td>
+            </tr>
+            <tr>
+              <th>Stan magazynowy</th>
+              <td>
+                <input
+                  [(ngModel)]="material.materialSafetyStock"
+                  [disabled]="!isEditMode"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>Opis</th>
+              <td>
+                <input
+                  [(ngModel)]="material.materialDescription"
+                  [disabled]="!isEditMode"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-6">
+        <table class="table table-striped table-bordered table-hover">
+          <tbody>
+            <tr>
+              <th>Kategoria</th>
+              <td>{{ material.materialCategory.name }}</td>
+            </tr>
+            <tr>
+              <th>Dostawca</th>
+              <td>
+                <select
+                  [(ngModel)]="material.materialVendor"
+                  [disabled]="!isEditMode"
+                >
+                  <option *ngFor="let vendor of vendors" [value]="vendor">
+                    {{ vendor.vendorName }}
+                  </option>
+                </select>
+                <button class="btn btn-secondary btn-sm" (click)="editVendor()">
+                  <i class="fa fa-edit"></i>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th>Status</th>
+              <td>
+                <button
+                  class="btn btn-secondary btn-sm"
+                  (click)="toggleStatus()"
+                >
+                  <i
+                    class="fa"
+                    [ngClass]="{
+                      'fa-toggle-on': material.materialStatus,
+                      'fa-toggle-off': !material.materialStatus
+                    }"
+                  ></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <button
+          *ngIf="!isEditMode"
+          (click)="toggleEditMode()"
+          class="btn btn-primary btn-sm"
+        >
+          Edytuj
+        </button>
+        <button
+          *ngIf="isEditMode"
+          (click)="saveChanges()"
+          class="btn btn-success btn-sm"
+        >
+          Zapisz
+        </button>
+        <button
+          *ngIf="isEditMode"
+          (click)="cancelChanges()"
+          class="btn btn-secondary btn-sm"
+        >
+          Anuluj
+        </button>
+        <button (click)="addToCart()" class="btn btn-primary btn-sm">
+          Dodaj do zamówienia
+        </button>
+        <a routerLink="/material" class="mt-5">Powrót do listy materiałów</a>
+      </div>
+    </div>
+  </div>
+</div>

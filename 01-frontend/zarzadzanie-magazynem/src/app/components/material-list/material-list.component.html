@@ -25,7 +25,13 @@
             [(ngModel)]="materialNameFilter"
           />
         </th>
-        <th></th>
+        <th>
+          <a routerLink="/creatematerial">
+            <button  class="btn btn-primary btn-md mt-2">
+              Utwórz materiał
+            </button>
+          </a>
+        </th>
         <th>
           <input
             type="text"
@@ -61,7 +67,15 @@
         <td class="align-middle">{{ material.materialQuantity }}</td>
         <td class="align-middle">{{ material.materialCategory.name }}</td>
         <td class="align-middle">{{ material.materialVendor.vendorName }}</td>
-        <td><button (click)="addToCart(material)" class="btn btn-primary btn-sm">+</button><button class="btn btn-primary btn-sm">-</button></td>
+        <td>
+          <button (click)="addToCart(material)" class="btn btn-primary btn-sm">
+            <fa-icon icon="plus"></fa-icon>
+          </button>
+          <button class="btn btn-primary btn-sm">
+            <fa-icon icon="minus"></fa-icon>
+          </button>        
+        
+        </td>
       </tr>
     </tbody>
   </table>
