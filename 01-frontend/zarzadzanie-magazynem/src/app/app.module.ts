@@ -29,8 +29,10 @@ import { OrderService } from './services/order.service';
 import { OrderItemsService } from './services/order-items.service';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
+import { CreateMaterialComponent } from './components/create-material/create-material.component';
 
 const routes: Routes = [
+  {path: 'create-material', component: CreateMaterialComponent},
   {path: 'cart-details', component: CartDetailsComponent},
   {path: 'order-details', component: OrderDetailsComponent},
   {path: 'orders', component: OrderListComponent},
@@ -56,7 +58,8 @@ const routes: Routes = [
     CartStatusComponent,
     MaterialDetailsComponent,
     OrderDetailsComponent,
-    CartDetailsComponent
+    CartDetailsComponent,
+    CreateMaterialComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
