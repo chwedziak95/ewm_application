@@ -13,4 +13,8 @@ export class UserService {
   getAll(): Observable<Array<User>> {
     return this.http.get<Array<User>>('http://localhost:8080/api/v1/user');
   }
+
+  getUser(email: string): Observable<User>{
+    return this.http.get<User>(`http://localhost:8080/api/v1/user/${email}`);
+  }
 }

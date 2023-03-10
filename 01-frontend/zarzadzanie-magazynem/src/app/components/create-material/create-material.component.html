@@ -1,114 +1,172 @@
 <div class="main-content page-m">
-    <div class="section-content section-content-p30">
-        <div class="container-fluid">
-            <form [formGroup]="createMaterialForm" (ngSubmit)="createMaterialSubmit()">
-                <!-- create material form -->
-                <div formGroupName="material" class="form-area">
-                    <h3>Materiał</h3>
-                    <div class="row">
-                        <div class="col-md-2"><label>Numer Materiału</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="materialNumber" type="text">
-                            </div>
-                        </div>                        
-                    </div>
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <form
+        [formGroup]="createMaterialForm"
+        (ngSubmit)="createMaterialSubmit()"
+      >
+        <!-- create material form -->
+        <div formGroupName="material" class="form-area">
+          <h3>Materiał</h3>
+          <div class="row">
+            <div class="col-md-2"><label>Numer Materiału</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input formControlName="materialNumber" type="text" />
 
-                    <div class="row">
-                        <div class="col-md-2"><label>Nazwa Materiału</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="materialName" type="text">
-                            </div>
-                        </div>                        
+                <div *ngIf="materialNumber!.invalid && (materialNumber!.dirty || materialNumber!.touched)" class="alert alert-danger mt-1">
+                    <div *ngIf="materialNumber.errors.required || materialNumber.errors.notOnlyWhiteSpace">
+                        Numer materiału jest wymagany
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-2"><label>Cena Materiału</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="materialPrice" type="text">
-                            </div>
-                        </div>                        
+                    <div *ngIf="materialNumber.errors.pattern">
+                      Nieprawidłowe znaki
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-2"><label>Stan magazynowy</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="materialQuantity" type="text">
-                            </div>
-                        </div>                        
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2"><label>Jednostka miary</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="unitOfMeasure" type="text">
-                            </div>
-                        </div>                        
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2"><label>EAN</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="materialEAN" type="text">
-                            </div>
-                        </div>                        
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2"><label>Minimalny stan magazynowy</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="materialSafetyStock" type="text">
-                            </div>
-                        </div>                        
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2"><label>Opis</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <input formControlName="materialDescription" type="text">
-                            </div>
-                        </div>                        
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2"><label>Kategoria</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <select formControlName="materialCategory">
-                                    <option *ngFor="let category of categories" [value]="category">
-                                        {{ category.name }}
-                                      </option>
-                                </select>
-                            </div>
-                        </div>                        
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2"><label>Dostawca</label></div>
-                        <div class="col-md-9">
-                            <div class="input-space">
-                                <select formControlName="materialVendor">
-                                    <option *ngFor="let vendor of vendors" [value]="vendor">
-                                        {{ vendor.vendorName }}
-                                      </option>
-                                </select>
-                            </div>
-                        </div>                        
-                    </div>
-
                 </div>
-                <!-- submit -->
-                <div class="text-center">
-                    <button type="submit" class="btn btn-info">Utwórz materiał</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2"><label>Nazwa Materiału</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input formControlName="materialName" type="text" />
+
+                <div *ngIf="materialName!.invalid && (materialName!.dirty || materialName!.touched)" class="alert alert-danger mt-1">
+                  <div *ngIf="materialName.errors.required || materialName.errors.notOnlyWhiteSpace">
+                      Nazwa materiału jest wymagana
+                  </div>
+                  <div *ngIf="materialName.errors.pattern">
+                    Nieprawidłowe znaki
+                  </div>
                 </div>
-            </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2"><label>Cena Materiału</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input formControlName="materialPrice" type="text" />
+                <div *ngIf="materialPrice!.invalid && (materialPrice!.dirty || materialPrice!.touched)" class="alert alert-danger mt-1">
+                  <div *ngIf="materialPrice.errors.required || materialPrice.errors.notOnlyWhiteSpace">
+                      Podaj cenę
+                  </div>
+
+                  <div *ngIf="materialPrice.errors.pattern">
+                    Nieprawidłowe znaki
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2"><label>Stan magazynowy</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input formControlName="materialQuantity" type="text" />
+                <div *ngIf="materialQuantity!.invalid && (materialQuantity!.dirty || materialQuantity!.touched)" class="alert alert-danger mt-1">
+                  <div *ngIf="materialQuantity.errors.required">
+                      Jeżeli ilość wynosi 0, podaj 0
+                  </div>
+
+                  <div *ngIf="materialQuantity.errors.pattern || materialQuantity.errors.notOnlyWhiteSpace">
+                    Nieprawidłowe znaki
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2"><label>Jednostka miary</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input formControlName="unitOfMeasure" type="text" />
+                <div *ngIf="unitOfMeasure!.invalid && (unitOfMeasure!.dirty || unitOfMeasure!.touched)" class="alert alert-danger mt-1">
+                  <div *ngIf="unitOfMeasure.errors.required  || unitOfMeasure.errors.notOnlyWhiteSpace">
+                      Podaj jednostkę miary
+                  </div>
+                  <div *ngIf="unitOfMeasure.errors.pattern">
+                    Nieprawidłowe znaki
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2"><label>EAN</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input formControlName="materialEAN" type="text" />
+              </div>
+              <div *ngIf="materialEAN.errors.pattern" class="alert alert-danger mt-1">
+                Nieprawidłowe znaki
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2"><label>Minimalny stan magazynowy</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input formControlName="materialSafetyStock" type="text" />
+              </div>
+              <div *ngIf="materialSafetyStock.errors.pattern" class="alert alert-danger mt-1">
+                Nieprawidłowe znaki
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2"><label>Opis</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input formControlName="materialDescription" type="text" />
+                
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2"><label>Kategoria</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <select formControlName="category">
+                        <option *ngFor="let category of categories" [ngValue]="category.categoryId">
+                            {{ category.name }}
+                          </option>
+                    </select>
+                </div>
+            </div>                        
         </div>
+
+        <div class="row">
+            <div class="col-md-2"><label>Dostawca</label></div>
+            <div class="col-md-9">
+                <div class="input-space">
+                    <select formControlName="vendor">
+                        <option *ngFor="let vendor of vendors" [ngValue]="vendor.vendorId">
+                            {{ vendor.vendorName }}
+                          </option>
+                    </select>
+                </div>
+            </div>                        
+        </div>
+          
+
+          
+        </div>
+        <!-- submit -->
+        <div class="text-center">
+          <button type="submit" class="btn btn-info">Utwórz materiał</button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
