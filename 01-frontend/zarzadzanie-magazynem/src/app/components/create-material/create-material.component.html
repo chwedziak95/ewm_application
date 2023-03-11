@@ -6,7 +6,7 @@
         (ngSubmit)="createMaterialSubmit()"
       >
         <!-- create material form -->
-        <div formGroupName="material" class="form-area">
+        <div class="form-area">
           <h3>Materiał</h3>
           <div class="row">
             <div class="col-md-2"><label>Numer Materiału</label></div>
@@ -14,11 +14,29 @@
               <div class="input-space">
                 <input formControlName="materialNumber" type="text" />
 
-                <div *ngIf="materialNumber!.invalid && (materialNumber!.dirty || materialNumber!.touched)" class="alert alert-danger mt-1">
-                    <div *ngIf="materialNumber.errors.required || materialNumber.errors.notOnlyWhiteSpace">
+                <div *ngIf="materialNumber.invalid && (materialNumber!.dirty || materialNumber!.touched)" class="alert alert-danger mt-1">
+                    <div *ngIf="materialNumber.errors.required">
                         Numer materiału jest wymagany
                     </div>
                     <div *ngIf="materialNumber.errors.pattern">
+                      Nieprawidłowe znaki
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2"><label>Producent</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input formControlName="materialManufacturer" type="text" />
+
+                <div *ngIf="materialManufacturer.invalid && (materialManufacturer!.dirty || materialManufacturer!.touched)" class="alert alert-danger mt-1">
+                    <div *ngIf="materialManufacturer.errors.required">
+                        Producent materiału jest wymagany
+                    </div>
+                    <div *ngIf="materialManufacturer.errors.pattern">
                       Nieprawidłowe znaki
                     </div>
                 </div>
@@ -32,8 +50,8 @@
               <div class="input-space">
                 <input formControlName="materialName" type="text" />
 
-                <div *ngIf="materialName!.invalid && (materialName!.dirty || materialName!.touched)" class="alert alert-danger mt-1">
-                  <div *ngIf="materialName.errors.required || materialName.errors.notOnlyWhiteSpace">
+                <div *ngIf="materialName.invalid && (materialName.dirty || materialName.touched)" class="alert alert-danger mt-1">
+                  <div *ngIf="materialName.errors.required">
                       Nazwa materiału jest wymagana
                   </div>
                   <div *ngIf="materialName.errors.pattern">
@@ -49,8 +67,8 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="materialPrice" type="text" />
-                <div *ngIf="materialPrice!.invalid && (materialPrice!.dirty || materialPrice!.touched)" class="alert alert-danger mt-1">
-                  <div *ngIf="materialPrice.errors.required || materialPrice.errors.notOnlyWhiteSpace">
+                <div *ngIf="materialPrice.invalid && (materialPrice.dirty || materialPrice.touched)" class="alert alert-danger mt-1">
+                  <div *ngIf="materialPrice.errors.required">
                       Podaj cenę
                   </div>
 
@@ -68,12 +86,12 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="materialQuantity" type="text" />
-                <div *ngIf="materialQuantity!.invalid && (materialQuantity!.dirty || materialQuantity!.touched)" class="alert alert-danger mt-1">
+                <div *ngIf="materialQuantity.invalid && (materialQuantity.dirty || materialQuantity.touched)" class="alert alert-danger mt-1">
                   <div *ngIf="materialQuantity.errors.required">
                       Jeżeli ilość wynosi 0, podaj 0
                   </div>
 
-                  <div *ngIf="materialQuantity.errors.pattern || materialQuantity.errors.notOnlyWhiteSpace">
+                  <div *ngIf="materialQuantity.errors.pattern">
                     Nieprawidłowe znaki
                   </div>
                 </div>
@@ -87,8 +105,8 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="unitOfMeasure" type="text" />
-                <div *ngIf="unitOfMeasure!.invalid && (unitOfMeasure!.dirty || unitOfMeasure!.touched)" class="alert alert-danger mt-1">
-                  <div *ngIf="unitOfMeasure.errors.required  || unitOfMeasure.errors.notOnlyWhiteSpace">
+                <div *ngIf="unitOfMeasure.invalid && (unitOfMeasure.dirty || unitOfMeasure.touched)" class="alert alert-danger mt-1">
+                  <div *ngIf="unitOfMeasure.errors.required">
                       Podaj jednostkę miary
                   </div>
                   <div *ngIf="unitOfMeasure.errors.pattern">
@@ -105,19 +123,19 @@
               <div class="input-space">
                 <input formControlName="materialEAN" type="text" />
               </div>
-              <div *ngIf="materialEAN.errors.pattern" class="alert alert-danger mt-1">
-                Nieprawidłowe znaki
-              </div>
+                <div *ngIf="materialEAN.errors?.pattern" class="alert alert-danger mt-1">
+                  Nieprawidłowe znaki
+                </div>
             </div>
           </div>
 
           <div class="row">
-            <div class="col-md-2"><label>Minimalny stan magazynowy</label></div>
+            <div class="col-md-2"><label>Min. stan mag.</label></div>
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="materialSafetyStock" type="text" />
               </div>
-              <div *ngIf="materialSafetyStock.errors.pattern" class="alert alert-danger mt-1">
+              <div *ngIf="materialSafetyStock.errors?.pattern" class="alert alert-danger mt-1">
                 Nieprawidłowe znaki
               </div>
             </div>
@@ -128,7 +146,9 @@
             <div class="col-md-9">
               <div class="input-space">
                 <input formControlName="materialDescription" type="text" />
-                
+                <div *ngIf="materialDescription.errors?.pattern" class="alert alert-danger mt-1">
+                  Nieprawidłowe znaki
+                </div>
               </div>
             </div>
           </div>
@@ -142,6 +162,11 @@
                             {{ category.name }}
                           </option>
                     </select>
+                    <div *ngIf="materialCategory.invalid && (materialCategory.dirty || materialCategory.touched)" class="alert alert-danger mt-1">
+                      <div *ngIf="materialCategory.errors.required">
+                          Wybierz kategorię
+                      </div>
+                    </div>
                 </div>
             </div>                        
         </div>
@@ -155,6 +180,11 @@
                             {{ vendor.vendorName }}
                           </option>
                     </select>
+                    <div *ngIf="materialVendor.invalid && (materialVendor.dirty || materialVendor.touched)" class="alert alert-danger mt-1">
+                      <div *ngIf="materialVendor.errors.required">
+                          Wybierz dostawcę
+                      </div>
+                    </div>
                 </div>
             </div>                        
         </div>

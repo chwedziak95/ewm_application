@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Material } from '../common/material/material';
+import { CreateMaterialPayload } from '../components/create-material/create-material.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,10 @@ export class MaterialService {
   private baseUrl = "http://localhost:8080/api/v1/material"
 
   constructor(private http: HttpClient) { }
+
+  createMaterial(materialPayload: CreateMaterialPayload): Observable<any>{
+    return this.http.post(this.baseUrl, materialPayload)
+  }
 
   getAll(): Observable<Array<Material>> {
     return this.http.get<Array<Material>>(this.baseUrl);

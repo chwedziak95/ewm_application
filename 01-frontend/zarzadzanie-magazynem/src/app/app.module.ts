@@ -4,13 +4,12 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { MaterialListComponent } from './components/material-list/material-list.component';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MaterialService } from './services/material.service';
 import { RouterModule, Routes } from '@angular/router';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
 import { FilterByPipe } from './pipes/filter-by.pipe';
@@ -22,24 +21,23 @@ import { CartStatusComponent } from './components/cart-status/cart-status.compon
 import { MaterialDetailsComponent } from './components/material-details/material-details.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
-import { CategoryService } from './services/category.service';
-import { UserService } from './services/user.service';
-import { VendorService } from './services/vendor.service';
-import { OrderService } from './services/order.service';
-import { OrderItemsService } from './services/order-items.service';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { CreateMaterialComponent } from './components/create-material/create-material.component';
 import { HeaderComponent } from './components/header/header.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { AuthGuard } from './auth/auth.guard';
+import { TokenInterceptor } from './auth/token/token-interceptor';
 
 const routes: Routes = [
-  {path: 'create-material', component: CreateMaterialComponent},
-  {path: 'cart-details', component: CartDetailsComponent},
-  {path: 'order-details', component: OrderDetailsComponent},
-  {path: 'orders', component: OrderListComponent},
-  {path: 'vendor', component: VendorListComponent},
-  {path: 'material/:materialId', component: MaterialDetailsComponent},
-  {path: 'material', component: MaterialListComponent},
+  {path: 'create-material', component: CreateMaterialComponent, canActivate: [AuthGuard]},
+  {path: 'cart-details', component: CartDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'order-details', component: OrderDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'user-profile/:name', component: UserProfileComponent, canActivate: [AuthGuard] },
+  {path: 'orders', component: OrderListComponent, canActivate: [AuthGuard]},
+  {path: 'vendor', component: VendorListComponent, canActivate: [AuthGuard]},
+  {path: 'material/:materialId', component: MaterialDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'material', component: MaterialListComponent, canActivate: [AuthGuard]},
   {path: 'signup', component: SignupComponent},
   {path: 'login', component: LoginComponent}
 ];
@@ -61,7 +59,8 @@ const routes: Routes = [
     OrderDetailsComponent,
     CartDetailsComponent,
     CreateMaterialComponent,
-    HeaderComponent
+    HeaderComponent,
+    UserProfileComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -76,12 +75,11 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
   providers: [
-    MaterialService, 
-    CategoryService, 
-    UserService, 
-    VendorService,
-    OrderService,
-    OrderItemsService
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

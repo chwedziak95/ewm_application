@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { AuthService } from '../shared/auth.service';
 import { LoginRequestPayload } from './login-request.payload';
 
@@ -41,17 +41,22 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  login(){
-    this.loginRequestPayload.email = this.loginForm.get('email')?.value;
-    this.loginRequestPayload.password = this.loginForm.get('password')?.value;
-
-    this.authService.login(this.loginRequestPayload).subscribe(data => {
-      this.isError = false;
-      this.router.navigateByUrl('');
-      this.toastr.success('Zalogowano');
-    }, error => {
-      this.isError = true;
-      throwError(error);
-    });
+  login() {
+    this.loginRequestPayload.email = this.loginForm.get('email').value;
+    this.loginRequestPayload.password = this.loginForm.get('password').value;
+  
+    this.authService.login(this.loginRequestPayload)
+      .pipe(
+        catchError((error) => {
+          this.isError = true;
+          console.log(error);
+          return throwError(() => new Error(error));
+        })
+      )
+      .subscribe((data) => {
+        this.isError = false;
+        this.router.navigateByUrl('');
+        this.toastr.success('Zalogowano');
+      });
   }
 }

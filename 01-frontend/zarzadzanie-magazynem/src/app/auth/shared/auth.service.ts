@@ -101,9 +101,6 @@ export class AuthService {
   getRefreshToken() {
     return this.localStorage.retrieve('refreshToken');
   }
-  getUserNameAndSurname(){
-    
-  }
 
   isLoggedIn(): boolean {
     return this.getToken() != null;
