@@ -28,6 +28,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AuthGuard } from './auth/auth.guard';
 import { TokenInterceptor } from './auth/token/token-interceptor';
+import { CreateVendorComponent } from './components/create-vendor/create-vendor.component';
+import { CreateCategoryComponent } from './components/create-category/create-category.component';
 
 const routes: Routes = [
   {path: 'create-material', component: CreateMaterialComponent, canActivate: [AuthGuard]},
@@ -60,7 +62,9 @@ const routes: Routes = [
     CartDetailsComponent,
     CreateMaterialComponent,
     HeaderComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    CreateVendorComponent,
+    CreateCategoryComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -11,9 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -36,11 +34,10 @@ public class OrderService {
     private final MailService mailService;
     private final OrdersResponse orderResponse;
     private final MaterialDto materialDto;
-
-    private MaterialMapper materialMapper;
+    private final MaterialMapper materialMapper;
 
     public void save(OrderRequest orderRequest){
-        Status status = statusRepository.findByStatusId(1L).orElseThrow(() -> new EwmAppException("Nie znaleziono statusu o id"));
+        Status status = statusRepository.findByStatusId(1).orElseThrow(() -> new EwmAppException("Nie znaleziono statusu o id"));
         String number = generateOrderNumber();
         Double total = countTotal(orderRequest.getOrderItems());
         Orders orders = ordersMapper.toEntity(orderRequest, authenticationService.getCurrentUser().getUserId() ,status.getStatusId(),number, total);

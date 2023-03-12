@@ -12,7 +12,13 @@ export class CartService {
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
 
-  constructor() { }
+  storage: Storage = sessionStorage;
+
+  constructor() {
+    let data = JSON.parse(this.storage.getItem('cartItems'));
+
+    if (data != null)
+   }
 
   addToCart(theCartItem: CartItem) {
     // check if we already have the item in our cart

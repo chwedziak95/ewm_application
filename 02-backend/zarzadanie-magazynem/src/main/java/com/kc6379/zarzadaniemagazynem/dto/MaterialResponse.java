@@ -21,7 +21,7 @@ public class MaterialResponse {
     private String unitOfMeasure;
     private String materialEAN;
     private Instant materialCreated;
-    private Long materialSafetyStock;
+    private Integer materialSafetyStock;
     private String materialDescription;
     private CategoryDto materialCategory;
     private VendorDto materialVendor;

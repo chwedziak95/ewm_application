@@ -18,7 +18,7 @@ public class MaterialDto {
     private Integer materialQuantity;
     private String unitOfMeasure;
     private String materialEAN;
-    private Long materialSafetyStock;
+    private Integer materialSafetyStock;
     private String materialDescription;
     private Long materialCategory;
     private Long materialVendor;

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,5 +21,26 @@ public class InternalOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long internalOrderId;
 
+    private LocalDateTime orderDate;
+
+    private LocalDateTime pickDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "userId",
+            referencedColumnName = "userId"
+    )
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "statusId",
+            referencedColumnName = "statusId"
+    )
+    private Status status;
+
     private String pickUpLocation;
+    @OneToMany(
+            mappedBy = "internalOrder"
+    )
+    private Set<InternalOrderItem> orderItems = new HashSet<>();
 }

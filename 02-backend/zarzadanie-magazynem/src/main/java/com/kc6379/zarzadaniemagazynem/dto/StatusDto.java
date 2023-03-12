@@ -15,6 +15,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class StatusDto implements Serializable {
-    private Long statusId;
+    private Integer statusId;
     private String name;
 }

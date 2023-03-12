@@ -1,8 +1,6 @@
 package com.kc6379.zarzadaniemagazynem.config;
 
-import com.kc6379.zarzadaniemagazynem.dto.MaterialDto;
-import com.kc6379.zarzadaniemagazynem.dto.OrderDelivery;
-import com.kc6379.zarzadaniemagazynem.dto.OrdersResponse;
+import com.kc6379.zarzadaniemagazynem.dto.*;
 import com.kc6379.zarzadaniemagazynem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -58,4 +56,14 @@ public class ApplicationConfig {
     public MaterialDto materialDto() {
         return new MaterialDto();
     }
+
+    @Bean
+    public InternalOrderResponse internalOrderResponse() {return new InternalOrderResponse();}
+
+    @Bean
+    public OrderRequest orderRequest() {return new OrderRequest();}
+
+    @Bean
+    public OrderItemRequest orderItemRequest() {return new OrderItemRequest();}
+
 }

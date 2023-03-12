@@ -23,7 +23,7 @@ public class OrderItemService {
 
     public List<OrderItemDto> getAllOrderItemsByOrder(Long ordersId){
         Orders orders = orderRepository.findByOrdersId(ordersId)
-                .orElseThrow(() -> new EwmAppException("Nie znaleziono zamówienia o id"));
+                .orElseThrow(() -> new EwmAppException("Nie znaleziono zamówienia o id" + ordersId));
         return orderItemRepository.findByOrders(orders)
                 .stream()
                 .map(orderItemMapper::toDto)

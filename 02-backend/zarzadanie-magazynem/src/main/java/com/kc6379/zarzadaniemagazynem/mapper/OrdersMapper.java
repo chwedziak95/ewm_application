@@ -21,7 +21,7 @@ public interface OrdersMapper {
     @Mapping(target = "orderDate", expression = "java(java.time.LocalDate.now())")
     @Mapping(source = "orderNumber", target = "orderNumber")
     @Mapping(source = "total", target = "orderTotal")
-    Orders toEntity(OrderRequest ordersRequest, Long user, Long status, String orderNumber, Double total);
+    Orders toEntity(OrderRequest ordersRequest, Long user, Integer status, String orderNumber, Double total);
 
     @AfterMapping
     default void linkOrderItems(@MappingTarget Orders orders) {
@@ -32,8 +32,6 @@ public interface OrdersMapper {
     OrderItem toOrderItemEntity(OrderItemRequest orderItemRequest);
 
     Set<OrderItem> toOrderItemEntities(Set<OrderItemRequest> orderItemRequest);
-    @Mapping(source = "materialId.materialId", target = "materialId")
-    OrderItemRequest toOrderItemDto(OrderItem orderItem);
     Set<OrderItemDto> toOrderItemDtos(Set<OrderItem> orderItems);
     default OrdersResponse toDto(Orders orders) {
         OrdersResponse ordersResponse = new OrdersResponse();

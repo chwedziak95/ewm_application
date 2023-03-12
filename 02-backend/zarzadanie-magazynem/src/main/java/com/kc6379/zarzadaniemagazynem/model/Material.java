@@ -25,7 +25,7 @@ public class Material {
     private String unitOfMeasure;
     private String materialEAN;
     private Instant materialCreated;
-    private Long materialSafetyStock;
+    private Integer materialSafetyStock;
     private String materialDescription;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
