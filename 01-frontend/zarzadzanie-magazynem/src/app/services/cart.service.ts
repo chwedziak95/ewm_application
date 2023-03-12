@@ -17,7 +17,7 @@ export class CartService {
   constructor() {
     let data = JSON.parse(this.storage.getItem('cartItems'));
 
-    if (data != null)
+    // if (data != null) -- tutaj skończyłeś z fontem
    }
 
   addToCart(theCartItem: CartItem) {
