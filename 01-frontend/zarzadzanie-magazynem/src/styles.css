@@ -70,6 +70,10 @@ input.ng-invalid.ng-touched {
 
 .material-table {
     height: 500px;
+}
+
+.button-container button {
+    margin-right: 0.3rem;
   }
 
 /* 

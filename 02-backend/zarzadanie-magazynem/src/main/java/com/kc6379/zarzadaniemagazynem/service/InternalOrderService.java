@@ -4,10 +4,7 @@ import com.kc6379.zarzadaniemagazynem.dto.*;
 import com.kc6379.zarzadaniemagazynem.exceptions.EwmAppException;
 import com.kc6379.zarzadaniemagazynem.mapper.InternalOrderMapper;
 import com.kc6379.zarzadaniemagazynem.mapper.MaterialMapper;
-import com.kc6379.zarzadaniemagazynem.model.InternalOrder;
-import com.kc6379.zarzadaniemagazynem.model.InternalOrderItem;
-import com.kc6379.zarzadaniemagazynem.model.Material;
-import com.kc6379.zarzadaniemagazynem.model.Status;
+import com.kc6379.zarzadaniemagazynem.model.*;
 import com.kc6379.zarzadaniemagazynem.repository.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,8 +40,25 @@ public class InternalOrderService {
     public void save(InternalOrderRequest internalOrderRequest){
         Status status = statusRepository.findByName("Utworzono").orElseThrow(() -> new EwmAppException("Nie znakleziono statusu o nazwie Utworzono"));
         InternalOrder internalOrder = internalOrderMapper.toEntity(internalOrderRequest, authenticationService.getCurrentUser().getUserId() ,status.getStatusId());
-        internalOrderRepository.save(internalOrder);
-        saveInternalOrderItems(internalOrderRequest.getOrderItems(), internalOrder);
+        boolean check = availableCheck(internalOrderRequest.getOrderItems());
+        if (check ==true) {
+            internalOrderRepository.save(internalOrder);
+            saveInternalOrderItems(internalOrderRequest.getOrderItems(), internalOrder);
+        } else {
+            throw new EwmAppException("Nie można utworzyć tego zamówienia");
+        }
+    }
+
+    private boolean availableCheck(Set<OrderItemRequest> orderItemRequests) {
+        boolean checkResult = true;
+        Set<InternalOrderItem> orderItems = internalOrderMapper.toInternalOrderItemEntities(orderItemRequests);
+        for (InternalOrderItem internalOrderItem : orderItems){
+            Material material = materialRepository.findByMaterialId(internalOrderItem.getMaterialId().getMaterialId()).orElseThrow(() -> new EwmAppException("Brak materiału"));
+            if (internalOrderItem.getQuantity() > material.getMaterialQuantity()){
+                checkResult = false;
+            }
+        }
+        return checkResult;
     }
 
     private void saveInternalOrderItems(Set<OrderItemRequest> orderItemRequests, InternalOrder internalOrder) {
@@ -62,6 +76,16 @@ public class InternalOrderService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    public List<InternalOrderResponse> getAllByUser(Long userId){
+        User user = userRepository.findByUserId(userId).
+                orElseThrow(() -> new EwmAppException("Nie znaleziono uytkownika o id: " + userId));
+        return internalOrderRepository.findAllByUser(user)
+               .stream()
+               .map(internalOrderMapper::toDto)
+               .collect(Collectors.toList());
+    }
+
     public void withdraw(Long id){
         internalOrderResponse.setPickupDateTime(LocalDateTime.now());
         InternalOrder internalOrder = internalOrderRepository.findByInternalOrderId(id)
@@ -73,6 +97,8 @@ public class InternalOrderService {
             internalOrderMapper.partialUpdate(internalOrderResponse, internalOrder);
             internalOrderRepository.save(internalOrder);
         }
+        internalOrderMapper.partialUpdate(internalOrderResponse, internalOrder);
+        internalOrderRepository.save(internalOrder);
     }
 
     private void updateMaterialQuantity(InternalOrder internalOrder) {

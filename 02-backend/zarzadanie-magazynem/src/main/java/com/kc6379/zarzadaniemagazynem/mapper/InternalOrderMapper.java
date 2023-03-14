@@ -47,5 +47,6 @@ public interface InternalOrderMapper {
     }
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source="pickupDateTime", target = "internalOrder.pickDate")
     InternalOrder partialUpdate(InternalOrderResponse internalOrderResponse, @MappingTarget InternalOrder internalOrder);
 }

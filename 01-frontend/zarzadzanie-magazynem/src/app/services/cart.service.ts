@@ -17,7 +17,9 @@ export class CartService {
   constructor() {
     let data = JSON.parse(this.storage.getItem('cartItems'));
 
-    // if (data != null) -- tutaj skończyłeś z fontem
+    if (data != null){
+      this.cartItems = data;
+    }
    }
 
   addToCart(theCartItem: CartItem) {
@@ -62,6 +64,10 @@ export class CartService {
 
     // log cart data just for debugging purposes
     this.logCartData(totalPriceValue, totalQuantityValue);
+  }
+
+  persistCartItems(){
+    this.storage.setItem('cartItems', JSON.stringify(this.cartItems));
   }
 
   logCartData(totalPriceValue: number, totalQuantityValue: number) {

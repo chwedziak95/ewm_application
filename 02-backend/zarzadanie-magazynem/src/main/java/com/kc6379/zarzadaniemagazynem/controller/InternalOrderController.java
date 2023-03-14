@@ -21,6 +21,12 @@ public class InternalOrderController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PostMapping("withdraw/{internalOrderId}")
+    public ResponseEntity<Void> withdraw(@PathVariable Long internalOrderId){
+        internalOrderService.withdraw(internalOrderId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<InternalOrderResponse>> getAll(){
         return ResponseEntity
@@ -28,10 +34,13 @@ public class InternalOrderController {
                 .body(internalOrderService.getAll());
     }
 
-    @PostMapping("withdraw/{internalOrderId}")
-    public ResponseEntity<Void> withdraw(@PathVariable Long internalOrderId){
-        internalOrderService.withdraw(internalOrderId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/by-user/{userId}")
+    public ResponseEntity<List<InternalOrderResponse>> getAllByUser(@PathVariable Long userId){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(internalOrderService.getAllByUser(userId));
     }
+
+
 
 }
