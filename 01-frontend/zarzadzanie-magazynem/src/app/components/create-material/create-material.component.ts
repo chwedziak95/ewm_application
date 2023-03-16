@@ -54,48 +54,48 @@ export class CreateMaterialComponent implements OnInit {
     this.createMaterialForm = new FormGroup({
       materialNumber: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.ST_CHAR_PATTERN),
+        Validators.pattern(this.ST_CHAR_PATTERN)
         
       ]),
       materialManufacturer: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.ST_CHAR_PATTERN),
+        Validators.pattern(this.ST_CHAR_PATTERN)
         
       ]),
       materialName: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.ST_CHAR_PATTERN),
+        Validators.pattern(this.ST_CHAR_PATTERN)
         
       ]),
       materialPrice: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.PRICE_PATTERN),
+        Validators.pattern(this.PRICE_PATTERN)
         
       ]),
       materialQuantity: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.PRICE_PATTERN),
+        Validators.pattern(this.PRICE_PATTERN)
         
       ]),
       unitOfMeasure: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.ONLY_CHAR_PATTERN),
+        Validators.pattern(this.ONLY_CHAR_PATTERN)
         
       ]),
       materialEAN: new FormControl('', [
-        Validators.pattern(this.ST_CHAR_PATTERN),
+        Validators.pattern(this.ST_CHAR_PATTERN)
         
       ]),
       materialSafetyStock: new FormControl('', [
-        Validators.pattern(this.PRICE_PATTERN),
+        Validators.pattern(this.PRICE_PATTERN)
         
       ]),
       materialDescription: new FormControl('', [
-        Validators.pattern(this.ST_CHAR_PATTERN),
+        Validators.pattern(this.ST_CHAR_PATTERN)
         
       ]),
       category: new FormControl('', [Validators.required]),
-      vendor: new FormControl('', [Validators.required]),
+      vendor: new FormControl('', [Validators.required])
     });
 
     this.categoryService.getAll().subscribe((data) => {
@@ -113,8 +113,6 @@ export class CreateMaterialComponent implements OnInit {
   }
 
   createMaterialSubmit() {
-    console.log('Tworzenie materiału...');
-
     this.materialPayload.materialNumber = this.createMaterialForm.get('materialNumber').value;
     this.materialPayload.materialManufacturer = this.createMaterialForm.get('materialManufacturer').value;
     this.materialPayload.materialName = this.createMaterialForm.get('materialName').value;

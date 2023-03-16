@@ -33,19 +33,7 @@ public interface OrdersMapper {
 
     Set<OrderItem> toOrderItemEntities(Set<OrderItemRequest> orderItemRequest);
     Set<OrderItemDto> toOrderItemDtos(Set<OrderItem> orderItems);
-    default OrdersResponse toDto(Orders orders) {
-        OrdersResponse ordersResponse = new OrdersResponse();
-        ordersResponse.setOrdersId(orders.getOrdersId());
-        ordersResponse.setOrderNumber(orders.getOrderNumber());
-        ordersResponse.setOrderDate(LocalDate.now());
-        ordersResponse.setDeliveryDate(LocalDate.now());
-        ordersResponse.setComment(orders.getComment());
-        ordersResponse.setUser(new UserEqDto(orders.getUser().getUserId(), orders.getUser().getEmail(), orders.getUser().getFirstName(), orders.getUser().getLastName()));
-        ordersResponse.setStatus(new StatusDto(orders.getStatus().getStatusId(), orders.getStatus().getName()));
-        ordersResponse.setOrderItems(toOrderItemDtos(orders.getOrderItems()));
-        ordersResponse.setOrderTotal(orders.getOrderTotal());
-        return ordersResponse;
-    }
+    OrdersResponse toDto(Orders orders);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Orders partialUpdate(OrdersResponse orderResponse, @MappingTarget Orders orders);

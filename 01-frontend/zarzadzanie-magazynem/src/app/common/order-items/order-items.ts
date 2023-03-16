@@ -7,15 +7,5 @@ export class OrderItems {
     materialId: Material;
     quantity: number;
   
-    constructor(
-      orderItemId: number,
-      orders: Orders,
-      materialId: Material,
-      quantity: number
-    ) {
-      this.orderItemId = orderItemId;
-      this.orders = orders;
-      this.materialId = materialId;
-      this.quantity = quantity;
-    }
+    constructor() {}
   }

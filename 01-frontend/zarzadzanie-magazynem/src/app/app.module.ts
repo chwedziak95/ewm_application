@@ -30,6 +30,14 @@ import { AuthGuard } from './auth/auth.guard';
 import { TokenInterceptor } from './auth/token/token-interceptor';
 import { CreateVendorComponent } from './components/create-vendor/create-vendor.component';
 import { CreateCategoryComponent } from './components/create-category/create-category.component';
+import { CustomDatePipe } from './pipes/custom.datepipe';
+import { VendorDetailsComponent } from './components/vendor-details/vendor-details.component';
+import { InternalOrderListComponent } from './components/internal-order-list/internal-order-list.component';
+import { InternalOrderDetailsComponent } from './components/internal-order-details/internal-order-details.component';
+import { InternalOrderCartComponent } from './components/internal-order-cart/internal-order-cart.component';
+import { InternalOrderCartStatusComponent } from './components/internal-order-cart-status/internal-order-cart-status.component';
+import { InternalOrderItemsComponent } from './components/internal-order-items/internal-order-items.component';
+
 
 const routes: Routes = [
   {path: 'create-material', component: CreateMaterialComponent, canActivate: [AuthGuard]},
@@ -64,7 +72,14 @@ const routes: Routes = [
     HeaderComponent,
     UserProfileComponent,
     CreateVendorComponent,
-    CreateCategoryComponent
+    CreateCategoryComponent,
+    CustomDatePipe,
+    VendorDetailsComponent,
+    InternalOrderListComponent,
+    InternalOrderDetailsComponent,
+    InternalOrderCartComponent,
+    InternalOrderCartStatusComponent,
+    InternalOrderItemsComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import static java.util.stream.Collectors.toList;
 
 @Service
@@ -20,8 +22,10 @@ import static java.util.stream.Collectors.toList;
 public class VendorService {
     private final VendorRepository vendorRepository;
     private final VendorMapper vendorMapper;
+    private VendorDto vendorDto;
+
     @Transactional
-    public VendorDto save(VendorDto vendorDto){
+    public VendorDto save(VendorDto vendorDto) {
         var existingVendor = vendorRepository.findByVendorEmailOrVendorNipOrVendorRegonOrVendorKrs(vendorDto.getVendorEmail(), vendorDto.getVendorNip(), vendorDto.getVendorRegon(), vendorDto.getVendorKrs());
         if (existingVendor.isPresent()) {
             Vendor existing = existingVendor.get();
@@ -45,6 +49,13 @@ public class VendorService {
         Vendor save = vendorRepository.save(vendorMapper.mapDtoToVendor(vendorDto));
         vendorDto.setVendorId(save.getVendorId());
         return vendorDto;
+    }
+
+    public void updateVendor(VendorDto vendorDto){
+        Vendor vendor = vendorRepository.findByVendorId(vendorDto.getVendorId())
+                .orElseThrow(() -> new EwmAppException("Nie znaleziono dostawcy o id: " + vendorDto.getVendorId()));
+        vendorRepository.save(vendorMapper.partialUpdate(vendorDto, vendor));
+
     }
 
     @Transactional(readOnly = true)

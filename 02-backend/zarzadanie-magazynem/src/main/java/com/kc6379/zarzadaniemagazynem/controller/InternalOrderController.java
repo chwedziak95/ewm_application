@@ -21,9 +21,21 @@ public class InternalOrderController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping("withdraw/{internalOrderId}")
-    public ResponseEntity<Void> withdraw(@PathVariable Long internalOrderId){
-        internalOrderService.withdraw(internalOrderId);
+    @PostMapping("withdraw/{id}")
+    public ResponseEntity<Void> withdraw(@PathVariable Long id){
+        internalOrderService.withdraw(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("cancel/{id}")
+    public ResponseEntity<Void> cancelOrder(@PathVariable Long id){
+        internalOrderService.cancelOrder(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("ready/{id}")
+    public ResponseEntity<Void> ready(@PathVariable Long id){
+        internalOrderService.ready(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

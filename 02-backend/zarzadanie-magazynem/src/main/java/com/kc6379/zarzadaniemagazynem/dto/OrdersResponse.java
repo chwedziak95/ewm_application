@@ -1,13 +1,8 @@
 package com.kc6379.zarzadaniemagazynem.dto;
 
+import com.kc6379.zarzadaniemagazynem.model.Status;
 import lombok.*;
-
-import java.io.Serializable;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,6 +20,6 @@ public class OrdersResponse {
     private LocalDate deliveryDate;
     private String comment;
     private UserEqDto user;
-    private StatusDto status;
+    private Status status;
     private Set<OrderItemDto> orderItems;
 }

@@ -26,8 +26,6 @@ public class ApplicationConfig {
                 .orElseThrow(() -> new UsernameNotFoundException("Nie znaleziono użytkownika"));
     }
 
-
-
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -65,5 +63,8 @@ public class ApplicationConfig {
 
     @Bean
     public OrderItemRequest orderItemRequest() {return new OrderItemRequest();}
+
+    @Bean
+    public StatusDto statusDto() {return new StatusDto();}
 
 }

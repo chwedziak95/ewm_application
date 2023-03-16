@@ -33,18 +33,7 @@ public interface InternalOrderMapper {
     @Mapping(source = "internalOrderItem.id", target ="orderItemId")
     Set<OrderItemDto> toInternalOrderItemDtos(Set<InternalOrderItem> internalOrderItems);
 
-    default InternalOrderResponse toDto(InternalOrder internalOrder){
-        InternalOrderResponse internalOrderResponse = new InternalOrderResponse();
-        internalOrderResponse.setId(internalOrder.getInternalOrderId());
-        internalOrderResponse.setUser(new UserEqDto(internalOrder.getUser().getUserId(), internalOrder.getUser().getEmail(), internalOrder.getUser().getFirstName(), internalOrder.getUser().getLastName()));
-        internalOrderResponse.setStatus(new StatusDto(internalOrder.getStatus().getStatusId(), internalOrder.getStatus().getName()));
-        internalOrderResponse.setPickLocation(internalOrder.getPickUpLocation());
-        internalOrderResponse.setOrderDateTIme(internalOrder.getOrderDate());
-        internalOrderResponse.setPickupDateTime(internalOrder.getPickDate());
-        internalOrderResponse.setOrderItems(toInternalOrderItemDtos(internalOrder.getOrderItems()));
-
-        return internalOrderResponse;
-    }
+    InternalOrderResponse toDto(InternalOrder internalOrder);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source="pickupDateTime", target = "internalOrder.pickDate")

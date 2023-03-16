@@ -36,12 +36,6 @@ public class User implements UserDetails{
     private String lastName;
     private Instant created;
     private boolean enabled;
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "user"
-    )
-    @JsonIgnore
-    private Set<UserRoles> userRoles = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

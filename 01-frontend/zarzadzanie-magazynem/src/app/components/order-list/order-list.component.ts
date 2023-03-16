@@ -17,7 +17,9 @@ export class OrderListComponent implements OnInit {
   orderVendorFilter: string = ''; // Zmienna do przechowywania wartości filtrowania po dostawcy zamówienia
 
   orders$: Array<Orders> = [];
-  constructor(private ordersService: OrderService) {
+  constructor(
+    private ordersService: OrderService
+    ) {
     this.ordersService.getAll().subscribe( orders =>{
       this.orders$ = orders;
     })
@@ -25,6 +27,8 @@ export class OrderListComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  
 
 }
 

@@ -12,9 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -73,6 +71,16 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    public List<OrdersResponse> getAllByUser(Long userId){
+        User user = userRepository.findByUserId(userId).
+                orElseThrow(() -> new EwmAppException("Nie znaleziono uytkownika o id: " + userId));
+        return orderRepository.findAllByUser(user)
+                .stream()
+                .map(ordersMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     private void sendOrderItemToVendor(OrderItem orderItem, Orders orders) {
         User user = userRepository.findByUserId(orders.getUser().getUserId()).orElseThrow(() -> new EwmAppException("Nie znaleziono użytkownika o id"));
         Material material = materialRepository.findByMaterialId(orderItem.getMaterialId().getMaterialId()).orElseThrow(() -> new EwmAppException("Nie znaleziono materiału o id"));
@@ -97,6 +105,8 @@ public class OrderService {
     public void deliveryOrder(Long ordersId) {
         orderResponse.setOrdersId(ordersId);
         orderResponse.setDeliveryDate(LocalDate.now());
+        Status status = statusRepository.findByName("Dostarczono").orElseThrow();
+        orderResponse.setStatus(status);
         Orders orders = orderRepository.findByOrdersId(ordersId)
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono zamówienia o id" + ordersId));
         if (orders.getDeliveryDate() != null ){
@@ -119,4 +129,16 @@ public class OrderService {
         }
     }
 
+    public void cancelOrder(Long ordersId) {
+        Orders orders = orderRepository.findByOrdersId(ordersId)
+                .orElseThrow(() -> new EwmAppException("Nie znaleziono zamówienia o id" + ordersId));
+        if (orders.getDeliveryDate() == null && !Objects.equals(orders.getStatus().getName(), "Anulowano")){
+            Status status = statusRepository.findByName("Anulowano").orElseThrow();
+            orderResponse.setStatus(status);
+            ordersMapper.partialUpdate(orderResponse, orders);
+            orderRepository.save(orders);
+        }else{
+            throw new EwmAppException("Wystąpił bład podczas anulowania zamówienia o id: " + ordersId);
+        }
+    }
 }

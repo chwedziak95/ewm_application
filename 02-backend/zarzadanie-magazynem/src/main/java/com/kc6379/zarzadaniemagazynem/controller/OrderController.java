@@ -35,4 +35,10 @@ public class OrderController {
         orderService.deliveryOrder(ordersId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/cancel/{ordersId}")
+    public ResponseEntity<Void> cancelOrder(@PathVariable Long ordersId){
+        orderService.cancelOrder(ordersId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

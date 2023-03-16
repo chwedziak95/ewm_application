@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -87,13 +88,15 @@ public class InternalOrderService {
     }
 
     public void withdraw(Long id){
-        internalOrderResponse.setPickupDateTime(LocalDateTime.now());
         InternalOrder internalOrder = internalOrderRepository.findByInternalOrderId(id)
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono zamówienia do magazynu o id: " + id));
         if (internalOrder.getPickDate() != null){
             throw new EwmAppException("Wygląda na to, że zamówienie " + id + " zostało już wydane");
             }else{
             updateMaterialQuantity(internalOrder);
+            internalOrderResponse.setPickupDateTime(LocalDateTime.now());
+            Status status = statusRepository.findByName("Wydane").orElseThrow();
+            internalOrderResponse.setStatus(status);
             internalOrderMapper.partialUpdate(internalOrderResponse, internalOrder);
             internalOrderRepository.save(internalOrder);
         }
@@ -123,5 +126,27 @@ public class InternalOrderService {
             orderRequest = new OrderRequest(null, null,com,set);
             orderService.save(orderRequest);
         }
+    }
+
+    public void cancelOrder(Long id){
+        InternalOrder internalOrder = internalOrderRepository.findByInternalOrderId(id).orElseThrow();
+        Status status = statusRepository.findByName("Anulowano").orElseThrow();
+        if (internalOrder.getPickDate() == null && !Objects.equals(internalOrder.getStatus().getName(), "Anulowano")) {
+            changeStatus(internalOrder, status);
+        }
+    }
+
+    public void ready(Long id){
+        InternalOrder internalOrder = internalOrderRepository.findByInternalOrderId(id).orElseThrow();
+        Status status = statusRepository.findByName("Gotowe").orElseThrow();
+        if (internalOrder.getPickDate() == null && Objects.equals(internalOrder.getStatus().getName(), "Utworzono")) {
+            changeStatus(internalOrder, status);
+        }
+    }
+
+    private void changeStatus(InternalOrder internalOrder, Status status){
+        internalOrderResponse.setStatus(status);
+        internalOrderMapper.partialUpdate(internalOrderResponse, internalOrder);
+        internalOrderRepository.save(internalOrder);
     }
 }

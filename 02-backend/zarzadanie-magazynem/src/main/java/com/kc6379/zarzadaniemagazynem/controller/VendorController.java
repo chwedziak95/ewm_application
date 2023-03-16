@@ -23,6 +23,12 @@ public class VendorController {
                 .body(vendorService.save(vendorDto));
     }
 
+    @PostMapping("/update")
+    public ResponseEntity<VendorDto> updateVendor(@RequestBody VendorDto vendorDto){
+        vendorService.updateVendor(vendorDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<VendorDto>> getAllVendors(){
         return ResponseEntity
