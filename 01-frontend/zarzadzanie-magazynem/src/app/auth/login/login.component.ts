@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   isError: boolean = false;
 
   constructor(private authService: AuthService, private activatedRoute: ActivatedRoute,
-    private router: Router, private toastr: ToastrService){
+    private router: Router, private toastr: ToastrService) {
     this.loginRequestPayload = {
       email: '',
       password: '',
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.loginRequestPayload.email = this.loginForm.get('email').value;
     this.loginRequestPayload.password = this.loginForm.get('password').value;
-  
+
     this.authService.login(this.loginRequestPayload)
       .pipe(
         catchError((error) => {

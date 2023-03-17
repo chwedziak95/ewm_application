@@ -2,23 +2,25 @@
     <nav class="navbar-sidebar">
         <ul class="list-unstyled navbar-list">
 
-            <li> 
-
-                <a routerLink="/material/" routerLinkActive="active-link">
+            <li class="menu-item" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()"> 
+                <button class="btn btn-link" routerLink="/material/" routerLinkActive="active-link">
                     Części zamienne
-                </a>
-                <a routerLink="/vendor/" routerLinkActive="active-link">
-                    Dostawcy
-                </a>
-                <a routerLink="/orders/" routerLinkActive="active-link">
-                    Zamówienia
-                </a>
-                <a routerLink="" routerLinkActive="active-link">
-                    Link
-                </a>
-
+                </button>
+                <div class="icon-container" [ngClass]="{'visible': showIcons}">
+                    <a class="icon-button" routerLink="/material/add" title="Add">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                    <a class="icon-button" routerLink="/material/remove" title="Remove">
+                        <i class="fas fa-minus"></i>
+                    </a>
+                    <a class="icon-button" routerLink="/material/settings" title="Settings">
+                        <i class="fas fa-cog"></i>
+                    </a>
+                </div>
             </li>
-        
+
+            <!-- Add similar structure for other menu items -->
+
         </ul>
     </nav>
 </div>

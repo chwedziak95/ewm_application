@@ -49,15 +49,18 @@ public class MaterialService {
                 alreadyExistProperties.add("Nazwa Materiału");
             }
 
-            if (existing.getMaterialEAN().equals(materialDto.getMaterialEAN())) {
+            if (!materialDto.getMaterialEAN().isEmpty() && existing.getMaterialEAN().equals(materialDto.getMaterialEAN())) {
                 alreadyExistProperties.add("EAN materiału");
             }
 
-            String message = "W bazie danych znajduje się materiał o tych parametrach: " + String.join(", ", alreadyExistProperties);
-            throw new EwmAppException(message);
+            if (!alreadyExistProperties.isEmpty()) {
+                String message = "W bazie danych znajduje się materiał o tych parametrach: " + String.join(", ", alreadyExistProperties);
+                throw new EwmAppException(message);
+            }
         }
         materialRepository.save(materialMapper.toEntity(materialDto));
     }
+
 
     @Transactional(readOnly = true)
     public List<MaterialResponse> getAll() {

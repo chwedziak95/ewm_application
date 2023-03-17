@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/services/category.service';
 import { CreateCategoryPayload } from './create-category.payload';
 
@@ -15,10 +16,11 @@ export class CreateCategoryComponent implements OnInit{
   private ST_CHAR_PATTERN = /^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ0-9 ]*$/;
 
   constructor(
-    private categoryService: CategoryService;
+    private categoryService: CategoryService,
+    private toastr: ToastrService
   ){
     this.categoryPayload ={
-      name = null;
+      name: null
     }
   }
 
@@ -48,10 +50,10 @@ export class CreateCategoryComponent implements OnInit{
 
     this.categoryService.createCategory(this.categoryPayload).subscribe({
       next: (response) => {
-        alert(`Utworzono kategorię`);
+        this.toastr.success(`Utworzono kategorię`);
       },
       error: (err) => {
-        alert(`Wystąpił błąd: ${err.message}`);
+        this.toastr.error(`Wystąpił błąd: ${err.message}`);
       },
     });
   }

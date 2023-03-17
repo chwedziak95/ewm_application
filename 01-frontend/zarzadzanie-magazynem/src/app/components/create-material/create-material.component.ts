@@ -5,6 +5,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
 import { Category } from 'src/app/common/category/category';
 import { Vendor } from 'src/app/common/vendor/vendor';
@@ -33,7 +34,8 @@ export class CreateMaterialComponent implements OnInit {
     private categoryService: CategoryService,
     private vendorService: VendorService,
     private materialService: MaterialService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.materialPayload = {
     materialNumber:null, 
@@ -55,44 +57,35 @@ export class CreateMaterialComponent implements OnInit {
       materialNumber: new FormControl('', [
         Validators.required,
         Validators.pattern(this.ST_CHAR_PATTERN)
-        
       ]),
       materialManufacturer: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.ST_CHAR_PATTERN)
-        
+        Validators.pattern(this.ST_CHAR_PATTERN)        
       ]),
       materialName: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.ST_CHAR_PATTERN)
-        
+        Validators.pattern(this.ST_CHAR_PATTERN)        
       ]),
       materialPrice: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.PRICE_PATTERN)
-        
+        Validators.pattern(this.PRICE_PATTERN)        
       ]),
       materialQuantity: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.PRICE_PATTERN)
-        
+        Validators.pattern(this.PRICE_PATTERN)        
       ]),
       unitOfMeasure: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.ONLY_CHAR_PATTERN)
-        
+        Validators.pattern(this.ONLY_CHAR_PATTERN)        
       ]),
       materialEAN: new FormControl('', [
-        Validators.pattern(this.ST_CHAR_PATTERN)
-        
+        Validators.pattern(this.ST_CHAR_PATTERN)        
       ]),
       materialSafetyStock: new FormControl('', [
-        Validators.pattern(this.PRICE_PATTERN)
-        
+        Validators.pattern(this.PRICE_PATTERN)        
       ]),
       materialDescription: new FormControl('', [
-        Validators.pattern(this.ST_CHAR_PATTERN)
-        
+        Validators.pattern(this.ST_CHAR_PATTERN)        
       ]),
       category: new FormControl('', [Validators.required]),
       vendor: new FormControl('', [Validators.required])
@@ -101,14 +94,14 @@ export class CreateMaterialComponent implements OnInit {
     this.categoryService.getAll().subscribe((data) => {
       this.categories = data;
     }, error => {
-      throwError(error);
+      return throwError(() => error);
     }
     );
 
     this.vendorService.getAll().subscribe((data) => {
       this.vendors = data;
     }, error => {
-      throwError(error);
+      return throwError(() => error);
     });
   }
 
@@ -139,12 +132,12 @@ export class CreateMaterialComponent implements OnInit {
 
     this.materialService.createMaterial(this.materialPayload).subscribe({
       next: (response) => {
-        alert(`Utworzono materiał`);
+        this.toastr.success('Utworzono materiał');
       },
       error: (err) => {
-        alert(`Wystąpił błąd: ${err.message}`);
-      },
-    });
+        this.toastr.error(`Wystąpił błąd: ${err.message}`);
+      }
+    });  
   }
 
   get materialNumber() {

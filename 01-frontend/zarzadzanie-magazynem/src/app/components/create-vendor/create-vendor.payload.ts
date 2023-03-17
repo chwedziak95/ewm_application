@@ -1,5 +1,4 @@
-export class Vendor {
-    vendorId: number;
+export class CreateVendorPayload{
     vendorName: string;
     vendorAddress: string;
     vendorCity: string;
@@ -12,7 +11,4 @@ export class Vendor {
     vendorKrs: string;
     vendorBankAccount: string;
     vendorBankName: string;
-    vendorCreated: Date;
-  
-    constructor() {}
-  }
+}

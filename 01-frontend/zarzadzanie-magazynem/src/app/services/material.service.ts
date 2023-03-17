@@ -39,7 +39,8 @@ export class MaterialService {
 
   private handleError(error: any) {
     console.error(error);
-    return throwError(error);
+    return throwError(() => error);
   }
+  
   
 }

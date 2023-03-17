@@ -67,4 +67,7 @@ public class ApplicationConfig {
     @Bean
     public StatusDto statusDto() {return new StatusDto();}
 
+    @Bean
+    public VendorDto vendorDto() {return new VendorDto();}
+
 }
