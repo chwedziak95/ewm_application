@@ -46,7 +46,7 @@
                   }
           "
         >
-          <td class="align-middle">{{ orders.orderNumber }}</td>
+        <a [routerLink]="['/orders', orders.ordersId]"><td class="align-middle">{{ orders.orderNumber }}</td></a>
           <td class="align-middle">{{ orders.orderDate | customDate}}</td>
           <td class="align-middle">{{ orders.deliveryDate | customDate}}</td>
           <td class="align-middle">{{ orders.orderTotal | currency:'PLN'}}</td>

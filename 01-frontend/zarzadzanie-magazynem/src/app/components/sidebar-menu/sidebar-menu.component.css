@@ -1,0 +1,41 @@
+.menu-item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .parent-btn {
+    flex: 1;
+    text-align: left;
+    padding-right: 30px; /* Adjust the padding to ensure there's enough space for the text */
+  }
+  
+  
+  
+  .hovered .parent-btn {
+    transform: translateX(-20px);
+  }
+  
+  .icon-container {
+    position: absolute;
+    top: 50%; /* Vertically center the tile to the middle of the button axis */
+    transform: translateY(-50%); /* Vertically center the tile to the middle of the button axis */
+    left: 100%; /* Position the tile on the right side of the button */
+    width: calc(100% / 3);
+    transition: transform 0.3s, opacity 0.3s;
+    opacity: 0;
+    z-index: 1;
+    margin-left: 1px; /* Add a margin to create a gap between the main button and the tile */
+  }
+  
+  .hovered .icon-container {
+    opacity: 1;
+    z-index: 1;
+  }
+  
+  .icon-button {
+    width: 100%;
+  }
+  

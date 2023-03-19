@@ -10,7 +10,13 @@
         <th>
         </th>
         <th>
+          <a routerLink="/internal-order-cart" *ngIf="internalCartItemsCount > 0">
+            <button  class="btn btn-primary btn-md mt-2">
+              Rezerwacja
+            </button>
+          </a>
         </th>
+        
       </tr>
       <tr>
         <th style="width: auto;">
@@ -28,11 +34,6 @@
           />
         </th>
         <th>
-          <a routerLink="/create-material">
-            <button  class="btn btn-primary btn-md mt-2">
-              Utwórz materiał
-            </button>
-          </a>
         </th>
         <th>
           <input
@@ -78,16 +79,16 @@
           <button (click)="addToCart(material)" class="btn btn-primary btn-sm">
             <fa-icon icon="plus"></fa-icon>
           </button>
-          <button class="btn btn-primary btn-sm">
+          <button (click)="decrementQuantity(material)" class="btn btn-primary btn-sm">
             <fa-icon icon="minus"></fa-icon>
           </button>        
         
         </td>
         <td class="button-container">
-          <button (click)="addToCart(material)" class="btn btn-dark btn-sm">
+          <button (click)="addToInternalCart(material)" class="btn btn-dark btn-sm">
             <fa-icon icon="plus"></fa-icon>
           </button>
-          <button class="btn btn-dark btn-sm">
+          <button (click)="decrementInternalOrderQuantity(material)" class="btn btn-dark btn-sm">
             <fa-icon icon="minus"></fa-icon>
           </button>        
         </td>

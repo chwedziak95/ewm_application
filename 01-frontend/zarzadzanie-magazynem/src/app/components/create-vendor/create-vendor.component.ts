@@ -14,7 +14,8 @@ export class CreateVendorComponent implements OnInit{
 
   vendorPayload: CreateVendorPayload;
   createVendorForm: FormGroup;
-  private ST_CHAR_PATTERN = /^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ0-9 ]*$/;
+  private ST_CHAR_PATTERN = /^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ0-9.+,/ -]*$/;
+
 
   constructor(
     private vendorService: VendorService,

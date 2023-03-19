@@ -8,9 +8,15 @@ import { Orders } from '../common/orders/orders';
 })
 export class OrderService {
 
+  private baseUrl = "http://localhost:8080/api/v1/orders";
+
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Array<Orders>> {
-    return this.http.get<Array<Orders>>('http://localhost:8080/api/v1/orders');
+    return this.http.get<Array<Orders>>(this.baseUrl);
+  }
+
+  createOrder(orders: Orders): Observable<any>{
+    return this.http.post<Orders>(this.baseUrl, orders);
   }
 }

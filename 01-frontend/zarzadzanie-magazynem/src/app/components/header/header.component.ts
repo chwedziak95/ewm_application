@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/auth/shared/auth.service';
+import { CartService } from 'src/app/services/cart.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -18,17 +19,24 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private userService: UserService, 
+    private userService: UserService,
+    private cartService: CartService, 
     private router: Router) { }
 
   ngOnInit() {
-    this.authService.loggedIn.subscribe((data: boolean) => this.isLoggedIn = data);
-    this.authService.username.subscribe((data: string) => this.username = data);
-    this.isLoggedIn = this.authService.isLoggedIn();
-    this.username = this.authService.getUserName();
-    this.userService.getUser(this.username).subscribe((data) => {
-      this.userFirstName = data.firstName;
-      this.userLastName = data.lastName;
+    this.authService.authStatus$.subscribe((data: boolean) => {
+      this.isLoggedIn = data;
+      if (data) {
+        this.username = this.authService.getUserName();
+        this.userService.getUser(this.username).subscribe((data) => {
+          this.userFirstName = data.firstName;
+          this.userLastName = data.lastName;
+        });
+      } else {
+        this.username = null;
+        this.userFirstName = null;
+        this.userLastName = null;
+      }
     });
   }
 
@@ -39,6 +47,7 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.isLoggedIn = false;
-    this.router.navigateByUrl('');
+    this.cartService.resetCart();
+    this.router.navigateByUrl('/logout');
   }
 }

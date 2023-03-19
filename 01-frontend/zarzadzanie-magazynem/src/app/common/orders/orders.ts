@@ -13,11 +13,5 @@ export class Orders {
   status: OrderStatus;
   orderItems: OrderItems[];
 
-  constructor() {}
-
-  getOrderDateString(): string {
-    const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "2-digit", day: "2-digit" };
-    return this.orderDate.toLocaleDateString("en-US", options);
-  }
-  
+  constructor() {}  
 }

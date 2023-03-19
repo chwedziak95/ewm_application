@@ -32,8 +32,9 @@ public interface OrdersMapper {
     OrderItem toOrderItemEntity(OrderItemRequest orderItemRequest);
 
     Set<OrderItem> toOrderItemEntities(Set<OrderItemRequest> orderItemRequest);
-    Set<OrderItemDto> toOrderItemDtos(Set<OrderItem> orderItems);
     OrdersResponse toDto(Orders orders);
+
+    Orders toDtoRaw(Orders orders);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Orders partialUpdate(OrdersResponse orderResponse, @MappingTarget Orders orders);

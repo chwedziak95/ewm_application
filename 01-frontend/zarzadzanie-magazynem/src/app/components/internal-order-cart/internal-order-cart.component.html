@@ -1,1 +1,83 @@
-<p>internal-order-cart works!</p>
+<div class="main-content">
+    <div class="section-content section-content-p30">
+        <div class="container-fluid">
+            <div *ngIf="cartItems.length > 0">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Artykuł</th>
+                        <th></th>
+                    </tr>
+
+                    <tr *ngFor="let tempInternalCartItem of cartItems">
+                        <td>
+                            <p>{{ tempInternalCartItem.name }}</p>
+                        </td>
+                        <td>
+                            <div class="items">
+                                <label>Ilość:</label>
+                                <div class="row no-gutters">
+                                    <div class="col">
+                                        <button (click)="incrementQuantity(tempInternalCartItem)"
+                                            class="btn btn-primary btn-sm">
+                                            <fa-icon icon="plus"></fa-icon>
+                                        </button>
+                                    </div>
+
+                                    <div class="col ml-4 mr-2">
+                                        {{ tempInternalCartItem.quantity }}
+                                    </div>
+
+                                    <div class="col">
+                                        <button (click)="decrementQuantity(tempInternalCartItem)"
+                                            class="btn btn-primary btn-sm">
+                                            <fa-icon icon="minus"></fa-icon>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <button (click)="remove(tempInternalCartItem)" class="btn btn-primary btn-sm mt-2">
+                                    <fa-icon icon="trash"></fa-icon>
+                                </button>
+
+                                <div class="col-8"></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <form [formGroup]="pickUpForm" (ngSubmit)="checkout()">
+                                <textarea class="form-control" id="pickup" rows="3"
+                                    formControlName="pickup"></textarea>
+
+                            </form>
+                        </td>
+                        <td>
+                            <p>Miejsce odioru zamówienia</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <p>Złóż zamówienie do magazynu:</p>
+                        </td>
+                        <td>
+                            <div class="col">
+                                <button (click)="checkout()" class="btn btn-primary btn-sm mt-2">
+                                    <fa-icon icon="paper-plane"></fa-icon>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                </table>
+            </div>
+
+            <div *ngIf="cartItems.length == 0" class="alert alert-warning col-md-12" role="alert">
+                Brak części zamiennych w tej rezerwacji
+            </div>
+
+        </div>
+    </div>
+</div>

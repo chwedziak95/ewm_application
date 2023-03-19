@@ -1,32 +1,31 @@
 <header class="header-desktop">
-    <div class="section-content section-content-p30">
-      <div class="container-fluid">
-        <div class="header-wrap">
-          <div class="header-content-title">
-            <h1 class="header-title">
-              Aplikacja wspomagająca zarządzanie magazynem
-            </h1>
-          </div>
-
-          <app-cart-status></app-cart-status>
-
-          <div *ngIf="isLoggedIn" ngbDropdown class="float-right">
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button (click)="goToUserProfile()" ngbDropdownItem>Profil</button>
-                <button (click)="logout()" ngbDropdownItem>Wyloguj</button>
-            </div>
-            <button class="userdetails" id="dropdownBasic1" ngbDropdownToggle>
-                <fa-icon icon="user"></fa-icon>
-                {{userFirstName}} {{userLastName}}
-            </button>
-        </div>  
-
-          <div *ngIf="!isLoggedIn" class="flex-grow-1 d-flex justify-content-end">
-            <a routerLink="/signup" class="signup mr-2">Rejestracja</a>
-            <a routerLink="/login" class="login mr-2">Logowanie</a>
-          </div>
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div class="header-wrap">
+        <div class="header-content-title">
+          <h1 class="header-title">
+            Aplikacja wspomagająca zarządzanie magazynem
+          </h1>
         </div>
-        <div class="account-wrap"></div>
+
+        <app-cart-status></app-cart-status>
+
+        <div *ngIf="isLoggedIn" ngbDropdown class="float-right">
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button (click)="goToUserProfile()" ngbDropdownItem class="btn btn-outline-info profile-btn">Profil</button>
+              <button (click)="logout()" ngbDropdownItem class="btn btn-outline-danger">Wyloguj</button>
+          </div>
+          <button class="userdetails" id="dropdownBasic1" ngbDropdownToggle>
+              <fa-icon icon="user"></fa-icon>
+              {{userFirstName}} {{userLastName}}
+          </button>
+      </div>  
+
+        <div *ngIf="!isLoggedIn" class="flex-grow-1 d-flex justify-content-end">
+          <a routerLink="/login" class="login mr-2">Logowanie</a>
+        </div>
       </div>
+      <div class="account-wrap"></div>
     </div>
-  </header>
+  </div>
+</header>

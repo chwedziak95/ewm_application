@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
   loginRequestPayload: LoginRequestPayload;
   registerSuccessMessage: string = '';
   isError: boolean = false;
+  rememberMe: boolean = false;
+
 
   constructor(private authService: AuthService, private activatedRoute: ActivatedRoute,
     private router: Router, private toastr: ToastrService) {
@@ -42,21 +44,25 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.loginRequestPayload.email = this.loginForm.get('email').value;
-    this.loginRequestPayload.password = this.loginForm.get('password').value;
-
-    this.authService.login(this.loginRequestPayload)
-      .pipe(
-        catchError((error) => {
-          this.isError = true;
-          console.log(error);
-          return throwError(() => new Error(error));
-        })
-      )
-      .subscribe((data) => {
+    this.loginRequestPayload.email = this.loginForm.get('email')?.value;
+    this.loginRequestPayload.password = this.loginForm.get('password')?.value;
+  
+    this.authService.login(this.loginRequestPayload, this.rememberMe).subscribe(
+      (data) => {
         this.isError = false;
         this.router.navigateByUrl('');
         this.toastr.success('Zalogowano');
-      });
+      },
+      (error) => {
+        this.isError = true;
+        console.log(error);
+      }
+    );
   }
+  
+
+  onRememberMeChange(event: any) {
+    this.rememberMe = event.target.checked;
+  }
+  
 }

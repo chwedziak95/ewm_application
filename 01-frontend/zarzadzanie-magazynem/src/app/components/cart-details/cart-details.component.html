@@ -64,11 +64,23 @@
 
           <tr>
             <td>
-              <p>Złóż zamówienie:</p>
+                <form [formGroup]="commentForm" (ngSubmit)="checkout()">
+                  <textarea class="form-control" id="commenttext" rows="3" formControlName="commenttext"></textarea>
+
+                </form>
+            </td>
+            <td>
+              <p>Komentarz</p>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <p>Złóż zamówienie u dostawców:</p>
             </td>
             <td>
               <div class="col">
-                <button (click)="checkout(cartItems)" class="btn btn-primary btn-sm mt-2">
+                <button (click)="checkout()" class="btn btn-primary btn-sm mt-2">
                   <fa-icon icon="paper-plane"></fa-icon>
                 </button>
               </div>              

@@ -37,19 +37,27 @@ import { InternalOrderDetailsComponent } from './components/internal-order-detai
 import { InternalOrderCartComponent } from './components/internal-order-cart/internal-order-cart.component';
 import { InternalOrderCartStatusComponent } from './components/internal-order-cart-status/internal-order-cart-status.component';
 import { InternalOrderItemsComponent } from './components/internal-order-items/internal-order-items.component';
+import { LogoutScreenComponent } from './components/logout-screen/logout-screen.component';
 
 
 const routes: Routes = [
+  {path: 'create-category', component: CreateCategoryComponent, canActivate: [AuthGuard]},
+  {path: 'create-vendor', component: CreateVendorComponent, canActivate: [AuthGuard]},
   {path: 'create-material', component: CreateMaterialComponent, canActivate: [AuthGuard]},
   {path: 'cart-details', component: CartDetailsComponent, canActivate: [AuthGuard]},
-  {path: 'order-details', component: OrderDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'internal-order-cart', component: InternalOrderCartComponent, canActivate: [AuthGuard]},
   {path: 'user-profile/:name', component: UserProfileComponent, canActivate: [AuthGuard] },
   {path: 'orders', component: OrderListComponent, canActivate: [AuthGuard]},
+  {path: 'orders/:id', component: OrderDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'internal-orders', component: InternalOrderListComponent, canActivate: [AuthGuard]},
+  {path: 'internal-orders/:id', component: InternalOrderDetailsComponent, canActivate: [AuthGuard]},
   {path: 'vendor', component: VendorListComponent, canActivate: [AuthGuard]},
-  {path: 'material/:materialId', component: MaterialDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'vendor/:vendorId', component: VendorDetailsComponent, canActivate: [AuthGuard]},
   {path: 'material', component: MaterialListComponent, canActivate: [AuthGuard]},
-  {path: 'signup', component: SignupComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'material/:materialId', component: MaterialDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'signup', component: SignupComponent, canActivate: [AuthGuard]},
+  {path: 'login', component: LoginComponent},
+  {path: 'logout', component: LogoutScreenComponent}
 ];
 
 @NgModule({
@@ -79,7 +87,8 @@ const routes: Routes = [
     InternalOrderDetailsComponent,
     InternalOrderCartComponent,
     InternalOrderCartStatusComponent,
-    InternalOrderItemsComponent
+    InternalOrderItemsComponent,
+    LogoutScreenComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
