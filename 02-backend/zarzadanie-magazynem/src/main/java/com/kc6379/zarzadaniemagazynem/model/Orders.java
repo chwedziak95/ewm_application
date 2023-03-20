@@ -25,20 +25,23 @@ public class Orders {
     private LocalDate deliveryDate;
     private String comment;
     private Double orderTotal;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "userId",
             referencedColumnName = "userId"
     )
     private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "statusId",
             referencedColumnName = "statusId"
     )
     private Status status;
     @OneToMany(
-            mappedBy = "orders"
+            mappedBy = "orders",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true
     )
     private Set<OrderItem> orderItems = new HashSet<>();
 

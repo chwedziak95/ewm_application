@@ -1,13 +1,12 @@
 package com.kc6379.zarzadaniemagazynem.service;
 
-import com.kc6379.zarzadaniemagazynem.dto.UserEqDto;
+import com.kc6379.zarzadaniemagazynem.dto.UserDto;
 import com.kc6379.zarzadaniemagazynem.exceptions.EwmAppException;
 import com.kc6379.zarzadaniemagazynem.mapper.UserMapper;
 import com.kc6379.zarzadaniemagazynem.model.User;
 import com.kc6379.zarzadaniemagazynem.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +19,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public UserEqDto getUser(String email){
+    public UserDto getUser(String email){
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono użytkownika o adresie email: " + email));
         return userMapper.toDto(user);

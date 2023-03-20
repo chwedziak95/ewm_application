@@ -1,6 +1,5 @@
 package com.kc6379.zarzadaniemagazynem.dto;
 
-import com.kc6379.zarzadaniemagazynem.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,5 +26,5 @@ public class PersonalEquipmentResponse {
     private Double purchasePrice;
     private Date warrantyDate;
     private String invoice;
-    private UserEqDto userEquipment;
+    private UserDto userEquipment;
 }

@@ -26,7 +26,7 @@ public class InternalOrderItem {
     )
     private InternalOrder internalOrder;
     @ManyToOne(
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @JoinColumn(
             name = "materialId",

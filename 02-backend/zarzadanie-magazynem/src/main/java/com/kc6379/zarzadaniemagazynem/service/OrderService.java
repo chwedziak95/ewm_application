@@ -63,13 +63,13 @@ public class OrderService {
         }
     }
 
-    @Transactional
-    public List<OrdersResponse> getAll(){
+    public List<OrdersResponse> getAll() {
         return orderRepository.findAll()
                 .stream()
-                .map(ordersMapper::toDto)
+                .map(ordersMapper::toOrdersResponse)
                 .collect(Collectors.toList());
     }
+
 
     @Transactional
     public List<OrdersResponse> getAllByUser(Long userId){
@@ -77,7 +77,7 @@ public class OrderService {
                 orElseThrow(() -> new EwmAppException("Nie znaleziono uytkownika o id: " + userId));
         return orderRepository.findAllByUser(user)
                 .stream()
-                .map(ordersMapper::toDto)
+                .map(ordersMapper::toOrdersResponse)
                 .collect(Collectors.toList());
     }
 

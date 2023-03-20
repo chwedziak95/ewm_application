@@ -15,12 +15,12 @@ import java.util.Set;
 @Builder
 public class InternalOrderResponse {
 
-    private Long id;
-    private UserEqDto user;
-    private LocalDateTime orderDateTIme;
-    private LocalDateTime pickupDateTime;
+    private Long internalOrderId;
+    private UserDto user;
+    private LocalDateTime orderDate;
+    private LocalDateTime pickDate;
     private Status status;
-    private String pickLocation;
+    private String pickUpLocation;
     private Set<OrderItemDto> orderItems;
 
 }

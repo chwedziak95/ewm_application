@@ -24,14 +24,14 @@ public class InternalOrder {
     private LocalDateTime orderDate;
 
     private LocalDateTime pickDate;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "userId",
             referencedColumnName = "userId"
     )
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "statusId",
             referencedColumnName = "statusId"
@@ -40,7 +40,10 @@ public class InternalOrder {
 
     private String pickUpLocation;
     @OneToMany(
-            mappedBy = "internalOrder"
+            mappedBy = "internalOrder",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true
     )
     private Set<InternalOrderItem> orderItems = new HashSet<>();
 }

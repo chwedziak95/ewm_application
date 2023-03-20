@@ -1,19 +1,20 @@
 package com.kc6379.zarzadaniemagazynem.mapper;
 
 import com.kc6379.zarzadaniemagazynem.dto.*;
-import com.kc6379.zarzadaniemagazynem.model.OrderItem;
-import com.kc6379.zarzadaniemagazynem.model.Orders;
+import com.kc6379.zarzadaniemagazynem.model.*;
 import org.mapstruct.*;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
+
 
 import static org.mapstruct.ReportingPolicy.IGNORE;
 
 @Component
-@Mapper(unmappedTargetPolicy = IGNORE,componentModel = "spring")
+@Mapper(unmappedTargetPolicy = IGNORE, componentModel = "spring")
 public interface OrdersMapper {
+    OrdersMapper INSTANCE = Mappers.getMapper(OrdersMapper.class);
 
     @Mapping(source = "user", target = "user.userId")
     @Mapping(source = "status", target = "status.statusId")
@@ -32,9 +33,30 @@ public interface OrdersMapper {
     OrderItem toOrderItemEntity(OrderItemRequest orderItemRequest);
 
     Set<OrderItem> toOrderItemEntities(Set<OrderItemRequest> orderItemRequest);
-    OrdersResponse toDto(Orders orders);
 
-    Orders toDtoRaw(Orders orders);
+    MaterialResponse toMaterialResponse(Material material);
+
+    default OrderItemDto toOrderItemDto(OrderItem orderItem) {
+        if (orderItem == null) {
+            return null;
+        }
+        OrderItemDto.OrderItemDtoBuilder orderItemDto = OrderItemDto.builder()
+                .orderItemId(orderItem.getOrderItemId())
+                .quantity(orderItem.getQuantity())
+                .materialId(toMaterialResponse(orderItem.getMaterialId()));
+        return orderItemDto.build();
+    }
+
+    List<OrderItemDto> toOrderItemDtoList(List<OrderItem> orderItems);
+
+    @Mapping(source = "user", target = "user")
+    @Mapping(source = "status", target = "status")
+    @Mapping(source = "orderItems", target = "orderItems")
+    OrdersResponse toOrdersResponse(Orders orders);
+
+    List<OrdersResponse> toOrdersResponseList(List<Orders> orders);
+    UserDto toUserDto(User user);
+    StatusDto toStatusDto(Status status);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Orders partialUpdate(OrdersResponse orderResponse, @MappingTarget Orders orders);

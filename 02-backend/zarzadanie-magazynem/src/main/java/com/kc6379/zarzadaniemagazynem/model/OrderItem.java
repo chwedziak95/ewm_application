@@ -26,7 +26,7 @@ public class OrderItem {
     )
     private Orders orders;
     @ManyToOne(
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @JoinColumn(
             name = "materialId",

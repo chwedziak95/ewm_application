@@ -19,7 +19,7 @@ public class OrdersResponse {
     private LocalDate orderDate;
     private LocalDate deliveryDate;
     private String comment;
-    private UserEqDto user;
+    private UserDto user;
     private Status status;
     private Set<OrderItemDto> orderItems;
 }

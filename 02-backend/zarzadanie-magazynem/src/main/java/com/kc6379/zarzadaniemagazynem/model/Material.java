@@ -27,13 +27,13 @@ public class Material {
     private Instant materialCreated;
     private Integer materialSafetyStock;
     private String materialDescription;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "categoryId",
             referencedColumnName = "categoryId"
     )
     private Category materialCategory;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "vendorId",
             referencedColumnName = "vendorId"

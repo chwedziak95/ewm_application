@@ -73,7 +73,7 @@ public class InternalOrderService {
     public List<InternalOrderResponse> getAll() {
         return internalOrderRepository.findAll()
                 .stream()
-                .map(internalOrderMapper::toDto)
+                .map(internalOrderMapper::toInternalOrderResponse)
                 .collect(Collectors.toList());
     }
 
@@ -83,7 +83,7 @@ public class InternalOrderService {
                 orElseThrow(() -> new EwmAppException("Nie znaleziono uytkownika o id: " + userId));
         return internalOrderRepository.findAllByUser(user)
                .stream()
-               .map(internalOrderMapper::toDto)
+               .map(internalOrderMapper::toInternalOrderResponse)
                .collect(Collectors.toList());
     }
 
@@ -94,7 +94,7 @@ public class InternalOrderService {
             throw new EwmAppException("Wygląda na to, że zamówienie " + id + " zostało już wydane");
             }else{
             updateMaterialQuantity(internalOrder);
-            internalOrderResponse.setPickupDateTime(LocalDateTime.now());
+            internalOrderResponse.setPickDate(LocalDateTime.now());
             Status status = statusRepository.findByName("Wydane").orElseThrow();
             internalOrderResponse.setStatus(status);
             internalOrderMapper.partialUpdate(internalOrderResponse, internalOrder);

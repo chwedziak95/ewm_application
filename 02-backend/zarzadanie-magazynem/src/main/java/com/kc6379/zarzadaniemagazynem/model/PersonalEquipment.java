@@ -27,7 +27,7 @@ public class PersonalEquipment {
     private Date warrantyDate;
     private String invoice;
     @ManyToOne(
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @JoinColumn(
             name = "userId",
