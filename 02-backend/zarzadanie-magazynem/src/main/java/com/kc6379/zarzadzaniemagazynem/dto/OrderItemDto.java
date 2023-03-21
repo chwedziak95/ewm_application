@@ -1,10 +1,7 @@
-package com.kc6379.zarzadaniemagazynem.dto;
+package com.kc6379.zarzadzaniemagazynem.dto;
 
-import com.kc6379.zarzadaniemagazynem.dto.MaterialResponse;
-import com.kc6379.zarzadaniemagazynem.model.OrderItem;
+import com.kc6379.zarzadzaniemagazynem.model.OrderItem;
 import lombok.*;
-
-import java.io.Serializable;
 
 /**
  * A DTO for the {@link OrderItem} entity

@@ -1,12 +1,12 @@
-package com.kc6379.zarzadaniemagazynem.dto;
+package com.kc6379.zarzadzaniemagazynem.dto;
 
-import com.kc6379.zarzadaniemagazynem.model.Status;
+import com.kc6379.zarzadzaniemagazynem.model.Status;
 import lombok.*;
 import java.time.LocalDate;
 import java.util.Set;
 
 /**
- * A DTO for the {@link com.kc6379.zarzadaniemagazynem.model.Orders} entity
+ * A DTO for the {@link com.kc6379.zarzadzaniemagazynem.model.Orders} entity
  */
 @AllArgsConstructor
 @NoArgsConstructor

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, throwError } from 'rxjs';
 import { AuthService } from '../shared/auth.service';
 import { LoginRequestPayload } from './login-request.payload';
 
@@ -49,20 +48,28 @@ export class LoginComponent implements OnInit {
   
     this.authService.login(this.loginRequestPayload, this.rememberMe).subscribe(
       (data) => {
-        this.isError = false;
-        this.router.navigateByUrl('');
-        this.toastr.success('Zalogowano');
+        if (data) {
+          this.isError = false;
+          this.router.navigateByUrl('');
+          this.toastr.success('Zalogowano');
+        }else{
+          this.toastr.error('Błędne dane logowania');
+        }
       },
       (error) => {
-        this.isError = true;
-        console.log(error);
+        console.error('Błąd logowania:', error);
+        if (error.status === 403) {
+          this.toastr.error('Błędne dane logowania');
+        } else {
+          this.toastr.error('Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.');
+        }
       }
     );
   }
   
-
+  
+  
   onRememberMeChange(event: any) {
     this.rememberMe = event.target.checked;
-  }
-  
+  }  
 }

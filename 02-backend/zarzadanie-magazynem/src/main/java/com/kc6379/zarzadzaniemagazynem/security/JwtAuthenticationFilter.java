@@ -1,4 +1,4 @@
-package com.kc6379.zarzadaniemagazynem.security;
+package com.kc6379.zarzadzaniemagazynem.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

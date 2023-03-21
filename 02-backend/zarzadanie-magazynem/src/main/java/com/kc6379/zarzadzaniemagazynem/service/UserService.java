@@ -1,10 +1,10 @@
-package com.kc6379.zarzadaniemagazynem.service;
+package com.kc6379.zarzadzaniemagazynem.service;
 
-import com.kc6379.zarzadaniemagazynem.dto.UserDto;
-import com.kc6379.zarzadaniemagazynem.exceptions.EwmAppException;
-import com.kc6379.zarzadaniemagazynem.mapper.UserMapper;
-import com.kc6379.zarzadaniemagazynem.model.User;
-import com.kc6379.zarzadaniemagazynem.repository.UserRepository;
+import com.kc6379.zarzadzaniemagazynem.dto.UserDto;
+import com.kc6379.zarzadzaniemagazynem.exceptions.EwmAppException;
+import com.kc6379.zarzadzaniemagazynem.mapper.UserMapper;
+import com.kc6379.zarzadzaniemagazynem.model.User;
+import com.kc6379.zarzadzaniemagazynem.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

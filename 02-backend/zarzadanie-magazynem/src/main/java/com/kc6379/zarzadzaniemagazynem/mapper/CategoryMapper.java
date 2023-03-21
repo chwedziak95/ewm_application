@@ -1,9 +1,7 @@
-package com.kc6379.zarzadaniemagazynem.mapper;
+package com.kc6379.zarzadzaniemagazynem.mapper;
 
-import com.kc6379.zarzadaniemagazynem.dto.CategoryDto;
-import com.kc6379.zarzadaniemagazynem.dto.VendorDto;
-import com.kc6379.zarzadaniemagazynem.model.Category;
-import com.kc6379.zarzadaniemagazynem.model.Vendor;
+import com.kc6379.zarzadzaniemagazynem.dto.CategoryDto;
+import com.kc6379.zarzadzaniemagazynem.model.Category;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")

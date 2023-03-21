@@ -1,17 +1,17 @@
-package com.kc6379.zarzadaniemagazynem.service;
+package com.kc6379.zarzadzaniemagazynem.service;
 
-import com.kc6379.zarzadaniemagazynem.dto.AuthenticationRequest;
-import com.kc6379.zarzadaniemagazynem.dto.RefreshTokenRequest;
-import com.kc6379.zarzadaniemagazynem.dto.RegisterRequest;
-import com.kc6379.zarzadaniemagazynem.exceptions.EwmAppException;
-import com.kc6379.zarzadaniemagazynem.model.NotificationEmail;
-import com.kc6379.zarzadaniemagazynem.model.User;
-import com.kc6379.zarzadaniemagazynem.model.VerificationToken;
-import com.kc6379.zarzadaniemagazynem.repository.RefreshTokenRepository;
-import com.kc6379.zarzadaniemagazynem.repository.UserRepository;
-import com.kc6379.zarzadaniemagazynem.repository.VerificationTokenRepository;
-import com.kc6379.zarzadaniemagazynem.security.AuthenticationResponse;
-import com.kc6379.zarzadaniemagazynem.security.JwtService;
+import com.kc6379.zarzadzaniemagazynem.dto.AuthenticationRequest;
+import com.kc6379.zarzadzaniemagazynem.dto.RefreshTokenRequest;
+import com.kc6379.zarzadzaniemagazynem.dto.RegisterRequest;
+import com.kc6379.zarzadzaniemagazynem.exceptions.EwmAppException;
+import com.kc6379.zarzadzaniemagazynem.model.NotificationEmail;
+import com.kc6379.zarzadzaniemagazynem.model.User;
+import com.kc6379.zarzadzaniemagazynem.model.VerificationToken;
+import com.kc6379.zarzadzaniemagazynem.repository.RefreshTokenRepository;
+import com.kc6379.zarzadzaniemagazynem.repository.UserRepository;
+import com.kc6379.zarzadzaniemagazynem.repository.VerificationTokenRepository;
+import com.kc6379.zarzadzaniemagazynem.security.AuthenticationResponse;
+import com.kc6379.zarzadzaniemagazynem.security.JwtService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -95,7 +95,7 @@ public class AuthenticationService {
                 )
         );
         var user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow();
+                .orElseThrow(() -> new EwmAppException("Nieprawidłowe dane logowania"));
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)

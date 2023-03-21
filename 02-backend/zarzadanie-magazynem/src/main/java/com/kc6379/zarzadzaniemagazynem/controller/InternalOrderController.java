@@ -1,8 +1,8 @@
-package com.kc6379.zarzadaniemagazynem.controller;
+package com.kc6379.zarzadzaniemagazynem.controller;
 
-import com.kc6379.zarzadaniemagazynem.dto.InternalOrderRequest;
-import com.kc6379.zarzadaniemagazynem.dto.InternalOrderResponse;
-import com.kc6379.zarzadaniemagazynem.service.InternalOrderService;
+import com.kc6379.zarzadzaniemagazynem.dto.InternalOrderRequest;
+import com.kc6379.zarzadzaniemagazynem.dto.InternalOrderResponse;
+import com.kc6379.zarzadzaniemagazynem.service.InternalOrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +44,13 @@ public class InternalOrderController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(internalOrderService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<InternalOrderResponse> getInternalOrder(@PathVariable Long id){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(internalOrderService.getInternalOrder(id));
     }
 
     @GetMapping("/by-user/{userId}")

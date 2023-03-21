@@ -1,8 +1,8 @@
-package com.kc6379.zarzadaniemagazynem.mapper;
+package com.kc6379.zarzadzaniemagazynem.mapper;
 
-import com.kc6379.zarzadaniemagazynem.dto.MaterialDto;
-import com.kc6379.zarzadaniemagazynem.model.Material;
-import com.kc6379.zarzadaniemagazynem.dto.MaterialResponse;
+import com.kc6379.zarzadzaniemagazynem.dto.MaterialDto;
+import com.kc6379.zarzadzaniemagazynem.model.Material;
+import com.kc6379.zarzadzaniemagazynem.dto.MaterialResponse;
 import org.mapstruct.*;
 
 import static org.mapstruct.ReportingPolicy.IGNORE;

@@ -1,11 +1,11 @@
-package com.kc6379.zarzadaniemagazynem.controller;
+package com.kc6379.zarzadzaniemagazynem.controller;
 
-import com.kc6379.zarzadaniemagazynem.dto.AuthenticationRequest;
-import com.kc6379.zarzadaniemagazynem.dto.RefreshTokenRequest;
-import com.kc6379.zarzadaniemagazynem.dto.RegisterRequest;
-import com.kc6379.zarzadaniemagazynem.security.AuthenticationResponse;
-import com.kc6379.zarzadaniemagazynem.service.AuthenticationService;
-import com.kc6379.zarzadaniemagazynem.service.RefreshTokenService;
+import com.kc6379.zarzadzaniemagazynem.dto.AuthenticationRequest;
+import com.kc6379.zarzadzaniemagazynem.dto.RefreshTokenRequest;
+import com.kc6379.zarzadzaniemagazynem.dto.RegisterRequest;
+import com.kc6379.zarzadzaniemagazynem.security.AuthenticationResponse;
+import com.kc6379.zarzadzaniemagazynem.service.AuthenticationService;
+import com.kc6379.zarzadzaniemagazynem.service.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

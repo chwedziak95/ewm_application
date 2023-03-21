@@ -36,7 +36,7 @@ export class MaterialDetailsComponent implements OnInit {
                }
 
   ngOnInit() {
-    this.getMaterialDetails(this.route.snapshot.params['materialId']);
+    this.getMaterialDetails(this.route.snapshot.params['id']);
     this.getCategories();
     this.getVendors();
   }

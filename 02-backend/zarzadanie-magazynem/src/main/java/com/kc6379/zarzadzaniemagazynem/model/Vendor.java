@@ -1,4 +1,4 @@
-package com.kc6379.zarzadaniemagazynem.model;
+package com.kc6379.zarzadzaniemagazynem.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data

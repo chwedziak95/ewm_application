@@ -1,7 +1,7 @@
-package com.kc6379.zarzadaniemagazynem.service;
+package com.kc6379.zarzadzaniemagazynem.service;
 
-import com.kc6379.zarzadaniemagazynem.exceptions.EwmAppException;
-import com.kc6379.zarzadaniemagazynem.model.NotificationEmail;
+import com.kc6379.zarzadzaniemagazynem.exceptions.EwmAppException;
+import com.kc6379.zarzadzaniemagazynem.model.NotificationEmail;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;

@@ -1,11 +1,11 @@
-package com.kc6379.zarzadaniemagazynem.dto;
+package com.kc6379.zarzadzaniemagazynem.dto;
 
 import lombok.*;
 
 import java.time.Instant;
 
 /**
- * A DTO for the {@link com.kc6379.zarzadaniemagazynem.model.Material} entity
+ * A DTO for the {@link com.kc6379.zarzadzaniemagazynem.model.Material} entity
  */
 @AllArgsConstructor
 @NoArgsConstructor

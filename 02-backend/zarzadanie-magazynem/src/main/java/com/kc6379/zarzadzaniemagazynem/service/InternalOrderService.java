@@ -1,11 +1,11 @@
-package com.kc6379.zarzadaniemagazynem.service;
+package com.kc6379.zarzadzaniemagazynem.service;
 
-import com.kc6379.zarzadaniemagazynem.dto.*;
-import com.kc6379.zarzadaniemagazynem.exceptions.EwmAppException;
-import com.kc6379.zarzadaniemagazynem.mapper.InternalOrderMapper;
-import com.kc6379.zarzadaniemagazynem.mapper.MaterialMapper;
-import com.kc6379.zarzadaniemagazynem.model.*;
-import com.kc6379.zarzadaniemagazynem.repository.*;
+import com.kc6379.zarzadzaniemagazynem.dto.*;
+import com.kc6379.zarzadzaniemagazynem.exceptions.EwmAppException;
+import com.kc6379.zarzadzaniemagazynem.mapper.InternalOrderMapper;
+import com.kc6379.zarzadzaniemagazynem.mapper.MaterialMapper;
+import com.kc6379.zarzadzaniemagazynem.model.*;
+import com.kc6379.zarzadzaniemagazynem.repository.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -148,5 +148,11 @@ public class InternalOrderService {
         internalOrderResponse.setStatus(status);
         internalOrderMapper.partialUpdate(internalOrderResponse, internalOrder);
         internalOrderRepository.save(internalOrder);
+    }
+
+    public InternalOrderResponse getInternalOrder(Long id) {
+        InternalOrder internalOrder = internalOrderRepository.findByInternalOrderId(id)
+                .orElseThrow(() -> new EwmAppException("Nie znaleziono wewnętrznego zamówienia o id: " +id));
+        return internalOrderMapper.toInternalOrderResponse(internalOrder);
     }
 }

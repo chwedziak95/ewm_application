@@ -1,1 +1,99 @@
-<p>order-details works!</p>
+<section class="h-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-10 col-xl-8">
+        <div class="card" style="border-radius: 10px;">
+          <div class="card-header px-4 py-5">
+            <h5 class="text-muted mb-0">Zamówienie z dnia {{orders.orderDate | customDate }} złożone przez: <span
+                style="color: #a8729a;">{{ orders.user?.firstName }} {{ orders.user?.lastName }}</span></h5>
+          </div>
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <p class="lead fw-normal mb-0" style="color: #a8729a;">Szczegóły zamówienia</p>
+              <p class="small text-muted mb-0">Identyfikator zamówienia : {{orders.ordersId}}</p>
+            </div>
+            <div *ngFor="let orderItems of orderItems$" class="card shadow-0 border mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p *ngIf="orderItems.materialId" class="text-muted mb-0">Numer:
+                      {{orderItems.materialId.materialNumber}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p *ngIf="orderItems.materialId" class="text-muted mb-0">{{orderItems.materialId.materialName}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p *ngIf="orderItems.materialId && orderItems.materialId.materialVendor"
+                      class="text-muted mb-0 small">Dostawca: {{orderItems.materialId.materialVendor.vendorName}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">Ilość: {{orderItems.quantity}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p *ngIf="orderItems.materialId" class="text-muted mb-0 small">Cena:
+                      {{orderItems.materialId.materialPrice}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between pt-2">
+              <p class="fw-bold mb-0">Szczegóły</p>
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Wartość zamówienia</span> {{ orders.orderTotal |
+                number : '1.2-2' }}</p>
+            </div>
+
+            <div class="d-flex justify-content-between pt-2">
+              <p class="text-muted mb-0">Numer zamówienia : {{orders.orderNumber}}</p>
+              <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> $19.00</p>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <p class="text-muted mb-0">Zamówiono : {{orders.orderDate | customDate }}</p>
+              <p class="text-muted mb-0"><span class="fw-bold me-4">GST 18%</span> 123</p>
+            </div>
+
+            <span *ngIf="orders.deliveryDate != null">
+              <div class="d-flex justify-content-between mb-5">
+                <p class="text-muted mb-0">Dostarczono : {{orders.deliveryDate | customDate }}</p>
+              </div>
+            </span>
+
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+              Launch demo modal
+            </button>
+
+          </div>
+          <div class="card-footer border-0 px-4 py-5"
+            style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+            <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Suma: <span
+                class="h2 mb-0 ms-2">{{ orders.orderTotal | number : '1.2-2' }}</span></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</section>

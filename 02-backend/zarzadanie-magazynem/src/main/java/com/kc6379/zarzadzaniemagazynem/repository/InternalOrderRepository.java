@@ -1,7 +1,7 @@
-package com.kc6379.zarzadaniemagazynem.repository;
+package com.kc6379.zarzadzaniemagazynem.repository;
 
-import com.kc6379.zarzadaniemagazynem.model.InternalOrder;
-import com.kc6379.zarzadaniemagazynem.model.User;
+import com.kc6379.zarzadzaniemagazynem.model.InternalOrder;
+import com.kc6379.zarzadzaniemagazynem.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,10 +1,10 @@
-package com.kc6379.zarzadaniemagazynem.service;
+package com.kc6379.zarzadzaniemagazynem.service;
 
-import com.kc6379.zarzadaniemagazynem.dto.RolesDto;
-import com.kc6379.zarzadaniemagazynem.exceptions.EwmAppException;
-import com.kc6379.zarzadaniemagazynem.mapper.RolesMapper;
-import com.kc6379.zarzadaniemagazynem.model.Roles;
-import com.kc6379.zarzadaniemagazynem.repository.RolesRepository;
+import com.kc6379.zarzadzaniemagazynem.dto.RolesDto;
+import com.kc6379.zarzadzaniemagazynem.exceptions.EwmAppException;
+import com.kc6379.zarzadzaniemagazynem.mapper.RolesMapper;
+import com.kc6379.zarzadzaniemagazynem.model.Roles;
+import com.kc6379.zarzadzaniemagazynem.repository.RolesRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

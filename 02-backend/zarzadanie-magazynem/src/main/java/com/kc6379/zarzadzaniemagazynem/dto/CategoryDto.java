@@ -1,4 +1,4 @@
-package com.kc6379.zarzadaniemagazynem.dto;
+package com.kc6379.zarzadzaniemagazynem.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

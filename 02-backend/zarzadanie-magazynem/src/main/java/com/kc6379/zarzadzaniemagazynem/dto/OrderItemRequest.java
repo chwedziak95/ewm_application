@@ -1,9 +1,9 @@
-package com.kc6379.zarzadaniemagazynem.dto;
+package com.kc6379.zarzadzaniemagazynem.dto;
 
 import lombok.*;
 
 /**
- * A DTO for the {@link com.kc6379.zarzadaniemagazynem.model.OrderItem} entity
+ * A DTO for the {@link com.kc6379.zarzadzaniemagazynem.model.OrderItem} entity
  */
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,9 +1,8 @@
-package com.kc6379.zarzadaniemagazynem.controller;
+package com.kc6379.zarzadzaniemagazynem.controller;
 
-import com.kc6379.zarzadaniemagazynem.dto.OrderRequest;
-import com.kc6379.zarzadaniemagazynem.dto.OrdersResponse;
-import com.kc6379.zarzadaniemagazynem.model.Orders;
-import com.kc6379.zarzadaniemagazynem.service.OrderService;
+import com.kc6379.zarzadzaniemagazynem.dto.OrderRequest;
+import com.kc6379.zarzadzaniemagazynem.dto.OrdersResponse;
+import com.kc6379.zarzadzaniemagazynem.service.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +27,13 @@ public class OrderController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(orderService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OrdersResponse> getOrder(@PathVariable Long id){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(orderService.getOrder(id));
     }
 
     @PostMapping("/delivery/{ordersId}")

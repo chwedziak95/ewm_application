@@ -1,7 +1,7 @@
-package com.kc6379.zarzadaniemagazynem.controller;
+package com.kc6379.zarzadzaniemagazynem.controller;
 
-import com.kc6379.zarzadaniemagazynem.dto.UserDto;
-import com.kc6379.zarzadaniemagazynem.service.UserService;
+import com.kc6379.zarzadzaniemagazynem.dto.UserDto;
+import com.kc6379.zarzadzaniemagazynem.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

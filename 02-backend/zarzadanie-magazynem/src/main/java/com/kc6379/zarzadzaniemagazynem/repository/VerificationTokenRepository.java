@@ -1,6 +1,6 @@
-package com.kc6379.zarzadaniemagazynem.repository;
+package com.kc6379.zarzadzaniemagazynem.repository;
 
-import com.kc6379.zarzadaniemagazynem.model.VerificationToken;
+import com.kc6379.zarzadzaniemagazynem.model.VerificationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

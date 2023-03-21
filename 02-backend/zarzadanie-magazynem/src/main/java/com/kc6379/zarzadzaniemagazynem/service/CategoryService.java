@@ -1,10 +1,10 @@
-package com.kc6379.zarzadaniemagazynem.service;
+package com.kc6379.zarzadzaniemagazynem.service;
 
-import com.kc6379.zarzadaniemagazynem.dto.CategoryDto;
-import com.kc6379.zarzadaniemagazynem.exceptions.EwmAppException;
-import com.kc6379.zarzadaniemagazynem.mapper.CategoryMapper;
-import com.kc6379.zarzadaniemagazynem.model.Category;
-import com.kc6379.zarzadaniemagazynem.repository.CategoryRepository;
+import com.kc6379.zarzadzaniemagazynem.dto.CategoryDto;
+import com.kc6379.zarzadzaniemagazynem.exceptions.EwmAppException;
+import com.kc6379.zarzadzaniemagazynem.mapper.CategoryMapper;
+import com.kc6379.zarzadzaniemagazynem.model.Category;
+import com.kc6379.zarzadzaniemagazynem.repository.CategoryRepository;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

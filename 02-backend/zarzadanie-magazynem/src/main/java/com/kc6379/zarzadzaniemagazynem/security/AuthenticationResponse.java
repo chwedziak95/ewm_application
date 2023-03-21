@@ -1,4 +1,4 @@
-package com.kc6379.zarzadaniemagazynem.security;
+package com.kc6379.zarzadzaniemagazynem.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

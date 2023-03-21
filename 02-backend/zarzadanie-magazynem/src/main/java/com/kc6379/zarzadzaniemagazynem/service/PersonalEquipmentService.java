@@ -1,11 +1,11 @@
-package com.kc6379.zarzadaniemagazynem.service;
+package com.kc6379.zarzadzaniemagazynem.service;
 
-import com.kc6379.zarzadaniemagazynem.dto.PersonalEquipmentDto;
-import com.kc6379.zarzadaniemagazynem.dto.PersonalEquipmentResponse;
-import com.kc6379.zarzadaniemagazynem.exceptions.EwmAppException;
-import com.kc6379.zarzadaniemagazynem.mapper.PersonalEquipmentMapper;
-import com.kc6379.zarzadaniemagazynem.model.PersonalEquipment;
-import com.kc6379.zarzadaniemagazynem.repository.PersonalEquipmentRepository;
+import com.kc6379.zarzadzaniemagazynem.dto.PersonalEquipmentDto;
+import com.kc6379.zarzadzaniemagazynem.dto.PersonalEquipmentResponse;
+import com.kc6379.zarzadzaniemagazynem.exceptions.EwmAppException;
+import com.kc6379.zarzadzaniemagazynem.mapper.PersonalEquipmentMapper;
+import com.kc6379.zarzadzaniemagazynem.model.PersonalEquipment;
+import com.kc6379.zarzadzaniemagazynem.repository.PersonalEquipmentRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
-package com.kc6379.zarzadaniemagazynem.config;
+package com.kc6379.zarzadzaniemagazynem.config;
 
-import com.kc6379.zarzadaniemagazynem.dto.*;
-import com.kc6379.zarzadaniemagazynem.repository.UserRepository;
+import com.kc6379.zarzadzaniemagazynem.dto.*;
+import com.kc6379.zarzadzaniemagazynem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

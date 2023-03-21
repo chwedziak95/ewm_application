@@ -38,6 +38,7 @@ import { InternalOrderCartComponent } from './components/internal-order-cart/int
 import { InternalOrderCartStatusComponent } from './components/internal-order-cart-status/internal-order-cart-status.component';
 import { InternalOrderItemsComponent } from './components/internal-order-items/internal-order-items.component';
 import { LogoutScreenComponent } from './components/logout-screen/logout-screen.component';
+import { CommonModule } from '@angular/common';
 
 
 const routes: Routes = [
@@ -54,7 +55,7 @@ const routes: Routes = [
   {path: 'vendor', component: VendorListComponent, canActivate: [AuthGuard]},
   {path: 'vendor/:vendorId', component: VendorDetailsComponent, canActivate: [AuthGuard]},
   {path: 'material', component: MaterialListComponent, canActivate: [AuthGuard]},
-  {path: 'material/:materialId', component: MaterialDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'material/:id', component: MaterialDetailsComponent, canActivate: [AuthGuard]},
   {path: 'signup', component: SignupComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LogoutScreenComponent}
@@ -99,7 +100,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   exports: [RouterModule],
   providers: [

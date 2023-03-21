@@ -1,16 +1,14 @@
-package com.kc6379.zarzadaniemagazynem.controller;
+package com.kc6379.zarzadzaniemagazynem.controller;
 
-import com.kc6379.zarzadaniemagazynem.dto.MaterialDto;
-import com.kc6379.zarzadaniemagazynem.dto.MaterialResponse;
-import com.kc6379.zarzadaniemagazynem.service.MaterialService;
+import com.kc6379.zarzadzaniemagazynem.dto.MaterialDto;
+import com.kc6379.zarzadzaniemagazynem.dto.MaterialResponse;
+import com.kc6379.zarzadzaniemagazynem.service.MaterialService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.http.HttpStatus.CREATED;
 

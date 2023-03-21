@@ -1,16 +1,17 @@
-package com.kc6379.zarzadaniemagazynem.service;
+package com.kc6379.zarzadzaniemagazynem.service;
 
-import com.kc6379.zarzadaniemagazynem.dto.OrderItemDto;
-import com.kc6379.zarzadaniemagazynem.exceptions.EwmAppException;
-import com.kc6379.zarzadaniemagazynem.mapper.OrderItemMapper;
-import com.kc6379.zarzadaniemagazynem.model.Orders;
-import com.kc6379.zarzadaniemagazynem.repository.OrderItemRepository;
-import com.kc6379.zarzadaniemagazynem.repository.OrderRepository;
+import com.kc6379.zarzadzaniemagazynem.dto.OrderItemDto;
+import com.kc6379.zarzadzaniemagazynem.exceptions.EwmAppException;
+import com.kc6379.zarzadzaniemagazynem.mapper.OrderItemMapper;
+import com.kc6379.zarzadzaniemagazynem.model.Orders;
+import com.kc6379.zarzadzaniemagazynem.repository.OrderItemRepository;
+import com.kc6379.zarzadzaniemagazynem.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service

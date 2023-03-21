@@ -1,4 +1,4 @@
-package com.kc6379.zarzadaniemagazynem;
+package com.kc6379.zarzadzaniemagazynem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

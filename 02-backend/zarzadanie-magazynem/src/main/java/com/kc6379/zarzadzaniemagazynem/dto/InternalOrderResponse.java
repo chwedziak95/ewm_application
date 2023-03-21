@@ -1,6 +1,6 @@
-package com.kc6379.zarzadaniemagazynem.dto;
+package com.kc6379.zarzadzaniemagazynem.dto;
 
-import com.kc6379.zarzadaniemagazynem.model.Status;
+import com.kc6379.zarzadzaniemagazynem.model.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

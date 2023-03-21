@@ -1,7 +1,7 @@
-package com.kc6379.zarzadaniemagazynem.controller;
+package com.kc6379.zarzadzaniemagazynem.controller;
 
-import com.kc6379.zarzadaniemagazynem.dto.OrderItemDto;
-import com.kc6379.zarzadaniemagazynem.service.OrderItemService;
+import com.kc6379.zarzadzaniemagazynem.dto.OrderItemDto;
+import com.kc6379.zarzadzaniemagazynem.service.OrderItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.http.HttpStatus.OK;
 

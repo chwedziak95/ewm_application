@@ -1,4 +1,4 @@
-package com.kc6379.zarzadaniemagazynem.service;
+package com.kc6379.zarzadzaniemagazynem.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

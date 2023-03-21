@@ -1,4 +1,4 @@
-package com.kc6379.zarzadaniemagazynem.config;
+package com.kc6379.zarzadzaniemagazynem.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;

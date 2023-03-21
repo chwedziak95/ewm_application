@@ -1,4 +1,4 @@
-package com.kc6379.zarzadaniemagazynem.model;
+package com.kc6379.zarzadzaniemagazynem.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;

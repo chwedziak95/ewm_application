@@ -1,7 +1,7 @@
-package com.kc6379.zarzadaniemagazynem.mapper;
+package com.kc6379.zarzadzaniemagazynem.mapper;
 
-import com.kc6379.zarzadaniemagazynem.dto.UserDto;
-import com.kc6379.zarzadaniemagazynem.model.User;
+import com.kc6379.zarzadzaniemagazynem.dto.UserDto;
+import com.kc6379.zarzadzaniemagazynem.model.User;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 

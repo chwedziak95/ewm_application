@@ -1,6 +1,4 @@
-package com.kc6379.zarzadaniemagazynem.exceptions;
-
-import org.springframework.mail.MailException;
+package com.kc6379.zarzadzaniemagazynem.exceptions;
 
 public class EwmAppException extends RuntimeException {
     public EwmAppException(String exMessage, Exception exception) {

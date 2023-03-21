@@ -1,6 +1,5 @@
-package com.kc6379.zarzadaniemagazynem.model;
+package com.kc6379.zarzadzaniemagazynem.model;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

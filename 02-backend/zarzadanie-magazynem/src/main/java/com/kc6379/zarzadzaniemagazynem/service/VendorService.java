@@ -1,10 +1,10 @@
-package com.kc6379.zarzadaniemagazynem.service;
+package com.kc6379.zarzadzaniemagazynem.service;
 
-import com.kc6379.zarzadaniemagazynem.dto.VendorDto;
-import com.kc6379.zarzadaniemagazynem.exceptions.EwmAppException;
-import com.kc6379.zarzadaniemagazynem.mapper.VendorMapper;
-import com.kc6379.zarzadaniemagazynem.model.Vendor;
-import com.kc6379.zarzadaniemagazynem.repository.VendorRepository;
+import com.kc6379.zarzadzaniemagazynem.dto.VendorDto;
+import com.kc6379.zarzadzaniemagazynem.exceptions.EwmAppException;
+import com.kc6379.zarzadzaniemagazynem.mapper.VendorMapper;
+import com.kc6379.zarzadzaniemagazynem.model.Vendor;
+import com.kc6379.zarzadzaniemagazynem.repository.VendorRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static java.util.stream.Collectors.toList;
 

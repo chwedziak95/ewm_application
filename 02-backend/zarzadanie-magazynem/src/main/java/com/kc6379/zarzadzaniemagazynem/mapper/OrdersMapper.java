@@ -1,7 +1,7 @@
-package com.kc6379.zarzadaniemagazynem.mapper;
+package com.kc6379.zarzadzaniemagazynem.mapper;
 
-import com.kc6379.zarzadaniemagazynem.dto.*;
-import com.kc6379.zarzadaniemagazynem.model.*;
+import com.kc6379.zarzadzaniemagazynem.dto.*;
+import com.kc6379.zarzadzaniemagazynem.model.*;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;

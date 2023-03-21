@@ -1,8 +1,8 @@
-package com.kc6379.zarzadaniemagazynem.repository;
+package com.kc6379.zarzadzaniemagazynem.repository;
 
-import com.kc6379.zarzadaniemagazynem.model.Category;
-import com.kc6379.zarzadaniemagazynem.model.Material;
-import com.kc6379.zarzadaniemagazynem.model.Vendor;
+import com.kc6379.zarzadzaniemagazynem.model.Category;
+import com.kc6379.zarzadzaniemagazynem.model.Material;
+import com.kc6379.zarzadzaniemagazynem.model.Vendor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

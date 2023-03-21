@@ -1,4 +1,4 @@
-package com.kc6379.zarzadaniemagazynem.dto;
+package com.kc6379.zarzadzaniemagazynem.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.io.Serializable;
 
 /**
- * A DTO for the {@link com.kc6379.zarzadaniemagazynem.model.Status} entity
+ * A DTO for the {@link com.kc6379.zarzadzaniemagazynem.model.Status} entity
  */
 @AllArgsConstructor
 @NoArgsConstructor

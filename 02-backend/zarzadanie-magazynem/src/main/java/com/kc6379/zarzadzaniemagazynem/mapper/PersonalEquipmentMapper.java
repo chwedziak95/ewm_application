@@ -1,8 +1,8 @@
-package com.kc6379.zarzadaniemagazynem.mapper;
+package com.kc6379.zarzadzaniemagazynem.mapper;
 
-import com.kc6379.zarzadaniemagazynem.dto.PersonalEquipmentDto;
-import com.kc6379.zarzadaniemagazynem.dto.PersonalEquipmentResponse;
-import com.kc6379.zarzadaniemagazynem.model.PersonalEquipment;
+import com.kc6379.zarzadzaniemagazynem.dto.PersonalEquipmentDto;
+import com.kc6379.zarzadzaniemagazynem.dto.PersonalEquipmentResponse;
+import com.kc6379.zarzadzaniemagazynem.model.PersonalEquipment;
 import org.mapstruct.*;
 
 

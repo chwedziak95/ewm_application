@@ -1,8 +1,8 @@
-package com.kc6379.zarzadaniemagazynem.controller;
+package com.kc6379.zarzadzaniemagazynem.controller;
 
-import com.kc6379.zarzadaniemagazynem.dto.PersonalEquipmentDto;
-import com.kc6379.zarzadaniemagazynem.dto.PersonalEquipmentResponse;
-import com.kc6379.zarzadaniemagazynem.service.PersonalEquipmentService;
+import com.kc6379.zarzadzaniemagazynem.dto.PersonalEquipmentDto;
+import com.kc6379.zarzadzaniemagazynem.dto.PersonalEquipmentResponse;
+import com.kc6379.zarzadzaniemagazynem.service.PersonalEquipmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

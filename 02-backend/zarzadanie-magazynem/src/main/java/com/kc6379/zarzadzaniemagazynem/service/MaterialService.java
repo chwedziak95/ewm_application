@@ -1,25 +1,22 @@
-package com.kc6379.zarzadaniemagazynem.service;
+package com.kc6379.zarzadzaniemagazynem.service;
 
-import com.kc6379.zarzadaniemagazynem.dto.MaterialDto;
-import com.kc6379.zarzadaniemagazynem.dto.MaterialResponse;
-import com.kc6379.zarzadaniemagazynem.exceptions.EwmAppException;
-import com.kc6379.zarzadaniemagazynem.mapper.MaterialMapper;
-import com.kc6379.zarzadaniemagazynem.model.Category;
-import com.kc6379.zarzadaniemagazynem.model.Material;
-import com.kc6379.zarzadaniemagazynem.model.Vendor;
-import com.kc6379.zarzadaniemagazynem.repository.CategoryRepository;
-import com.kc6379.zarzadaniemagazynem.repository.MaterialRepository;
-import com.kc6379.zarzadaniemagazynem.repository.VendorRepository;
+import com.kc6379.zarzadzaniemagazynem.dto.MaterialDto;
+import com.kc6379.zarzadzaniemagazynem.dto.MaterialResponse;
+import com.kc6379.zarzadzaniemagazynem.exceptions.EwmAppException;
+import com.kc6379.zarzadzaniemagazynem.mapper.MaterialMapper;
+import com.kc6379.zarzadzaniemagazynem.model.Category;
+import com.kc6379.zarzadzaniemagazynem.model.Material;
+import com.kc6379.zarzadzaniemagazynem.model.Vendor;
+import com.kc6379.zarzadzaniemagazynem.repository.CategoryRepository;
+import com.kc6379.zarzadzaniemagazynem.repository.MaterialRepository;
+import com.kc6379.zarzadzaniemagazynem.repository.VendorRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 
