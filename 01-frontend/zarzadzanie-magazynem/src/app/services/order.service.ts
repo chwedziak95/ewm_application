@@ -23,4 +23,14 @@ export class OrderService {
   createOrder(orders: Orders): Observable<any>{
     return this.http.post<Orders>(this.baseUrl, orders);
   }
+
+  deliveryOrder(ordersId: number, orders: Orders): Observable<any>{
+    const deliveryUrl = `${this.baseUrl}/delivery/${ordersId}`
+    return this.http.post<Orders>(deliveryUrl, orders)
+  }
+
+  cancelOrder(ordersId: number): Observable<any>{
+    const orderUrl = `${this.baseUrl}/${ordersId}`;
+    return this.http.post<Orders>(orderUrl,null);
+  }
 }

@@ -37,8 +37,8 @@ public class OrderController {
     }
 
     @PostMapping("/delivery/{ordersId}")
-    public ResponseEntity<Void> deliveryOrder(@PathVariable Long ordersId){
-        orderService.deliveryOrder(ordersId);
+    public ResponseEntity<Void> deliveryOrder(@PathVariable Long ordersId, @RequestBody OrdersResponse ordersResponse){
+        orderService.deliveryOrder(ordersId, ordersResponse);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

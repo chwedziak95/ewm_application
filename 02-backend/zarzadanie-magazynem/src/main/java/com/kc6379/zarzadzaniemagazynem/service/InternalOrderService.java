@@ -151,7 +151,7 @@ public class InternalOrderService {
     }
 
     public InternalOrderResponse getInternalOrder(Long id) {
-        InternalOrder internalOrder = internalOrderRepository.findByInternalOrderId(id)
+        InternalOrder internalOrder = internalOrderRepository.findAllByInternalOrderId(id)
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono wewnętrznego zamówienia o id: " +id));
         return internalOrderMapper.toInternalOrderResponse(internalOrder);
     }

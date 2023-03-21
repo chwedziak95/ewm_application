@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,7 @@ public class OrderService {
     private final OrdersResponse orderResponse;
     private final MaterialDto materialDto;
     private final MaterialMapper materialMapper;
+    private final LocalDate currentDate = LocalDate.now();
 
     public void save(OrderRequest orderRequest){
         Status status = statusRepository.findByStatusId(1).orElseThrow(() -> new EwmAppException("Nie znaleziono statusu o id"));
@@ -102,32 +104,41 @@ public class OrderService {
         return UUID.randomUUID().toString();
     }
 
-    public void deliveryOrder(Long ordersId) {
-        orderResponse.setOrdersId(ordersId);
-        orderResponse.setDeliveryDate(LocalDate.now());
-        Status status = statusRepository.findByName("Dostarczono").orElseThrow();
-        orderResponse.setStatus(status);
+    public void deliveryOrder(Long ordersId, OrdersResponse ordersResponse) {
         Orders orders = orderRepository.findByOrdersId(ordersId)
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono zamówienia o id" + ordersId));
-        if (orders.getDeliveryDate() != null ){
-            throw new EwmAppException("Zamówienie zostało już dostarczone");
-        }else {
-            updateMaterialQuantity(orders);
-            ordersMapper.partialUpdate(orderResponse, orders);
-            orderRepository.save(orders);
+        LocalDate orderDate = orders.getOrderDate();
+        LocalDate deliveryDate = ordersResponse.getDeliveryDate();
+        if (deliveryDate.isBefore(orderDate)) {
+            throw new EwmAppException("Data dostawy nie może być wcześniejsza niż data zamówienia");
+        } else if (deliveryDate.isAfter(LocalDate.now())) {
+            throw new EwmAppException("Data dostawy nie może być późniejsza niż dzisiaj");
         }
+        orderResponse.setOrdersId(ordersId);
+        Status status = statusRepository.findByName("Dostarczono").orElseThrow();
+        orderResponse.setStatus(status);
+        orderResponse.setDeliveryDate(deliveryDate);
+        if (orders.getDeliveryDate() != null) {
+            throw new EwmAppException("Zamówienie zostało już dostarczone");
+        }
+        updateMaterialQuantity(orders);
+        ordersMapper.partialUpdate(orderResponse, orders);
+        orderRepository.save(orders);
     }
+
 
     private void updateMaterialQuantity(Orders orders) {
         Set<OrderItem> orderItems = orderItemRepository.findByOrders(orders);
         for (OrderItem orderItem : orderItems) {
             Material material = materialRepository.findByMaterialId(orderItem.getMaterialId().getMaterialId())
                     .orElseThrow(() -> new EwmAppException("Nie znaleziono materiału o id"));
-            materialDto.setMaterialQuantity(material.getMaterialQuantity() + orderItem.getQuantity());
-            materialMapper.partialUpdate(materialDto, material);
+            int newMaterialQuantity = material.getMaterialQuantity() + orderItem.getQuantity();
+            material.setMaterialQuantity(newMaterialQuantity);
             materialRepository.save(material);
         }
     }
+
+
 
     public void cancelOrder(Long ordersId) {
         Orders orders = orderRepository.findByOrdersId(ordersId)
@@ -143,7 +154,7 @@ public class OrderService {
     }
 
     public OrdersResponse getOrder(Long id) {
-        Orders orders = orderRepository.findByOrdersId(id)
+        Orders orders = orderRepository.findAllByOrdersId(id)
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono zamówienia o id: " + id));
         return ordersMapper.toOrdersResponse(orders);
     }

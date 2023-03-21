@@ -45,13 +45,4 @@ public class Orders {
     )
     private Set<OrderItem> orderItems = new HashSet<>();
 
-    public void add(OrderItem orderItem) {
-        if (orderItem != null) {
-            if (orderItems == null) {
-                orderItems = new HashSet<>();
-            }
-            orderItems.add(orderItem);
-            orderItem.setOrders(this);
-        }
-    }
 }
