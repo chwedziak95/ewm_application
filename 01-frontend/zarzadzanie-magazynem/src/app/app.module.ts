@@ -39,6 +39,7 @@ import { InternalOrderCartStatusComponent } from './components/internal-order-ca
 import { InternalOrderItemsComponent } from './components/internal-order-items/internal-order-items.component';
 import { LogoutScreenComponent } from './components/logout-screen/logout-screen.component';
 import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 const routes: Routes = [
@@ -101,7 +102,8 @@ const routes: Routes = [
     ToastrModule.forRoot(),
     FontAwesomeModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    NgbModule
   ],
   exports: [RouterModule],
   providers: [
