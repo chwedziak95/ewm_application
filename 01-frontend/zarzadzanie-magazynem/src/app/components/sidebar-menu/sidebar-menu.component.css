@@ -1,41 +1,59 @@
-.menu-item {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .parent-btn {
-    flex: 1;
-    text-align: left;
-    padding-right: 30px; /* Adjust the padding to ensure there's enough space for the text */
-  }
-  
-  
-  
-  .hovered .parent-btn {
-    transform: translateX(-20px);
-  }
-  
-  .icon-container {
-    position: absolute;
-    top: 50%; /* Vertically center the tile to the middle of the button axis */
-    transform: translateY(-50%); /* Vertically center the tile to the middle of the button axis */
-    left: 100%; /* Position the tile on the right side of the button */
-    width: calc(100% / 3);
-    transition: transform 0.3s, opacity 0.3s;
-    opacity: 0;
-    z-index: 1;
-    margin-left: 1px; /* Add a margin to create a gap between the main button and the tile */
-  }
-  
-  .hovered .icon-container {
-    opacity: 1;
-    z-index: 1;
-  }
-  
-  .icon-button {
-    width: 100%;
-  }
-  
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+html {
+  height: -webkit-fill-available;
+}
+
+main {
+  height: 100vh;
+  height: -webkit-fill-available;
+  max-height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.dropdown-toggle { outline: 0; }
+
+.btn-toggle {
+  padding: .25rem .5rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, .65);
+  background-color: transparent;
+}
+.btn-toggle:hover,
+.btn-toggle:focus {
+  color: rgba(0, 0, 0, .85);
+  background-color: #d2f4ea;
+}
+
+.btn-toggle::before {
+  width: 1.25em;
+  line-height: 0;
+  content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+  transition: transform .35s ease;
+  transform-origin: .5em 50%;
+}
+
+.btn-toggle[aria-expanded="true"] {
+  color: rgba(0, 0, 0, .85);
+}
+.btn-toggle[aria-expanded="true"]::before {
+  transform: rotate(90deg);
+}
+
+.btn-toggle-nav a {
+  padding: .1875rem .5rem;
+  margin-top: .125rem;
+  margin-left: 1.25rem;
+}
+.btn-toggle-nav a:hover,
+.btn-toggle-nav a:focus {
+  background-color: #d2f4ea;
+}
+
+.scrollarea {
+  overflow-y: auto;
+}
