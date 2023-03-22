@@ -1,7 +1,7 @@
 import { Injectable, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SignupRequestPayload } from '../signup/signup-request.payload';
-import { map, Observable, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { LoginRequestPayload } from '../login/login-request.payload';
 import { LoginResponse } from '../login/login-response.payload';
 import { LocalStorageService } from 'ngx-webstorage';
@@ -37,25 +37,37 @@ export class AuthService {
     return this.httpClient
       .post<LoginResponse>(
         'http://localhost:8080/api/v1/auth/authenticate',
-        loginRequestPayload
+        loginRequestPayload,
+        { observe: 'response' }
       )
       .pipe(
-        map((data) => {
+        map((response) => {
+          const data = response.body;
           this.localStorage.store("token", data.token);
           this.localStorage.store('refreshToken', data.refreshToken);
           this.localStorage.store('expiresAt', data.expiresAt);
           this.localStorage.store('username', data.username);
-  
+    
           // Store the rememberMe value
           this.localStorage.store('rememberMe', rememberMe);
-  
+    
           // Emit the new value for authStatus BehaviorSubject
           this._authStatus.next(true);
-  
+    
           return true;
+        }),
+        catchError((error) => {
+          // Rzuć nowy błąd w przypadku błędu uwierzytelnienia
+          if (error.status === 401 || error.status === 403) {
+            return throwError(() => new Error('Nieprawidłowe poświadczenia logowania'));
+          }
+        
+          // W przypadku innych błędów, przekaż dalej
+          return throwError(error);
         })
       );
   }
+  
   
 
   getToken() {

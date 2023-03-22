@@ -21,16 +21,19 @@ export class OrderService {
   }
 
   createOrder(orders: Orders): Observable<any>{
-    return this.http.post<Orders>(this.baseUrl, orders);
+    return this.http.post<Orders>(this.baseUrl, orders, { observe: 'response' });
   }
 
-  deliveryOrder(ordersId: number, orders: Orders): Observable<any>{
-    const deliveryUrl = `${this.baseUrl}/delivery/${ordersId}`
-    return this.http.post<Orders>(deliveryUrl, orders)
+  deliveryOrder(ordersId: number, deliveryDate: Date): Observable<any> {
+    const deliveryUrl = `${this.baseUrl}/delivery/${ordersId}`;
+    const deliveryData = { deliveryDate: deliveryDate.toISOString() };
+    return this.http.post<Orders>(deliveryUrl, deliveryData, { observe: 'response' });
   }
+  
 
-  cancelOrder(ordersId: number): Observable<any>{
-    const orderUrl = `${this.baseUrl}/${ordersId}`;
-    return this.http.post<Orders>(orderUrl,null);
+  cancelOrder(ordersId: number): Observable<any> {
+    const orderUrl = `${this.baseUrl}/cancel/${ordersId}`;
+    return this.http.post<Orders>(orderUrl, {}, { observe: 'response' });
   }
+  
 }

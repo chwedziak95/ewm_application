@@ -69,22 +69,45 @@
                   <div class="mb-3">
                     <label for="deliveryDate">Data przyjęcia dostawy</label>
                     <div class="input-group">
-                      <input id="deliveryDate" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker [(ngModel)]="deliveryDate" #dp="ngbDatepicker" />
+                      <input id="deliveryDate" class="form-control" placeholder="yyyy-mm-dd" name="dp" [min]="minDate" [max]="maxDate" ngbDatepicker [(ngModel)]="deliveryDate" #dp="ngbDatepicker" (ngModelChange)="onDeliveryDateChanged()" />
                       <button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button>
                     </div>
                   </div>
                 </form>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-outline-dark" (click)="confirmDeliveryAndCloseModal(modal)">Potwierdź</button>
+                <button type="button" class="btn btn-outline-dark" [disabled]="!isDeliveryDateValid" (click)="confirmDeliveryAndCloseModal(modal)">Potwierdź</button>
+              </div>
+              <div *ngIf="!isDeliveryDateValid" class="alert alert-danger mt-2">
+                Wybrana data jest nieprawidłowa.
+              </div>
+              
+            </ng-template>
+            
+
+            <span *ngIf="orders.deliveryDate == null && orders.status?.name != 'Anulowano' ">
+              <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Potwierdź dostawę</button>
+            </span>
+
+            <ng-template #cancelModal let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-cancel-title">Anulowanie zamówienia</h4>
+                <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+              </div>
+              <div class="modal-body">
+                <p>Czy na pewno chcesz anulować to zamówienie?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" (click)="cancelOrderAndCloseModal(modal)">Tak, anuluj zamówienie</button>
+                <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('Cross click')">Nie</button>
               </div>
             </ng-template>
             
 
-            <span *ngIf="orders.deliveryDate == null">
-              <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Potwierdź dostawę</button>
+            <span *ngIf="orders.status?.name !== 'Dostarczono' && orders.status?.name !== 'Anulowano'">
+              <button class="btn btn-lg btn-outline-danger" (click)="open(cancelModal)">Anuluj zamówienie</button>
             </span>
-            <hr />
+            <hr />     
 
 
           </div>
@@ -92,7 +115,12 @@
             style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
             <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Suma: <span
                 class="h2 mb-0 ms-2">{{ orders.orderTotal | number : '1.2-2' }}</span></h5>
+                <span *ngIf="orders.status?.name === 'Anulowano'">
+                  <h5 class="d-flex align-items-center justify-content-start text-white text-uppercase mb-0"><span
+                    class="h2 mb-0 ms-2">Zamówenie anulowane</span></h5>
+                </span>
           </div>
+
         </div>
       </div>
     </div>

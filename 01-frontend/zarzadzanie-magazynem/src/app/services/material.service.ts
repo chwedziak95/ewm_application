@@ -14,7 +14,7 @@ export class MaterialService {
   constructor(private http: HttpClient) { }
 
   createMaterial(materialPayload: CreateMaterialPayload): Observable<any>{
-    return this.http.post(this.baseUrl, materialPayload);
+    return this.http.post(this.baseUrl, materialPayload, { observe: 'response' });
   }
 
   getAll(): Observable<Array<Material>> {

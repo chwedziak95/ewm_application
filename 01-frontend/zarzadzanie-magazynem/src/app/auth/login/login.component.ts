@@ -43,12 +43,16 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    if (this.loginForm.invalid) {
+      this.toastr.error('Błędne dane logowania');
+      return;
+    }
     this.loginRequestPayload.email = this.loginForm.get('email')?.value;
     this.loginRequestPayload.password = this.loginForm.get('password')?.value;
-  
+
     this.authService.login(this.loginRequestPayload, this.rememberMe).subscribe(
-      (data) => {
-        if (data) {
+      (status) => {
+        if (status) {
           this.isError = false;
           this.router.navigateByUrl('');
           this.toastr.success('Zalogowano');
@@ -58,9 +62,7 @@ export class LoginComponent implements OnInit {
       },
       (error) => {
         console.error('Błąd logowania:', error);
-        if (error.status === 403) {
-          this.toastr.error('Błędne dane logowania');
-        } else {
+        if (error) {
           this.toastr.error('Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.');
         }
       }

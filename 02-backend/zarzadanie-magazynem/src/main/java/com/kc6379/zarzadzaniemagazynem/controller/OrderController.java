@@ -44,6 +44,7 @@ public class OrderController {
 
     @PostMapping("/cancel/{ordersId}")
     public ResponseEntity<Void> cancelOrder(@PathVariable Long ordersId){
+        System.out.println("cancelOrder() called"); // Add this line
         orderService.cancelOrder(ordersId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
