@@ -19,16 +19,23 @@ export class OrderListComponent implements OnInit {
   orders$: Array<Orders> = [];
   constructor(
     private ordersService: OrderService
-    ) {
-    this.ordersService.getAll().subscribe( orders =>{
+  ) {
+    this.ordersService.getAll().subscribe(orders => {
       this.orders$ = orders;
     })
-   }
+  }
 
   ngOnInit(): void {
   }
 
-  
+  // Get unique status names from orders
+  getUniqueStatusNames(): string[] {
+    const statusNames = this.orders$.map(order => order.status?.name);
+    return Array.from(new Set(statusNames));
+  }
+
+
+
 
 }
 

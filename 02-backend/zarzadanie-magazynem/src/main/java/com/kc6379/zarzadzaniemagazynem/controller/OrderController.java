@@ -4,6 +4,7 @@ import com.kc6379.zarzadzaniemagazynem.dto.OrderRequest;
 import com.kc6379.zarzadzaniemagazynem.dto.OrdersResponse;
 import com.kc6379.zarzadzaniemagazynem.service.OrderService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequestMapping("/api/v1/orders")
 @AllArgsConstructor
 public class OrderController {
+    @Autowired
     private final OrderService orderService;
 
     @PostMapping

@@ -82,9 +82,9 @@ public class InternalOrderService {
         User user = userRepository.findByUserId(userId).
                 orElseThrow(() -> new EwmAppException("Nie znaleziono uytkownika o id: " + userId));
         return internalOrderRepository.findAllByUser(user)
-               .stream()
-               .map(internalOrderMapper::toInternalOrderResponse)
-               .collect(Collectors.toList());
+                .stream()
+                .map(internalOrderMapper::toInternalOrderResponse)
+                .collect(Collectors.toList());
     }
 
     public void withdraw(Long id){
@@ -92,7 +92,7 @@ public class InternalOrderService {
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono zamówienia do magazynu o id: " + id));
         if (internalOrder.getPickDate() != null){
             throw new EwmAppException("Wygląda na to, że zamówienie " + id + " zostało już wydane");
-            }else{
+        }else{
             updateMaterialQuantity(internalOrder);
             internalOrderResponse.setPickDate(LocalDateTime.now());
             Status status = statusRepository.findByName("Wydane").orElseThrow();

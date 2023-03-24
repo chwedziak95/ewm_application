@@ -1,13 +1,9 @@
 package com.kc6379.zarzadzaniemagazynem.dto;
 
-import com.kc6379.zarzadzaniemagazynem.model.Status;
 import lombok.*;
 import java.time.LocalDate;
 import java.util.Set;
 
-/**
- * A DTO for the {@link com.kc6379.zarzadzaniemagazynem.model.Orders} entity
- */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -20,6 +16,6 @@ public class OrdersResponse {
     private LocalDate deliveryDate;
     private String comment;
     private UserDto user;
-    private Status status;
+    private StatusDto status;
     private Set<OrderItemDto> orderItems;
 }

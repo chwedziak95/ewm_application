@@ -116,7 +116,7 @@ public class OrderService {
         }
         orderResponse.setOrdersId(ordersId);
         Status status = statusRepository.findByName("Dostarczono").orElseThrow();
-        orderResponse.setStatus(status);
+        orderResponse.setStatus(new StatusDto(status.getStatusId(), status.getName()));
         orderResponse.setDeliveryDate(deliveryDate);
         if (orders.getDeliveryDate() != null) {
             throw new EwmAppException("Zamówienie zostało już dostarczone");
@@ -145,7 +145,7 @@ public class OrderService {
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono zamówienia o id" + ordersId));
         if (orders.getDeliveryDate() == null && !Objects.equals(orders.getStatus().getName(), "Anulowano")){
             Status status = statusRepository.findByName("Anulowano").orElseThrow();
-            orderResponse.setStatus(status);
+            orderResponse.setStatus(new StatusDto(status.getStatusId(), status.getName()));
             ordersMapper.partialUpdate(orderResponse, orders);
             orderRepository.save(orders);
         }else{

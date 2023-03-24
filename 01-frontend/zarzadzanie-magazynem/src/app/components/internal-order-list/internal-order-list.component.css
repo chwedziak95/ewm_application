@@ -1,0 +1,9 @@
+.card{
+    margin: 5px 5px 5px 5px;
+    width: 25rem; 
+    border-radius: 10px;
+}
+
+.card-footer {
+    height: 10px;
+  }

@@ -7,16 +7,10 @@
         <th>Stan magazynowy</th>
         <th style="width: auto;">Kategoria</th>
         <th style="width: auto;">Dostawca</th>
-        <th>
-        </th>
-        <th>
-          <a routerLink="/internal-order-cart" *ngIf="internalCartItemsCount > 0">
-            <button  class="btn btn-primary btn-md mt-2">
-              Rezerwacja
-            </button>
-          </a>
-        </th>
-        
+        <th></th>
+        <th></th>
+        <th><fa-icon icon="shop-lock"></fa-icon></th>
+        <th><a routerLink="/internal-order-cart" *ngIf="internalCartItemsCount > 0"><fa-icon icon="truck"></fa-icon></a></th>
       </tr>
       <tr>
         <th style="width: auto;">
@@ -33,8 +27,7 @@
             [(ngModel)]="materialNameFilter"
           />
         </th>
-        <th>
-        </th>
+        <th></th>
         <th>
           <input
             type="text"
@@ -49,12 +42,10 @@
             [(ngModel)]="materialVendorFilter"
           />
         </th>
-        <th>
-          Zamów
-        </th>
-        <th>
-          Zarezerwuj
-        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -70,7 +61,7 @@
                 }
         "
       >
-      <a [routerLink]="['/material', material.materialId]"><td class="align-middle">{{ material.materialNumber }}</td></a>
+        <a [routerLink]="['/material', material.materialId]"><td class="align-middle">{{ material.materialNumber }}</td></a>
         <td class="align-middle">{{ material.materialName }}</td>
         <td class="align-middle">{{ material.materialQuantity }}</td>
         <td class="align-middle">{{ material.materialCategory.name }}</td>
@@ -81,16 +72,23 @@
           </button>
           <button (click)="decrementQuantity(material)" class="btn btn-primary btn-sm">
             <fa-icon icon="minus"></fa-icon>
-          </button>        
-        
+          </button>
         </td>
         <td class="button-container">
-          <button (click)="addToInternalCart(material)" class="btn btn-dark btn-sm">
-            <fa-icon icon="plus"></fa-icon>
-          </button>
-          <button (click)="decrementInternalOrderQuantity(material)" class="btn btn-dark btn-sm">
-            <fa-icon icon="minus"></fa-icon>
-          </button>        
+          <div class="d-flex flex-column">
+            <button (click)="addToInternalCart(material)" class="btn btn-dark btn-sm mb-1">
+              <fa-icon icon="plus"></fa-icon>
+            </button>
+            <button (click)="decrementInternalOrderQuantity(material)" class="btn btn-dark btn-sm">
+              <fa-icon icon="minus"></fa-icon>
+            </button>
+          </div>
+        </td>
+        <td class="align-middle">
+          <span *ngIf="getCartQuantity(material) > 0">{{ getCartQuantity(material) }}</span>
+        </td>
+        <td class="align-middle">
+          <span *ngIf="getInternalCartQuantity(material) > 0">{{ getInternalCartQuantity(material) }}</span>
         </td>
       </tr>
     </tbody>

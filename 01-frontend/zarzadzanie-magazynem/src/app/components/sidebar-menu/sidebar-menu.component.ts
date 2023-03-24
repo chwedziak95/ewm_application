@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import * as $ from 'jquery';
-import * as Popper from 'popper.js';
-import './sidebar-menu.component.js';
 
 @Component({
   selector: 'app-sidebar-menu',
@@ -12,10 +9,5 @@ export class SidebarMenuComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    $('.sidebar-menu').SidebarMenu({
-      accordionMenu: true,
-      startCollapsed: false,
-      slideSpeed: 200
-    });
   }
 }

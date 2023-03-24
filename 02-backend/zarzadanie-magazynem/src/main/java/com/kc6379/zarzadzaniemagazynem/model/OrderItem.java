@@ -23,8 +23,8 @@ public class OrderItem {
             referencedColumnName = "materialId"
     )
     private Material materialId;
-    private int quantity;
-    @ManyToOne(fetch = FetchType.LAZY)
+    private Integer quantity;
+    @ManyToOne
     @JoinColumn(
             name = "ordersId",
             referencedColumnName = "ordersId"

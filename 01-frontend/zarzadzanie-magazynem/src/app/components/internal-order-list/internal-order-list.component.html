@@ -1,1 +1,75 @@
-<p>internal-order-list works!</p>
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+
+      <div class="row mb-3">
+        <div class="col-12">
+          <button class="btn btn-primary" (click)="toggleSortOrder()">
+            <i class="fa" [ngClass]="{'fa-sort-up': sortOrder === 'asc', 'fa-sort-down': sortOrder === 'desc'}"></i>
+            {{ sortOrder === 'asc' ? 'Sort by Date (Newest to Oldest)' : 'Sort by Date (Oldest to Newest)' }}
+          </button>
+          
+        </div>
+      </div>
+      <div class="row">
+
+        <!-- loop over the collection of products -->
+        <div *ngFor="let internalOrder of internalOrdersNew$ | sortByDate:sortOrder" class="card">
+
+          <div class="card-header">
+            <div class="row">
+              <div class="col-4">
+                <h5 class="d-flex justify-content-start">Identyfikator:</h5>
+              </div>
+              <div class="col-8">
+                <h5 class="d-flex justify-content-start">{{ internalOrder.internalOrderId }}</h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <h5 class="d-flex justify-content-start">Rezerwuje:</h5>
+              </div>
+              <div class="col-8">
+                <h5 class="d-flex justify-content-start">{{ internalOrder.user.firstName }} {{
+                  internalOrder.user.lastName }}</h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <h5 class="d-flex justify-content-start">Data:</h5>
+              </div>
+              <div class="col-8">
+                <h5 class="d-flex justify-content-start">{{ internalOrder.orderDate | date:'dd/LL/y'}}</h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <h5 class="d-flex justify-content-start">Godzina:</h5>
+              </div>
+              <div class="col-8">
+                <h5 class="d-flex justify-content-start">{{ internalOrder.orderDate | date:'HH:mm'}}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-4 scrollable-card-body">
+            <div class="row" *ngFor="let orderItem of internalOrder.orderItems; let i = index" [hidden]="i >= 5">
+              <div class="col-12">
+                <p>{{ orderItem.materialId.materialNumber }} - {{ orderItem.quantity }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+
+          </div>
+
+          <!-- if products empty then display a message-->
+          <div *ngIf="internalOrders$?.length == 0" class="alert alert-warning col-md-12" role="alert">
+            Sukces, nikt nie potrzebuje części zamiennych!
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>

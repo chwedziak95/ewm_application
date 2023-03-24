@@ -22,6 +22,7 @@ export class MaterialListComponent implements OnInit {
   materialVendorFilter: string = '';
 
   internalCartItemsCount: number = 0;
+  cartItemsCount: number = 0;
   internalCartSubscription: Subscription;
 
   material$: Array<Material> = [];
@@ -32,16 +33,19 @@ export class MaterialListComponent implements OnInit {
     this.materialService.getAll().subscribe(material => {
       this.material$ = material;
     }),
-    this.internalCartSubscription = this.internalCartService.internalCartItems$.subscribe(internalCartItems => {
-      this.internalCartItemsCount = internalCartItems.reduce((acc, item) => acc + item.quantity, 0);
-    });
+      this.internalCartSubscription = this.internalCartService.internalCartItems$.subscribe(internalCartItems => {
+        this.internalCartItemsCount = internalCartItems.reduce((acc, item) => acc + item.quantity, 0);
+      }),
+      this.cartService.totalPrice.subscribe(
+        data => this.cartItemsCount = data
+      );
   }
 
   ngOnDestroy() {
     this.internalCartSubscription.unsubscribe();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   addToCart(material: Material) {
     const cartItem = new CartItem(material);
@@ -53,13 +57,25 @@ export class MaterialListComponent implements OnInit {
     this.cartService.decrementQuantity(existingCartItem);
   }
 
-  addToInternalCart(material: Material){
+  addToInternalCart(material: Material) {
     const cartItem = new InternalCartItem(material);
     this.internalCartService.addToInternalCart(cartItem);
   }
 
-  decrementInternalOrderQuantity(material: Material){
+  decrementInternalOrderQuantity(material: Material) {
     const existingCartItem = this.internalCartService.internalCartItems.find(item => item.id === material.materialId);
     this.internalCartService.decrementQuantity(existingCartItem);
   }
+
+
+  getCartQuantity(material: Material): number {
+    const existingCartItem = this.cartService.cartItems.find(item => item.id === material.materialId);
+    return existingCartItem ? existingCartItem.quantity : 0;
+  }
+
+  getInternalCartQuantity(material: Material): number {
+    const existingInternalCartItem = this.internalCartService.internalCartItems.find(item => item.id === material.materialId);
+    return existingInternalCartItem ? existingInternalCartItem.quantity : 0;
+  }
+
 }

@@ -1,42 +1,32 @@
 <div style="overflow: auto">
-    <table class="table">
-      <thead class="table-dark">
-        <tr>
-          <th>Numer zamówienia</th>
-          <th>Data zamówienia</th>
-          <th>Data przyjęcia</th>
-          <th>Kwota zamówienia</th>
-          <th></th>
-        </tr>
-        <tr>
-          <th>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="orderNumberFilter"
-            />
-          </th>
-          <th>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="orderDateFilter"
-            />
-          </th>
-          <th></th>
-          <th>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="orderStatusFilter"
-            />
-          </th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="
+  <table class="table">
+    <thead class="table-dark">
+      <tr>
+        <th>Numer zamówienia</th>
+        <th>Data zamówienia</th>
+        <th>Data przyjęcia</th>
+        <th>Kwota zamówienia</th>
+        <th></th>
+      </tr>
+      <tr>
+        <th>
+          <input type="text" class="form-control" [(ngModel)]="orderNumberFilter" />
+        </th>
+        <th>
+          <input type="text" class="form-control" [(ngModel)]="orderDateFilter" />
+        </th>
+        <th></th>
+        <th>
+          <select class="form-control" [(ngModel)]="orderStatusFilter">
+            <option value="">status : Wyświetl wszystkie</option>
+            <option *ngFor="let status of getUniqueStatusNames()" [value]="status">{{status}}</option>
+          </select>
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="
             let orders of orders$
               | filterBy
                 : {
@@ -44,15 +34,15 @@
                     orderDate: orderDateFilter,
                     status: { name: orderStatusFilter }
                   }
-          "
-        >
-        <a [routerLink]="['/orders/', orders.ordersId]"><td class="align-middle">{{ orders.orderNumber }}</td></a>
-          <td class="align-middle">{{ orders.orderDate | customDate}}</td>
-          <td *ngIf="orders.status?.name === 'Anulowano'" class="align-middle">{{ orders.status.name }}</td>
-          <td *ngIf="orders.status?.name !== 'Anulowano'"class="align-middle">{{ orders.deliveryDate | customDate}}</td>
-          <td class="align-middle">{{ orders.orderTotal | currency:'PLN'}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+          ">
+        <a [routerLink]="['/orders/', orders.ordersId]">
+          <td class="align-middle">{{ orders.orderNumber }}</td>
+        </a>
+        <td class="align-middle">{{ orders.orderDate | customDate}}</td>
+        <td *ngIf="orders.status?.name === 'Anulowano'" class="align-middle">{{ orders.status.name }}</td>
+        <td *ngIf="orders.status?.name !== 'Anulowano'" class="align-middle">{{ orders.deliveryDate | customDate}}</td>
+        <td class="align-middle">{{ orders.orderTotal | currency:'PLN'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

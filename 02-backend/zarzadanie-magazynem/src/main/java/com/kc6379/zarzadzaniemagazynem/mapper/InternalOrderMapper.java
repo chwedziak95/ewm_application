@@ -15,7 +15,6 @@ import static org.mapstruct.ReportingPolicy.IGNORE;
 @Mapper(unmappedTargetPolicy = IGNORE,componentModel = "spring")
 public interface InternalOrderMapper {
 
-    InternalOrderMapper INSTANCE = Mappers.getMapper(InternalOrderMapper.class);
     @Mapping(source = "user", target = "user.userId")
     @Mapping(source = "status", target = "status.statusId")
     @Mapping(source = "internalOrderRequest.orderItems", target = "orderItems")

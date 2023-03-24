@@ -14,7 +14,6 @@ import static org.mapstruct.ReportingPolicy.IGNORE;
 @Component
 @Mapper(unmappedTargetPolicy = IGNORE, componentModel = "spring")
 public interface OrdersMapper {
-    OrdersMapper INSTANCE = Mappers.getMapper(OrdersMapper.class);
 
     @Mapping(source = "user", target = "user.userId")
     @Mapping(source = "status", target = "status.statusId")

@@ -3,62 +3,53 @@
       <svg class="bi pe-none me-2" width="30" height="24">
         <use xlink:href="#bootstrap" />
       </svg>
-      <span class="fs-5 fw-semibold">Collapsible</span>
+      <span class="fs-5 fw-semibold">Menu</span>
     </a>
     <ul class="list-unstyled ps-0">
       <li class="mb-1">
         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-          data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-          Home
+          data-bs-toggle="collapse" data-bs-target="#material-collapse" aria-expanded="false">
+          Materiały
         </button>
-        <div class="collapse show" id="home-collapse">
+        <div class="collapse show" id="material-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Overview</a></li>
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Updates</a></li>
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Reports</a></li>
+            <li><a routerLink="/material/" class="link-dark d-inline-flex text-decoration-none rounded">Lista</a></li>
+            <li><a routerLink="/create-material" class="link-dark d-inline-flex text-decoration-none rounded">Nowy materiał</a></li>
+            <li><a routerLink="/create-category" class="link-dark d-inline-flex text-decoration-none rounded">Nowa kategoria</a></li>
           </ul>
         </div>
       </li>
       <li class="mb-1">
         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-          data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-          Dashboard
+          data-bs-toggle="collapse" data-bs-target="#vendors-collapse" aria-expanded="false">
+          Dostawcy
         </button>
-        <div class="collapse" id="dashboard-collapse">
+        <div class="collapse" id="vendors-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Overview</a></li>
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Weekly</a></li>
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Monthly</a></li>
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Annually</a></li>
+            <li><a routerLink="/vendor/" class="link-dark d-inline-flex text-decoration-none rounded">Lista</a></li>
+            <li><a routerLink="/create-vendor" class=" link-dark d-inline-flex text-decoration-none rounded">Nowy dostawca</a></li>
           </ul>
         </div>
       </li>
       <li class="mb-1">
         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
           data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-          Orders
+          Zamówienia
         </button>
         <div class="collapse" id="orders-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">New</a></li>
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Processed</a></li>
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Shipped</a></li>
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Returned</a></li>
+            <li><a routerLink="/orders/" class="link-dark d-inline-flex text-decoration-none rounded">Lista</a></li>
           </ul>
         </div>
       </li>
-      <li class="border-top my-3"></li>
       <li class="mb-1">
         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-          data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-          Account
+          data-bs-toggle="collapse" data-bs-target="#internal-orders-collapse" aria-expanded="false">
+          Wew. zamówienia
         </button>
-        <div class="collapse" id="account-collapse">
+        <div class="collapse" id="internal-orders-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">New...</a></li>
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Profile</a></li>
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Settings</a></li>
-            <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Sign out</a></li>
+            <li><a routerLink="/internal-orders/" class="link-dark d-inline-flex text-decoration-none rounded">Panel</a></li>
           </ul>
         </div>
       </li>

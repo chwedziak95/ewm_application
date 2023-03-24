@@ -40,6 +40,7 @@ import { InternalOrderItemsComponent } from './components/internal-order-items/i
 import { LogoutScreenComponent } from './components/logout-screen/logout-screen.component';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SortInternalOrderByDatePipe } from './pipes/sort-internal-order-by-date.pipe';
 
 
 const routes: Routes = [
@@ -84,6 +85,7 @@ const routes: Routes = [
     CreateVendorComponent,
     CreateCategoryComponent,
     CustomDatePipe,
+    SortInternalOrderByDatePipe,
     VendorDetailsComponent,
     InternalOrderListComponent,
     InternalOrderDetailsComponent,
