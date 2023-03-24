@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Material } from '../common/material/material';
 import { CreateMaterialPayload } from '../components/create-material/create-material.payload';
+import { UpdateMaterialPayload } from '../components/create-material/update-material.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +27,9 @@ export class MaterialService {
     return this.http.get<Material>(materialUrl);
   }
 
-  updateMaterial(material: Material): Observable<Material> {
-    const url = `${this.baseUrl}/${material.materialId}`;
-    return this.http.put<Material>(url, material, this.httpOptions).pipe(
-      catchError(this.handleError)
-    );
+  updateMaterial(id: number, materialPayload: UpdateMaterialPayload): Observable<any> {
+    const url = `${this.baseUrl}/update/${id}`;
+    return this.http.post<Material>(url, materialPayload, { observe: 'response' });
   }
 
   private httpOptions = {

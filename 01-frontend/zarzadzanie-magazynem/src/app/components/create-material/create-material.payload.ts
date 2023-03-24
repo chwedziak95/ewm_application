@@ -8,6 +8,7 @@ export class CreateMaterialPayload{
     materialEAN: string; 
     materialSafetyStock: number; 
     materialDescription: string; 
+    materialLocation: string;
     materialCategory: number; 
     materialVendor: number 
 }

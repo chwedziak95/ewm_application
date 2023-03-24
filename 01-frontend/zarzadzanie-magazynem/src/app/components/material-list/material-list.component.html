@@ -9,6 +9,7 @@
           <th scope="col" class="col">Stan</th>
           <th scope="col" class="col">Kategoria</th>
           <th scope="col" class="col">Dostawca</th>
+          <th scope="col" class="col">Lokalizacja</th>
           <th><a routerLink="/cart-details" *ngIf="cartItemsCount > 0"><fa-icon icon="shop-lock"></fa-icon></a></th>
           <th><a routerLink="/internal-order-cart" *ngIf="internalCartItemsCount > 0"><fa-icon
             icon="truck"></fa-icon></a></th>
@@ -19,6 +20,9 @@
           <th></th>
           <th><input type="text" class="form-control" [(ngModel)]="materialCategoryFilter" /></th>
           <th><input type="text" class="form-control" [(ngModel)]="materialVendorFilter" /></th>
+          <th>
+            
+          </th>
           <th>
             
           </th>
@@ -43,6 +47,14 @@
           <td>{{ material.materialQuantity }}</td>
           <td>{{ material.materialCategory.name }}</td>
           <td>{{ material.materialVendor.vendorName }}</td>
+          <td>
+            <span *ngIf="material.materialLocation !== ''">
+              {{ material.materialLocation }}
+            </span>
+            <span>
+              Magazyn(nm)
+            </span>
+          </td>
           <td>
             <div class="d-flex">
             <button (click)="addToCart(material)" class="btn btn-primary btn-sm">

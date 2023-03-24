@@ -15,36 +15,55 @@
             <tr>
               <th>Nazwa</th>
               <td>
+                <span *ngIf="isEditMode == false">{{ material.materialName }}</span>
                 <input
-                  [(ngModel)]="material.materialName"
+                  [(ngModel)]="materialPayload.materialName"
                   [disabled]="!isEditMode"
+                  *ngIf="isEditMode"
                 />
               </td>
             </tr>
             <tr>
               <th>Cena</th>
               <td>
+                <span *ngIf="isEditMode == false">{{ material.materialPrice }}</span>
                 <input
-                  [(ngModel)]="material.materialPrice"
+                  [(ngModel)]="materialPayload.materialPrice"
                   [disabled]="!isEditMode"
+                  *ngIf="isEditMode"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>Miejsce Magazynowe</th>
+              <td>
+                {{ material.materialLocation }}
+                <input
+                  [(ngModel)]="materialPayload.materialLocation"
+                  [disabled]="!isEditMode"
+                  *ngIf="isEditMode"
                 />
               </td>
             </tr>
             <tr>
               <th>Ilość</th>
               <td>
+                <span *ngIf="isEditMode == false">{{ material.materialQuantity }}</span>
                 <input
-                  [(ngModel)]="material.materialQuantity"
+                  [(ngModel)]="materialPayload.materialQuantity"
                   [disabled]="!isEditMode"
+                  *ngIf="isEditMode"
                 />
               </td>
             </tr>
             <tr>
               <th>Jednostka miary</th>
               <td>
+                <span *ngIf="isEditMode == false">{{ material.unitOfMeasure }}</span>
                 <input
-                  [(ngModel)]="material.unitOfMeasure"
+                  [(ngModel)]="materialPayload.unitOfMeasure"
                   [disabled]="!isEditMode"
+                  *ngIf="isEditMode"
                 />
               </td>
             </tr>
@@ -57,20 +76,24 @@
               <td>{{ material.materialCreated | date }}</td>
             </tr>
             <tr>
-              <th>Stan magazynowy</th>
+              <th>Minimalny stan magazynowy</th>
               <td>
+                <span *ngIf="isEditMode == false">{{ material.materialSafetyStock }}</span>
                 <input
-                  [(ngModel)]="material.materialSafetyStock"
+                  [(ngModel)]="materialPayload.materialSafetyStock"
                   [disabled]="!isEditMode"
+                  *ngIf="isEditMode"
                 />
               </td>
             </tr>
             <tr>
               <th>Opis</th>
               <td>
+                <span *ngIf="isEditMode == false">{{ material.materialDescription }}</span>
                 <input
-                  [(ngModel)]="material.materialDescription"
+                  [(ngModel)]="materialPayload.materialDescription"
                   [disabled]="!isEditMode"
+                  *ngIf="isEditMode"
                 />
               </td>
             </tr>
@@ -82,20 +105,22 @@
           <tbody>
             <tr>
               <th>Kategoria</th>
-              <td>{{ material.materialCategory.name }}</td>
+              <td>{{ material.materialCategory?.name }}</td>
             </tr>
             <tr>
               <th>Dostawca</th>
               <td>
+                <span *ngIf="isEditMode == false">{{ material.materialVendor?.vendorName }}</span>
                 <select
-                  [(ngModel)]="material.materialVendor"
+                  [(ngModel)]="materialPayload.materialVendor"
                   [disabled]="!isEditMode"
+                  *ngIf="isEditMode"
                 >
                   <option *ngFor="let vendor of vendors" [value]="vendor">
-                    {{ vendor.vendorName }}
+                    {{ vendor?.vendorName }}
                   </option>
                 </select>
-                <button class="btn btn-secondary btn-sm" (click)="editVendor()">
+                <button *ngIf="isEditMode" class="btn btn-secondary btn-sm" (click)="editVendor()">
                   <i class="fa fa-edit"></i>
                 </button>
               </td>
@@ -152,3 +177,4 @@
     </div>
   </div>
 </div>
+

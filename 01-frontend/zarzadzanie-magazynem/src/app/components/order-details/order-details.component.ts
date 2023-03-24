@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalDismissReasons, NgbDateStruct, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Material } from 'src/app/common/material/material';
 import { OrderItems } from 'src/app/common/order-items/order-items';
@@ -63,8 +63,6 @@ export class OrderDetailsComponent implements OnInit {
     );
   }
 
-  // TBD: NIE WYŚWIELTLA SIE TOASTR SUCCESS POMIMO ŻE DANE SĄ PRZEKAZYWANE DO SEWRWERA
-
   confirmDeliveryAndCloseModal(modal) {
     this.orders.deliveryDate = new Date(Date.UTC(this.deliveryDate.year, this.deliveryDate.month - 1, this.deliveryDate.day));
     this.orderService.deliveryOrder(this.orders.ordersId, this.orders.deliveryDate).subscribe(
@@ -72,7 +70,6 @@ export class OrderDetailsComponent implements OnInit {
         if (response.status === 200 || response.status === 204) {
           this.toastr.success('Potwierdzono dostawę');
           modal.close();
-          console.log('Delivery confirmed', response);
         } else {
           this.toastr.error('Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.');
         }

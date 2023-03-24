@@ -94,4 +94,11 @@ public class MaterialService {
     }
 
 
+    public void update(Long id, MaterialDto materialDto) {
+        System.out.println("received update data" + materialDto.getMaterialName());
+        Material material = materialRepository.findByMaterialId(id)
+                .orElseThrow(() -> new EwmAppException("Nie znaleziono materiału o id : " + id));
+        materialMapper.partialUpdate(materialDto, material);
+        materialRepository.save(material);
+    }
 }

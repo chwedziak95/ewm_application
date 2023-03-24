@@ -147,8 +147,10 @@ public class InternalOrderService {
 
     private void changeStatus(InternalOrder internalOrder, Status status){
         internalOrderResponse.setStatus(status);
+        internalOrderResponse.setPickDate(null);
         internalOrderMapper.partialUpdate(internalOrderResponse, internalOrder);
         internalOrderRepository.save(internalOrder);
+        System.out.println(internalOrder);
     }
 
     public InternalOrderResponse getInternalOrder(Long id) {

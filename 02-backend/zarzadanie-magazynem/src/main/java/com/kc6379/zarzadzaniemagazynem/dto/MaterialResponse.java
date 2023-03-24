@@ -24,6 +24,7 @@ public class MaterialResponse {
     private Instant materialCreated;
     private Integer materialSafetyStock;
     private String materialDescription;
+    private String materialLocation;
     private CategoryDto materialCategory;
     private VendorDto materialVendor;
     private Boolean materialStatus;

@@ -134,6 +134,18 @@
           </div>
 
           <div class="row">
+            <div class="col-md-2"><label>Miesjca składowania</label></div>
+            <div class="col-md-9">
+              <div class="input-space">
+                <input formControlName="materialLocation" type="text" />
+              </div>
+              <div *ngIf="materialEAN.errors?.pattern" class="alert alert-danger mt-1">
+                Nieprawidłowe znaki
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
             <div class="col-md-2"><label>Min. stan mag.</label></div>
             <div class="col-md-9">
               <div class="input-space">

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CartItem } from 'src/app/common/cart-item/cart-item';
 import { Category } from 'src/app/common/category/category';
 import { Material } from 'src/app/common/material/material';
@@ -8,6 +9,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { MaterialService } from 'src/app/services/material.service';
 import { VendorService } from 'src/app/services/vendor.service';
+import { UpdateMaterialPayload } from '../create-material/update-material.payload';
 
 @Component({
   selector: 'app-material-details',
@@ -21,10 +23,11 @@ export class MaterialDetailsComponent implements OnInit {
   material: Material;
   selectedVendor: Vendor;
   isEditMode: boolean = false;
-
+  materialPayload: UpdateMaterialPayload; // Add this line
 
   constructor(private materialService: MaterialService,
               private router: Router,
+              private toastr: ToastrService,
               private cartService: CartService,
               private route: ActivatedRoute,
               private categoryService: CategoryService,
@@ -33,6 +36,7 @@ export class MaterialDetailsComponent implements OnInit {
                 this.material = {} as Material;
                 this.categories = [];
                 this.vendors = [];
+                this.materialPayload = {} as UpdateMaterialPayload; // Add this line
                }
 
   ngOnInit() {
@@ -67,9 +71,21 @@ export class MaterialDetailsComponent implements OnInit {
     );
   }
 
-  saveChanges(): void { // add this method
+  saveChanges() {
     this.isEditMode = false;
-    this.materialService.updateMaterial(this.material).subscribe();
+    // Update the material object with the new payload values
+    console.log("updating material : " + this.materialPayload);
+    Object.assign(this.material, this.materialPayload);
+    this.materialService.updateMaterial(this.material.materialId, this.materialPayload).subscribe(
+      (response) => {
+        if(response.status == 200 || response.status == 201){
+          this.toastr.success("Zapisano zmiany");
+          this.updateData();
+        }else{
+          this.toastr.error("Wystąpił bład");
+        }
+      }
+    );
   }
 
   editVendor(): void {
@@ -78,15 +94,33 @@ export class MaterialDetailsComponent implements OnInit {
 
   toggleStatus(): void {
     this.material.materialStatus = !this.material.materialStatus;
-    this.materialService.updateMaterial(this.material).subscribe();
+    this.materialService.updateMaterial(this.material.materialId, this.materialPayload).subscribe();
   }
 
   toggleEditMode(): void {
     this.isEditMode = true;
+    // Reset the material payload when entering edit mode
+    this.materialPayload = {
+      materialName: this.material.materialName,
+      materialPrice: this.material.materialPrice,
+      materialLocation: this.material.materialLocation,
+      materialQuantity: this.material.materialQuantity,
+      unitOfMeasure: this.material.unitOfMeasure,
+      materialSafetyStock: this.material.materialSafetyStock,
+      materialDescription: this.material.materialDescription,
+      materialVendor: this.material.materialVendor.vendorId
+    };
   }
+
 
   cancelChanges(): void {
     this.isEditMode = false;
+  }
+
+  updateData(){
+    this.getMaterialDetails(this.material.materialId);
+    this.getCategories();
+    this.getVendors();
   }
   
 }

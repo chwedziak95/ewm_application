@@ -13,6 +13,7 @@ export class Material {
   materialCreated: Date;
   materialSafetyStock: number;
   materialDescription: string;
+  materialLocation: string;
   materialCategory: Category;
   materialVendor: Vendor;
   materialStatus: boolean;

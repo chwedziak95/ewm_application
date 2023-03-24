@@ -4,11 +4,16 @@
 
       <div class="row mb-3">
         <div class="col-12">
-          <button class="btn btn-primary" (click)="toggleSortOrder()">
-            <i class="fa" [ngClass]="{'fa-sort-up': sortOrder === 'asc', 'fa-sort-down': sortOrder === 'desc'}"></i>
-            {{ sortOrder === 'asc' ? 'Sort by Date (Newest to Oldest)' : 'Sort by Date (Oldest to Newest)' }}
-          </button>
-          
+          <span *ngIf="internalOrdersNew$?.length !== 0">
+
+            <button class="btn btn-primary" (click)="toggleSortOrder()">
+              <i class="fa" [ngClass]="{'fa-sort-up': sortOrder === 'asc', 'fa-sort-down': sortOrder === 'desc'}"></i>
+              {{ sortOrder === 'asc' ? 'Sort by Date (Newest to Oldest)' : 'Sort by Date (Oldest to Newest)' }}
+            </button>
+
+          </span>
+
+
         </div>
       </div>
       <div class="row">
@@ -52,23 +57,175 @@
             </div>
           </div>
           <div class="card-body p-4 scrollable-card-body">
-            <div class="row" *ngFor="let orderItem of internalOrder.orderItems; let i = index" [hidden]="i >= 5">
+            <div class="row" *ngFor="let orderItem of internalOrder.orderItems">
               <div class="col-12">
-                <p>{{ orderItem.materialId.materialNumber }} - {{ orderItem.quantity }}</p>
+                <p>{{ orderItem.materialId.materialNumber }} ilość: {{ orderItem.quantity }}</p>
               </div>
             </div>
           </div>
 
+
           <div class="card-footer">
-
+            <div>
+              <div class="row">
+                <div class="col">
+                  <span>
+                    <button class="btn btn-sm btn-info" (click)="open(detailsModal, internalOrder)">Szczegóły</button>
+                  </span>
+                </div>
+                <div class="col">
+                  <span *ngIf="internalOrder.status.statusId ===1">
+                    <button class="btn btn-sm btn-success" (click)="open(readyModal, internalOrder)">Gotowe</button>
+                  </span>
+                  <span *ngIf="internalOrder.status.statusId ===4">
+                    <button class="btn btn-sm btn-success" (click)="open(withdrawModal, internalOrder)">Wydanie</button>
+                  </span>
+                </div>
+                <div class="col">
+                  <span
+                    *ngIf="internalOrder.status.statusId !==3 || internalOrder.status.statusId !==6 || internalOrder.status.statusId !==4">
+                    <button class="btn btn-sm btn-danger" (click)="open(cancelModal, internalOrder)">Anuluj</button>
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- if products empty then display a message-->
-          <div *ngIf="internalOrders$?.length == 0" class="alert alert-warning col-md-12" role="alert">
-            Sukces, nikt nie potrzebuje części zamiennych!
-          </div>
+          <!-- Modal templates -->
+          <ng-template #cancelModal let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-cancel-title">Anulowanie zamówienia</h4>
+              <button type="button" class="btn-close" aria-label="Close"
+                (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+              <p>Czy na pewno chcesz anulować to zamówienie?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" (click)="cancel(modal)">Tak, anuluj
+                zamówienie</button>
+              <button type="button" class="btn btn-outline-secondary"
+                (click)="modal.dismiss('Cross click')">Nie</button>
+            </div>
+          </ng-template>
+
+          <ng-template #readyModal let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-cancel-title">Gotowe do wydania</h4>
+              <button type="button" class="btn-close" aria-label="Close"
+                (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+              <p>Czy potwierdzasz, że zamówienie jest gotowe do odbioru?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" (click)="ready(modal)">Tak</button>
+              <button type="button" class="btn btn-outline-secondary"
+                (click)="modal.dismiss('Cross click')">Nie</button>
+            </div>
+          </ng-template>
+
+          <ng-template #withdrawModal let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-cancel-title">Potwierdzenie wydania zamówienia</h4>
+              <button type="button" class="btn-close" aria-label="Close"
+                (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+              <p>Czy potwierdzasz, że odebrano zamówienie?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-danger" (click)="withdraw(modal)">Tak</button>
+              <button type="button" class="btn btn-outline-secondary"
+                (click)="modal.dismiss('Cross click')">Nie</button>
+            </div>
+          </ng-template>
+
+          <ng-template #detailsModal let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-cancel-title">Szczegóły zamówienia</h4>
+              <button type="button" class="btn-close" aria-label="Close"
+                (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-4">
+                  <h5 class="d-flex justify-content-start">Identyfikator:</h5>
+                </div>
+                <div class="col-8">
+                  <h5 class="d-flex justify-content-start">{{ internalOrder.internalOrderId }}</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <h5 class="d-flex justify-content-start">Rezerwuje:</h5>
+                </div>
+                <div class="col-8">
+                  <h5 class="d-flex justify-content-start">{{ internalOrder.user.firstName }} {{
+                    internalOrder.user.lastName }}</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <h5 class="d-flex justify-content-start">Data:</h5>
+                </div>
+                <div class="col-8">
+                  <h5 class="d-flex justify-content-start">{{ internalOrder.orderDate | date:'dd/LL/y'}}</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <h5 class="d-flex justify-content-start">Godzina:</h5>
+                </div>
+                <div class="col-8">
+                  <h5 class="d-flex justify-content-start">{{ internalOrder.orderDate | date:'HH:mm'}}</h5>
+                </div>
+              </div>
+              <table class="table table-bordered">
+                <thead>
+                  <tr class="align-text-start">
+                    <th scope="col" class="col">Numer materiału</th>
+                    <th scope="col" class="col">Ilość</th>
+                    <th scope="col" class="col">Magazyn</th>
+                    <th scope="col" class="col">Aktualny stan</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let orderItem of internalOrder.orderItems">
+                    <td>{{ orderItem.materialId.materialNumber }}</td>
+                    <td>{{ orderItem.quantity }}</td>
+                    <td><span *ngIf="orderItem.materialId.materialLocation !== ''">
+                        {{ orderItem.materialId.materialLocation }}
+                      </span>
+                      <span>
+                        Magazyn(nm)
+                      </span>
+                    </td>
+                    <td>{{ orderItem.materialId.materialQuantity }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+            <div class="modal-footer">
+              <span *ngIf="internalOrder.status.statusId ===1">
+                <button type="button" class="btn btn-success" (click)="ready(modal)">Gotowe do odbioru</button>
+              </span>
+              <span *ngIf="internalOrder.status.statusId ===4">
+                <button type="button" class="btn btn-success" (click)="withdraw(modal)">Wydano towar</button>
+              </span>
+
+              <button type="button" class="btn btn-outline-secondary"
+                (click)="modal.dismiss('Cross click')">Cofnij</button>
+            </div>
+          </ng-template>
 
         </div>
+        <span *ngIf="internalOrdersNew$?.length === 0">
+          <div class="alert alert-info col-md-12">
+            Sukces, nikt nie potrzebuje części zamiennych!
+          </div>
+        </span>
 
       </div>
     </div>

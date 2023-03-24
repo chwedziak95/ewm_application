@@ -25,6 +25,7 @@ public class Material {
     private Instant materialCreated;
     private Integer materialSafetyStock;
     private String materialDescription;
+    private String materialLocation;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "categoryId",

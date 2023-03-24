@@ -21,6 +21,7 @@ public class MaterialDto {
     private String materialEAN;
     private Integer materialSafetyStock;
     private String materialDescription;
+    private String materialLocation;
     private Long materialCategory;
     private Long materialVendor;
 }

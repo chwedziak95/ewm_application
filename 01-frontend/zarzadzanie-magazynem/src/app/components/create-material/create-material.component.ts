@@ -47,6 +47,7 @@ export class CreateMaterialComponent implements OnInit {
     materialEAN: null,
     materialSafetyStock: null, 
     materialDescription: null,
+    materialLocation: null,
     materialCategory: null, 
     materialVendor: null
     }
@@ -79,6 +80,9 @@ export class CreateMaterialComponent implements OnInit {
         Validators.pattern(this.ONLY_CHAR_PATTERN)        
       ]),
       materialEAN: new FormControl('', [
+        Validators.pattern(this.ST_CHAR_PATTERN)        
+      ]),
+      materialLocation: new FormControl('', [
         Validators.pattern(this.ST_CHAR_PATTERN)        
       ]),
       materialSafetyStock: new FormControl('', [
@@ -115,6 +119,7 @@ export class CreateMaterialComponent implements OnInit {
     this.materialPayload.materialEAN = this.createMaterialForm.get('materialEAN').value;
     this.materialPayload.materialSafetyStock = this.createMaterialForm.get('materialSafetyStock').value;
     this.materialPayload.materialDescription = this.createMaterialForm.get('materialDescription').value;
+    this.materialPayload.materialLocation = this.createMaterialForm.get('materialLocation').value;
     this.materialPayload.materialCategory = this.createMaterialForm.get('category').value;
     this.materialPayload.materialVendor = this.createMaterialForm.get('vendor').value;
 
@@ -172,5 +177,8 @@ export class CreateMaterialComponent implements OnInit {
   }
   get materialVendor() {
     return this.createMaterialForm.get('vendor');
+  }
+  get materialLocation() {
+    return this.createMaterialForm.get('materialLocation');
   }
 }
