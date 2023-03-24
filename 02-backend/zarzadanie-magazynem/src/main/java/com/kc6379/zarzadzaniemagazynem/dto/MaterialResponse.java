@@ -9,7 +9,8 @@ import java.time.Instant;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class MaterialResponse {
     private Long materialId;

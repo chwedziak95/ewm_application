@@ -17,7 +17,6 @@ import { VendorListComponent } from './components/vendor-list/vendor-list.compon
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrderItemsListComponent } from './components/order-items-list/order-items-list.component';
 import { UserListComponent } from './components/user-list/user-list.component';
-import { CartStatusComponent } from './components/cart-status/cart-status.component';
 import { MaterialDetailsComponent } from './components/material-details/material-details.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
@@ -75,7 +74,6 @@ const routes: Routes = [
     OrderListComponent,
     OrderItemsListComponent,
     UserListComponent,
-    CartStatusComponent,
     MaterialDetailsComponent,
     OrderDetailsComponent,
     CartDetailsComponent,

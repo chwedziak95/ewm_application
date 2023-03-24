@@ -7,9 +7,6 @@
             Aplikacja wspomagająca zarządzanie magazynem
           </h1>
         </div>
-
-        <app-cart-status></app-cart-status>
-
         <div *ngIf="isLoggedIn" ngbDropdown class="float-right">
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
               <button (click)="goToUserProfile()" ngbDropdownItem class="btn btn-outline-info profile-btn">Profil</button>

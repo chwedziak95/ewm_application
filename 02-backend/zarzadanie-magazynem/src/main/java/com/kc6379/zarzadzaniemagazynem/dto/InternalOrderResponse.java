@@ -1,17 +1,15 @@
 package com.kc6379.zarzadzaniemagazynem.dto;
 
 import com.kc6379.zarzadzaniemagazynem.model.Status;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class InternalOrderResponse {
 

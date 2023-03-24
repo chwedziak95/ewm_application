@@ -7,7 +7,8 @@ import lombok.*;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class OrderItemRequest{
     private Long materialId;
     private Integer quantity;

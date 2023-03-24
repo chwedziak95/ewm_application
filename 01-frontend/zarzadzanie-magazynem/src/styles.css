@@ -68,10 +68,6 @@ input.ng-invalid.ng-touched {
   justify-content: flex-end;
 }
 
-.material-table {
-    height: 500px;
-}
-
 .button-container button {
     margin-right: 0.3rem;
   }
@@ -200,7 +196,7 @@ a,a:hover{
 }
 
 .main-content{
-    padding-top:116px;
+    padding-top:10px;
     min-height:100vh
 }
 
@@ -598,7 +594,7 @@ input.au-input.au-input-xl{
     background:#fff
 }
 .main-content.page-m{
-    padding:10% 30% 10% 5%
+    padding:2% 30% 10% 5%
 }
 
 /* 

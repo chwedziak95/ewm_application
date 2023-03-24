@@ -7,7 +7,8 @@ import lombok.*;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class VendorDto {
     private Long vendorId;

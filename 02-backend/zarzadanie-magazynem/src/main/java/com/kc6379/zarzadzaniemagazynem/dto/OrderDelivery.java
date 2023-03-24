@@ -9,7 +9,8 @@ import java.time.Instant;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class OrderDelivery{
     private Long ordersId;
     private Instant deliveryDate;

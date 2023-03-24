@@ -42,6 +42,7 @@ export class AuthService {
       )
       .pipe(
         map((response) => {
+          console.log("response : " + response)
           const data = response.body;
           this.localStorage.store("token", data.token);
           this.localStorage.store('refreshToken', data.refreshToken);

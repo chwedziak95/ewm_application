@@ -42,7 +42,7 @@ public class InternalOrderService {
         Status status = statusRepository.findByName("Utworzono").orElseThrow(() -> new EwmAppException("Nie znakleziono statusu o nazwie Utworzono"));
         InternalOrder internalOrder = internalOrderMapper.toEntity(internalOrderRequest, authenticationService.getCurrentUser().getUserId() ,status.getStatusId());
         boolean check = availableCheck(internalOrderRequest.getOrderItems());
-        if (check ==true) {
+        if (check) {
             internalOrderRepository.save(internalOrder);
             saveInternalOrderItems(internalOrderRequest.getOrderItems(), internalOrder);
         } else {
@@ -71,6 +71,7 @@ public class InternalOrderService {
     }
     @Transactional
     public List<InternalOrderResponse> getAll() {
+        System.out.println(internalOrderRepository.findAll());
         return internalOrderRepository.findAll()
                 .stream()
                 .map(internalOrderMapper::toInternalOrderResponse)

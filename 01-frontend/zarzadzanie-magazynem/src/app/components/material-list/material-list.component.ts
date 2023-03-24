@@ -52,6 +52,11 @@ export class MaterialListComponent implements OnInit {
     this.cartService.addToCart(cartItem);
   }
 
+  removeFromCart(material: Material) {
+    const existingCartItem = this.cartService.cartItems.find(item => item.id === material.materialId);
+    this.cartService.remove(existingCartItem);
+  }
+
   decrementQuantity(material: Material) {
     const existingCartItem = this.cartService.cartItems.find(item => item.id === material.materialId);
     this.cartService.decrementQuantity(existingCartItem);
@@ -60,6 +65,11 @@ export class MaterialListComponent implements OnInit {
   addToInternalCart(material: Material) {
     const cartItem = new InternalCartItem(material);
     this.internalCartService.addToInternalCart(cartItem);
+  }
+
+  removeFromInternalCart(material: Material) {
+    const cartItem = this.internalCartService.internalCartItems.find(item => item.id === material.materialId);
+    this.internalCartService.remove(cartItem);
   }
 
   decrementInternalOrderQuantity(material: Material) {

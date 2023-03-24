@@ -9,7 +9,8 @@ import java.util.Date;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class PersonalEquipmentDto {
     private Long personalEquipmentId;

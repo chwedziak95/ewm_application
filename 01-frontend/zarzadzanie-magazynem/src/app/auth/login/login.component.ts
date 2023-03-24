@@ -52,6 +52,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.loginRequestPayload, this.rememberMe).subscribe(
       (status) => {
+        console.log("status : " + status)
         if (status) {
           this.isError = false;
           this.router.navigateByUrl('');

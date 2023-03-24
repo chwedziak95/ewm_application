@@ -1,11 +1,11 @@
 package com.kc6379.zarzadzaniemagazynem.dto;
 
-import com.kc6379.zarzadzaniemagazynem.model.OrderItem;
 import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class OrderItemDto{
     private Long orderItemId;

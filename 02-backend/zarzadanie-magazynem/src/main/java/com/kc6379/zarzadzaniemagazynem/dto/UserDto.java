@@ -7,7 +7,8 @@ import lombok.*;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class UserDto {
     private Long userId;
     private String email;

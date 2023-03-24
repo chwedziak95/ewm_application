@@ -1,96 +1,76 @@
-<div style="overflow: auto">
-  <table class="table">
-    <thead class="table-dark">
-      <tr>
-        <th style="width: auto;">Numer materiału</th>
-        <th>Nazwa</th>
-        <th>Stan magazynowy</th>
-        <th style="width: auto;">Kategoria</th>
-        <th style="width: auto;">Dostawca</th>
-        <th></th>
-        <th></th>
-        <th><fa-icon icon="shop-lock"></fa-icon></th>
-        <th><a routerLink="/internal-order-cart" *ngIf="internalCartItemsCount > 0"><fa-icon icon="truck"></fa-icon></a></th>
-      </tr>
-      <tr>
-        <th style="width: auto;">
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="materialNumberFilter"
-          />
-        </th>
-        <th style="width: auto;">
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="materialNameFilter"
-          />
-        </th>
-        <th></th>
-        <th>
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="materialCategoryFilter"
-          />
-        </th>
-        <th>
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="materialVendorFilter"
-          />
-        </th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="
-          let material of material$
-            | filterBy
-              : {
-                  materialNumber: materialNumberFilter,
-                  materialName: materialNameFilter,
-                  materialCategory: { name: materialCategoryFilter },
-                  materialVendor: { vendorName: materialVendorFilter }
-                }
-        "
-      >
-        <a [routerLink]="['/material', material.materialId]"><td class="align-middle">{{ material.materialNumber }}</td></a>
-        <td class="align-middle">{{ material.materialName }}</td>
-        <td class="align-middle">{{ material.materialQuantity }}</td>
-        <td class="align-middle">{{ material.materialCategory.name }}</td>
-        <td class="align-middle">{{ material.materialVendor.vendorName }}</td>
-        <td class="button-container">
-          <button (click)="addToCart(material)" class="btn btn-primary btn-sm">
-            <fa-icon icon="plus"></fa-icon>
-          </button>
-          <button (click)="decrementQuantity(material)" class="btn btn-primary btn-sm">
-            <fa-icon icon="minus"></fa-icon>
-          </button>
-        </td>
-        <td class="button-container">
-          <div class="d-flex flex-column">
-            <button (click)="addToInternalCart(material)" class="btn btn-dark btn-sm mb-1">
+<div class="main-content">
+
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr class="align-text-centre">
+          <th scope="col" class="col">Numer materiału</th>
+          <th scope="col" class="col">Nazwa</th>
+          <th scope="col" class="col">Stan</th>
+          <th scope="col" class="col">Kategoria</th>
+          <th scope="col" class="col">Dostawca</th>
+          <th><a routerLink="/cart-details" *ngIf="cartItemsCount > 0"><fa-icon icon="shop-lock"></fa-icon></a></th>
+          <th><a routerLink="/internal-order-cart" *ngIf="internalCartItemsCount > 0"><fa-icon
+            icon="truck"></fa-icon></a></th>
+        </tr>
+        <tr>
+          <th><input type="text" class="form-control" [(ngModel)]="materialNumberFilter" /></th>
+          <th><input type="text" class="form-control" [(ngModel)]="materialNameFilter" /></th>
+          <th></th>
+          <th><input type="text" class="form-control" [(ngModel)]="materialCategoryFilter" /></th>
+          <th><input type="text" class="form-control" [(ngModel)]="materialVendorFilter" /></th>
+          <th>
+            
+          </th>
+          <th>
+
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="
+        let material of material$
+          | filterBy
+            : {
+                materialNumber: materialNumberFilter,
+                materialName: materialNameFilter,
+                materialCategory: { name: materialCategoryFilter },
+                materialVendor: { vendorName: materialVendorFilter }
+              }
+      ">
+          <td><a [routerLink]="['/material', material.materialId]">{{ material.materialNumber }}</a></td>
+          <td>{{ material.materialName }}</td>
+          <td>{{ material.materialQuantity }}</td>
+          <td>{{ material.materialCategory.name }}</td>
+          <td>{{ material.materialVendor.vendorName }}</td>
+          <td>
+            <div class="d-flex">
+            <button (click)="addToCart(material)" class="btn btn-primary btn-sm">
               <fa-icon icon="plus"></fa-icon>
             </button>
+            <span *ngIf="getCartQuantity(material) > 0">
+              <button  class="btn btn-light btn-sm" (click)="removeFromCart(material)">{{ getCartQuantity(material) }}</button>
+            </span>
+            <button (click)="decrementQuantity(material)" class="btn btn-primary btn-sm">
+              <fa-icon icon="minus"></fa-icon>
+            </button>
+          </div>
+          </td>
+          <td>
+            <div class="d-flex">
+            <button (click)="addToInternalCart(material)" class="btn btn-dark btn-sm">
+              <fa-icon icon="plus"></fa-icon>
+            </button>
+            <span *ngIf="getInternalCartQuantity(material)> 0">
+              <button (click)="removeFromInternalCart(material)" class="btn btn-light">{{ getInternalCartQuantity(material) }}</button>
+            </span>
             <button (click)="decrementInternalOrderQuantity(material)" class="btn btn-dark btn-sm">
               <fa-icon icon="minus"></fa-icon>
             </button>
           </div>
-        </td>
-        <td class="align-middle">
-          <span *ngIf="getCartQuantity(material) > 0">{{ getCartQuantity(material) }}</span>
-        </td>
-        <td class="align-middle">
-          <span *ngIf="getInternalCartQuantity(material) > 0">{{ getInternalCartQuantity(material) }}</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

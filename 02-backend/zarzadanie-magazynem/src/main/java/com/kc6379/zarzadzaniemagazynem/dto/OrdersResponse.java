@@ -6,7 +6,8 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class OrdersResponse {
     private Long ordersId;
