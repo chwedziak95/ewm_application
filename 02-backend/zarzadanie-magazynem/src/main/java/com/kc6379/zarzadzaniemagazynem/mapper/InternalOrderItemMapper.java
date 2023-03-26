@@ -8,8 +8,10 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface InternalOrderItemMapper {
+    @Mapping(target = "id", ignore = true)
     @Mapping(source = "materialId", target ="materialId.materialId")
     InternalOrderItem toEntity(OrderItemRequest orderItemRequest);
 
+    @Mapping(target = "orderItemId", ignore = true)
     OrderItemDto toDto(InternalOrderItem internalOrderItem);
 }

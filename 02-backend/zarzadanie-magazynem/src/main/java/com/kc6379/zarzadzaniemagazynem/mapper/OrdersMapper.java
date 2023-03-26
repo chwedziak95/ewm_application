@@ -3,7 +3,6 @@ package com.kc6379.zarzadzaniemagazynem.mapper;
 import com.kc6379.zarzadzaniemagazynem.dto.*;
 import com.kc6379.zarzadzaniemagazynem.model.*;
 import org.mapstruct.*;
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Set;
@@ -58,5 +57,6 @@ public interface OrdersMapper {
     StatusDto toStatusDto(Status status);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Orders partialUpdate(OrdersResponse orderResponse, @MappingTarget Orders orders);
+    @Mapping(target = "status", ignore = true)
+    void partialUpdate(OrdersResponse orderResponse, @MappingTarget Orders orders);
 }

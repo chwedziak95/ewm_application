@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Aplikacja Bazodanowa wspomagająca zarządzanie magazynem</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>Aplikacja Bazodanowa wspomagająca zarządzanie magazynem</h1>
+<p th:text="${message}"></p>
+<table>
+    <thead>
+    <tr>
+        <th>Numer artykułu</th>
+        <th>Nazwa artykułu</th>
+        <th>Ilość</th>
+        <th>Jednostka miary</th>
+    </tr>
+    </thead>
+    <tbody th:each="item : ${orderItems}">
+    <tr>
+        <td th:text="${item.materialId.materialNumber}"></td>
+        <td th:text="${item.materialId.materialName}"></td>
+        <td th:text="${item.quantity}"></td>
+        <td th:text="${item.materialId.unitOfMeasure}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

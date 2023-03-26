@@ -4,7 +4,6 @@ import com.kc6379.zarzadzaniemagazynem.dto.MaterialDto;
 import com.kc6379.zarzadzaniemagazynem.dto.MaterialResponse;
 import com.kc6379.zarzadzaniemagazynem.service.MaterialService;
 import lombok.AllArgsConstructor;
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

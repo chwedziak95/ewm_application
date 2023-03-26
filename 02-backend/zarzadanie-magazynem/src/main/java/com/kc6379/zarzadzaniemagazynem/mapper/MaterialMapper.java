@@ -20,5 +20,5 @@ public abstract class MaterialMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source = "materialCategory", target = "materialCategory.categoryId")
     @Mapping(source = "materialVendor", target = "materialVendor.vendorId")
-    public abstract Material partialUpdate(MaterialDto materialDto, @MappingTarget Material material);
+    public abstract void partialUpdate(MaterialDto materialDto, @MappingTarget Material material);
 }

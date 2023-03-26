@@ -4,6 +4,7 @@ import com.kc6379.zarzadzaniemagazynem.dto.InternalOrderRequest;
 import com.kc6379.zarzadzaniemagazynem.dto.InternalOrderResponse;
 import com.kc6379.zarzadzaniemagazynem.service.InternalOrderService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequestMapping("/api/v1/internal-orders")
 @AllArgsConstructor
 public class InternalOrderController {
+    @Autowired
     private final InternalOrderService internalOrderService;
     @PostMapping
     public ResponseEntity<Void> createInternalOrder(@RequestBody InternalOrderRequest internalOrderRequest){

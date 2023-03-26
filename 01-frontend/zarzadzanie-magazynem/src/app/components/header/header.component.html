@@ -10,6 +10,7 @@
         <div *ngIf="isLoggedIn" ngbDropdown class="float-right">
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
               <button (click)="goToUserProfile()" ngbDropdownItem class="btn btn-outline-info profile-btn">Profil</button>
+              <button routerLink="/signup" ngbDropdownItem class="btn btn-outline-info profile-btn">Dodaj użytkownika</button>
               <button (click)="logout()" ngbDropdownItem class="btn btn-outline-danger">Wyloguj</button>
           </div>
           <button class="userdetails" id="dropdownBasic1" ngbDropdownToggle>

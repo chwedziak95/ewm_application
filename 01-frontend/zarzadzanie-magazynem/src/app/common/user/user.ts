@@ -7,21 +7,16 @@ export class User{
     created: Date;
     enabled: boolean;
   
-    constructor(
-      userId: number,
-      password: string,
-      email: string,
-      firstName: string,
-      lastName: string,
-      created: Date,
-      enabled: boolean,
-    ) {
-      this.userId = userId;
-      this.password = password;
-      this.email = email;
-      this.firstName = firstName;
-      this.lastName = lastName;
-      this.created = created;
-      this.enabled = enabled;
-    }
+    constructor() {}
+
+    static fromResponse(response: any): User {
+        const user = new User();
+        user.userId = response.userId;
+        user.email = response.email;
+        user.firstName = response.firstName;
+        user.lastName = response.lastName;
+        user.created = new Date(response.created);
+        user.enabled = response.enabled;
+        return user;
+      }
 }

@@ -9,7 +9,7 @@
             <div class="col-md-2"><label>Numer Materiału</label></div>
             <div class="col-md-9">
               <div class="input-space">
-                <input formControlName="materialNumber" type="text" />
+                <input formControlName="materialNumber" type="text" (input)="checkMaterialExists()" />
 
                 <div *ngIf="materialNumber.invalid && (materialNumber!.dirty || materialNumber!.touched)"
                   class="alert alert-danger mt-1">
@@ -19,6 +19,9 @@
                   <div *ngIf="materialNumber.errors.pattern">
                     Nieprawidłowe znaki
                   </div>
+                </div>
+                <div *ngIf="materialNumberExists" class="alert alert-danger mt-1">
+                  Ten numer materiału już istnieje
                 </div>
               </div>
             </div>
@@ -48,7 +51,7 @@
             <div class="col-md-2"><label>Nazwa Materiału</label></div>
             <div class="col-md-9">
               <div class="input-space">
-                <input formControlName="materialName" type="text" />
+                <input formControlName="materialName" type="text" (input)="checkMaterialExists()" />
 
                 <div *ngIf="materialName.invalid && (materialName.dirty || materialName.touched)"
                   class="alert alert-danger mt-1">
@@ -125,10 +128,14 @@
             <div class="col-md-2"><label>EAN</label></div>
             <div class="col-md-9">
               <div class="input-space">
-                <input formControlName="materialEAN" type="text" />
-              </div>
-              <div *ngIf="materialEAN.errors?.pattern" class="alert alert-danger mt-1">
-                Nieprawidłowe znaki
+                <input formControlName="materialEAN" type="text" (input)="checkMaterialExists()" />
+
+                <div *ngIf="materialEAN.errors?.pattern" class="alert alert-danger mt-1">
+                  Nieprawidłowe znaki
+                </div>
+                <div *ngIf="materialEANExists" class="alert alert-danger mt-1">
+                  Ten EAN już istnieje
+                </div>
               </div>
             </div>
           </div>
@@ -212,8 +219,11 @@
         </div>
         <!-- submit -->
         <div class="text-center">
-          <button type="submit" class="btn btn-info">Utwórz materiał</button>
+          <button type="submit"
+            [ngClass]="{'btn btn-danger': materialNumberExists || materialNameExists || materialEANExists, 'btn btn-info': !(materialNumberExists || materialNameExists || materialEANExists)}"
+            [disabled]="materialNumberExists || materialNameExists || materialEANExists">Utwórz materiał</button>
         </div>
+
       </form>
     </div>
   </div>

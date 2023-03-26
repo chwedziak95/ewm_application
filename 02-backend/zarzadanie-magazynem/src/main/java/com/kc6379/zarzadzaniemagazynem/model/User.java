@@ -32,7 +32,7 @@ public class User implements UserDetails{
     @NotEmpty(message = "Nazwisko jest wymagane")
     private String lastName;
     private Instant created;
-    private boolean enabled;
+    private Boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

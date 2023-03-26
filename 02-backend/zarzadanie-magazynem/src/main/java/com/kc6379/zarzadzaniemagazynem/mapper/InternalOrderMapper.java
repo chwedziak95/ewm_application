@@ -3,7 +3,6 @@ package com.kc6379.zarzadzaniemagazynem.mapper;
 import com.kc6379.zarzadzaniemagazynem.dto.*;
 import com.kc6379.zarzadzaniemagazynem.model.*;
 import org.mapstruct.*;
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -56,5 +55,5 @@ public interface InternalOrderMapper {
     StatusDto toStatusDto(Status status);
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source="pickDate", target = "internalOrder.pickDate")
-    InternalOrder partialUpdate(InternalOrderResponse internalOrderResponse, @MappingTarget InternalOrder internalOrder);
+    void partialUpdate(InternalOrderResponse internalOrderResponse, @MappingTarget InternalOrder internalOrder);
 }

@@ -38,6 +38,13 @@ public class OrderController {
                 .body(orderService.getOrder(id));
     }
 
+    @GetMapping("/by-user/{id}")
+    public ResponseEntity<List<OrdersResponse>> getAllByUser(@PathVariable Long id){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(orderService.getAllByUser(id));
+    }
+
     @PostMapping("/delivery/{ordersId}")
     public ResponseEntity<Void> deliveryOrder(@PathVariable Long ordersId, @RequestBody OrdersResponse ordersResponse){
         orderService.deliveryOrder(ordersId, ordersResponse);

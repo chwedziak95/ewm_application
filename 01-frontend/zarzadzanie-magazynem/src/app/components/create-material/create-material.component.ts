@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
 import { Category } from 'src/app/common/category/category';
+import { Material } from 'src/app/common/material/material';
 import { Vendor } from 'src/app/common/vendor/vendor';
 import { CategoryService } from 'src/app/services/category.service';
 import { MaterialService } from 'src/app/services/material.service';
@@ -20,9 +21,13 @@ import { CreateMaterialPayload } from './create-material.payload';
   styleUrls: ['./create-material.component.css'],
 })
 export class CreateMaterialComponent implements OnInit {
+  materials: Material[] = [];
   vendors: Vendor[] = [];
   categories: Category[] = [];
   materialPayload: CreateMaterialPayload;
+  materialNumberExists: boolean = false;
+  materialNameExists: boolean = false;
+  materialEANExists: boolean = false;
 
   createMaterialForm: FormGroup;
 
@@ -38,22 +43,23 @@ export class CreateMaterialComponent implements OnInit {
     private toastr: ToastrService
   ) {
     this.materialPayload = {
-    materialNumber:null, 
-    materialManufacturer: null,
-    materialName: null,
-    materialPrice: null,
-    materialQuantity: null,
-    unitOfMeasure: null,
-    materialEAN: null,
-    materialSafetyStock: null, 
-    materialDescription: null,
-    materialLocation: null,
-    materialCategory: null, 
-    materialVendor: null
+      materialNumber: null,
+      materialManufacturer: null,
+      materialName: null,
+      materialPrice: null,
+      materialQuantity: null,
+      unitOfMeasure: null,
+      materialEAN: null,
+      materialSafetyStock: null,
+      materialDescription: null,
+      materialLocation: null,
+      materialCategory: null,
+      materialVendor: null
     }
   }
 
   ngOnInit() {
+    this.getMaterials();
     this.createMaterialForm = new FormGroup({
       materialNumber: new FormControl('', [
         Validators.required,
@@ -61,35 +67,35 @@ export class CreateMaterialComponent implements OnInit {
       ]),
       materialManufacturer: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.ST_CHAR_PATTERN)        
+        Validators.pattern(this.ST_CHAR_PATTERN)
       ]),
       materialName: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.ST_CHAR_PATTERN)        
+        Validators.pattern(this.ST_CHAR_PATTERN)
       ]),
       materialPrice: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.PRICE_PATTERN)        
+        Validators.pattern(this.PRICE_PATTERN)
       ]),
       materialQuantity: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.PRICE_PATTERN)        
+        Validators.pattern(this.PRICE_PATTERN)
       ]),
       unitOfMeasure: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.ONLY_CHAR_PATTERN)        
+        Validators.pattern(this.ONLY_CHAR_PATTERN)
       ]),
       materialEAN: new FormControl('', [
-        Validators.pattern(this.ST_CHAR_PATTERN)        
+        Validators.pattern(this.ST_CHAR_PATTERN)
       ]),
       materialLocation: new FormControl('', [
-        Validators.pattern(this.ST_CHAR_PATTERN)        
+        Validators.pattern(this.ST_CHAR_PATTERN)
       ]),
       materialSafetyStock: new FormControl('', [
-        Validators.pattern(this.PRICE_PATTERN)        
+        Validators.pattern(this.PRICE_PATTERN)
       ]),
       materialDescription: new FormControl('', [
-        Validators.pattern(this.ST_CHAR_PATTERN)        
+        Validators.pattern(this.ST_CHAR_PATTERN)
       ]),
       category: new FormControl('', [Validators.required]),
       vendor: new FormControl('', [Validators.required])
@@ -107,6 +113,17 @@ export class CreateMaterialComponent implements OnInit {
     }, error => {
       return throwError(() => error);
     });
+  }
+
+  getMaterials() {
+    this.materialService.getAll().subscribe(
+      data => {
+        this.materials = data;
+      },
+      error => {
+        console.error('Wystąpił błąd podczas pobierania listy materiałów : ', error);
+      }
+    );
   }
 
   createMaterialSubmit() {
@@ -142,8 +159,24 @@ export class CreateMaterialComponent implements OnInit {
       error: (err) => {
         this.toastr.error(`Wystąpił błąd: ${err.message}`);
       }
-    });  
+    });
   }
+
+  checkMaterialExists() {
+    const materialNumber = this.createMaterialForm.get('materialNumber').value;
+    const materialName = this.createMaterialForm.get('materialName').value;
+    const materialEAN = this.createMaterialForm.get('materialEAN').value;
+  
+    this.materialNumberExists = materialNumber && this.materials.some(material => material.materialNumber === materialNumber);
+    this.materialNameExists = materialName && this.materials.some(material => material.materialName === materialName);
+    
+    if (materialEAN) {
+      this.materialEANExists = this.materials.some(material => material.materialEAN === materialEAN);
+    } else {
+      this.materialEANExists = false;
+    }
+  }
+  
 
   get materialNumber() {
     return this.createMaterialForm.get('materialNumber');

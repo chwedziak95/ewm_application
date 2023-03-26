@@ -42,7 +42,7 @@
                 materialVendor: { vendorName: materialVendorFilter }
               }
       ">
-          <td><a [routerLink]="['/material', material.materialId]">{{ material.materialNumber }}</a></td>
+          <td><a [routerLink]="['/material/', material.materialId]">{{ material.materialNumber }}</a></td>
           <td>{{ material.materialName }}</td>
           <td>{{ material.materialQuantity }}</td>
           <td>{{ material.materialCategory.name }}</td>

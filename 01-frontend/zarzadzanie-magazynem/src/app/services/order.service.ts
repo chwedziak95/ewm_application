@@ -7,12 +7,18 @@ import { Orders } from '../common/orders/orders';
   providedIn: 'root'
 })
 export class OrderService {
+  
   private baseUrl = "http://localhost:8080/api/v1/orders";
 
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Array<Orders>> {
     return this.http.get<Array<Orders>>(this.baseUrl);
+  }
+
+  getAllByUser(id: number): Observable<Array<Orders>> {
+    const url = `${this.baseUrl}/by-user/${id}`;
+    return this.http.get<Array<Orders>>(url);
   }
 
   getOrder(ordersId: number): Observable<Orders> {

@@ -1,1 +1,263 @@
-<p>user-profile works!</p>
+<div class="main-content">
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a routerLink="/material/">Menu</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Użytkownik / Profil</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                            <h5 class="my-3">{{ user?.firstName }} {{ user?.lastName }}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Użytkownik</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{ user?.firstName }} {{ user?.lastName }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Email</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{ user?.email }}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Użytkownik od</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{ user?.created | date:'dd/LL/YYYY' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4 mb-md-0">
+                                <div class="card-body">
+                                    <p class="mb-4"><span class="text-primary font-italic me-1">Zamówienia</span></p>
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <p class="mb-0">Zewnętrzne</p>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <p class="text-muted mb-0">{{ totalValue }}zł</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <p class="mb-0">Ilość zamówionych części</p>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <p class="text-muted mb-0">{{ orderQty }}</p>
+                                        </div>
+                                    </div>
+                                    <div *ngFor="let vendorTotalValueEntry of vendorTotalValues | keyvalue">
+                                        <p class="mt-4 mb-1" style="font-size: .77rem;">
+                                            {{vendorTotalValueEntry.key}} {{ vendorTotalValueEntry.value |
+                                            number:'1.2-2' }} zł
+                                        </p>
+
+                                        <div class="progress rounded" style="height: 5px;">
+
+                                            <div class="progress-bar" role="progressbar"
+                                                [style.width]="(vendorTotalValueEntry.value / totalValue) * 100 + '%'"
+                                                [attr.aria-valuenow]="(vendorTotalValueEntry.value / totalValue) * 100"
+                                                aria-valuemin="0" aria-valuemax="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4 mb-md-0">
+                                <div class="card-body">
+                                    <p class="mb-4"><span class="text-primary font-italic me-1">Wentętrzne
+                                            zamówienia</span></p>
+                                    <div class="row">
+                                        <div class="col">
+                                            Data do
+                                            <div class="input-group">
+                                              <input id="deliveryDateFrom" class="form-control"
+                                                placeholder="yyyy-mm-dd" name="dpFrom" ngbDatepicker
+                                                #dpFrom="ngbDatepicker" (dateSelect)="onDateRangeChange()" [(ngModel)]="deliveryDateFrom" />
+                                              <button class="btn btn-outline-secondary bi bi-calendar3"
+                                                (click)="dpFrom.toggle()" type="button"></button>
+                                            </div>
+                                          </div>
+                                          <!-- Date To -->
+                                          <div class="col">
+                                            Data do
+                                            <div class="input-group">
+                                              <input id="deliveryDateTo" class="form-control" placeholder="yyyy-mm-dd"
+                                                name="dpTo" ngbDatepicker #dpTo="ngbDatepicker" (dateSelect)="onDateRangeChange()" [(ngModel)]="deliveryDateTo" />
+                                              <button class="btn btn-outline-secondary bi bi-calendar3"
+                                                (click)="dpTo.toggle()" type="button"></button>
+                                            </div>
+                                          </div>
+                                        <div class="col-5">
+                                            Status
+                                            <div class="input-group">
+                                                <div ngbDropdown class="d-inline-block">
+                                                    <button type="button" class="btn btn-outline-primary"
+                                                        id="dropdownBasic1" ngbDropdownToggle>
+                                                        {{selectedStatus || 'Status'}}
+                                                    </button>
+                                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                                        <button *ngFor="let status of uniqueStatuses" ngbDropdownItem
+                                                            (click)="onStatusChange(status)">{{status}}</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngFor="let internalOrder of internalOrders$">
+                                        <div class="col">
+                                            <div class="breadcrumb-item"><button
+                                                    (click)="open(detailsModal, internalOrder)"><!-- Numer id zamówienia -->
+                                                    {{internalOrder.internalOrderId}}</button></div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="breadcrumb-item"><!-- Data zamówienia -->
+                                                {{internalOrder.orderDate | date:'dd/LL/y'}}</div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="breadcrumb-item"><!-- Status --> {{internalOrder.status.name}}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <ng-template #detailsModal let-modal>
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modal-cancel-title">Szczegóły zamówienia</h4>
+                                            <button type="button" class="btn-close" aria-label="Close"
+                                                (click)="modal.dismiss('Cross click')"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <h5 class="d-flex justify-content-start">Identyfikator:</h5>
+                                                </div>
+                                                <div class="col-8">
+                                                    <h5 class="d-flex justify-content-start">{{
+                                                        internalOrder.internalOrderId }}</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <h5 class="d-flex justify-content-start">Rezerwuje:</h5>
+                                                </div>
+                                                <div class="col-8">
+                                                    <h5 class="d-flex justify-content-start">{{
+                                                        internalOrder.user.firstName }} {{
+                                                        internalOrder.user.lastName }}</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <h5 class="d-flex justify-content-start">Data:</h5>
+                                                </div>
+                                                <div class="col-8">
+                                                    <h5 class="d-flex justify-content-start">{{ internalOrder.orderDate
+                                                        | date:'dd/LL/y'}}</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <h5 class="d-flex justify-content-start">Godzina:</h5>
+                                                </div>
+                                                <div class="col-8">
+                                                    <h5 class="d-flex justify-content-start">{{ internalOrder.orderDate
+                                                        | date:'HH:mm'}}</h5>
+                                                </div>
+                                            </div>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr class="align-text-start">
+                                                        <th scope="col" class="col">Numer materiału</th>
+                                                        <th scope="col" class="col">Ilość</th>
+                                                        <th scope="col" class="col">Magazyn</th>
+                                                        <th scope="col" class="col">Aktualny stan</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let orderItems of internalOrder.orderItems">
+                                                        <td>{{ orderItems.materialId.materialNumber }}</td>
+                                                        <td>{{ orderItems.quantity }}</td>
+                                                        <td><span *ngIf="orderItems.materialId.materialLocation !== ''">
+                                                                {{ orderItems.materialId.materialLocation }}
+                                                            </span>
+                                                            <span>
+                                                                Magazyn(nm)
+                                                            </span>
+                                                        </td>
+                                                        <td>{{ orderItems.materialId.materialQuantity }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary"
+                                                (click)="modal.dismiss('Cross click')">Cofnij</button>
+
+                                            <div class="col">
+                                                <span
+                                                    *ngIf="internalOrder.status.statusId !==3 && internalOrder.status.statusId !==6 && internalOrder.status.statusId !==4">
+                                                    <button class="btn btn-sm btn-danger"
+                                                        (click)="open(cancelModal, internalOrder)">Anuluj</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+
+                                    <ng-template #cancelModal let-modal>
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modal-cancel-title">Anulowanie zamówienia</h4>
+                                            <button type="button" class="btn-close" aria-label="Close"
+                                                (click)="modal.dismiss('Cross click')"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Czy na pewno chcesz anulować to zamówienie?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-danger"
+                                                (click)="cancel(modal)">Tak, anuluj
+                                                zamówienie</button>
+                                            <button type="button" class="btn btn-outline-secondary"
+                                                (click)="modal.dismiss('Cross click')">Nie</button>
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

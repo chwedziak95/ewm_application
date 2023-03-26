@@ -2,7 +2,6 @@ package com.kc6379.zarzadzaniemagazynem.service;
 
 import com.kc6379.zarzadzaniemagazynem.dto.*;
 import com.kc6379.zarzadzaniemagazynem.exceptions.EwmAppException;
-import com.kc6379.zarzadzaniemagazynem.mapper.MaterialMapper;
 import com.kc6379.zarzadzaniemagazynem.mapper.OrdersMapper;
 import com.kc6379.zarzadzaniemagazynem.model.*;
 import com.kc6379.zarzadzaniemagazynem.repository.*;
@@ -12,11 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
+@SuppressWarnings("SpellCheckingInspection")
 @Service
 @AllArgsConstructor
 @Slf4j
@@ -29,12 +28,8 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
     private final AuthenticationService authenticationService;
     private final OrdersMapper ordersMapper;
-    private final VendorRepository vendorRepository;
     private final MailService mailService;
     private final OrdersResponse orderResponse;
-    private final MaterialDto materialDto;
-    private final MaterialMapper materialMapper;
-    private final LocalDate currentDate = LocalDate.now();
 
     public void save(OrderRequest orderRequest){
         Status status = statusRepository.findByStatusId(1).orElseThrow(() -> new EwmAppException("Nie znaleziono statusu o id"));
@@ -47,7 +42,7 @@ public class OrderService {
 
     private Double countTotal(Set<OrderItemRequest> orderItemRequests) {
         Set<OrderItem> orderItems = ordersMapper.toOrderItemEntities(orderItemRequests);
-        Double total = 0.0;
+        double total = 0.0;
         for (OrderItem orderItem : orderItems) {
             Material material = materialRepository.findByMaterialId(orderItem.getMaterialId().getMaterialId())
                     .orElseThrow(() -> new EwmAppException(" Podczas przeliczania Nie znaleziono materiału o id"));
@@ -58,11 +53,60 @@ public class OrderService {
 
     public void saveOrderItems(Set<OrderItemRequest> orderItemRequests, Orders orders) {
         Set<OrderItem> orderItems = ordersMapper.toOrderItemEntities(orderItemRequests);
+        Map<Vendor, List<OrderItem>> vendorOrderItemsMap = orderItems.stream().collect(Collectors.groupingBy(orderItem -> {
+            Material material = materialRepository.findByMaterialId(orderItem.getMaterialId().getMaterialId())
+                    .orElseThrow(() -> new EwmAppException("Nie znaleziono materiału o id"));
+            return material.getMaterialVendor();
+        }));
+
         for (OrderItem orderItem : orderItems) {
             orderItem.setOrders(orders);
-            sendOrderItemToVendor(orderItem, orders);
             orderItemRepository.save(orderItem);
         }
+
+        for (Map.Entry<Vendor, List<OrderItem>> entry : vendorOrderItemsMap.entrySet()) {
+            sendOrderItemsToVendor(entry.getKey(), entry.getValue(), orders);
+        }
+    }
+
+    private void sendOrderItemsToVendor(Vendor vendor, List<OrderItem> orderItems, Orders orders) {
+        User user = userRepository.findByUserId(orders.getUser().getUserId()).orElseThrow(() -> new EwmAppException("Nie znaleziono użytkownika o id"));
+
+        List<OrderItemDto> orderItemsDto = convertOrderItemsToDto(orderItems);
+
+        mailService.sendOrderItemToVendor(new NotificationEmail(
+                "Zamówienie: " + orders.getOrderNumber(), vendor.getVendorEmail(),
+                "Nowe zamówienie od: " + user.getFirstName() +
+                        " " + user.getLastName() +
+                        "\nNumer zamówienia: " + orders.getOrderNumber()), orderItemsDto);
+    }
+
+
+
+
+    private List<OrderItemDto> convertOrderItemsToDto(List<OrderItem> orderItems) {
+        List<OrderItemDto> orderItemDtos = new ArrayList<>();
+
+        for (OrderItem orderItem : orderItems) {
+            Material material = materialRepository.findByMaterialId(orderItem.getMaterialId().getMaterialId())
+                    .orElseThrow(() -> new EwmAppException("Nie znaleziono materiału o id"));
+
+            MaterialResponse materialResponse = MaterialResponse.builder()
+                    .materialNumber(material.getMaterialNumber())
+                    .materialName(material.getMaterialName())
+                    .unitOfMeasure(material.getUnitOfMeasure())
+                    .build();
+
+            OrderItemDto orderItemDto = OrderItemDto.builder()
+                    .orderItemId(orderItem.getOrderItemId())
+                    .materialId(materialResponse)
+                    .quantity(orderItem.getQuantity())
+                    .build();
+
+            orderItemDtos.add(orderItemDto);
+        }
+
+        return orderItemDtos;
     }
 
     public List<OrdersResponse> getAll() {
@@ -83,23 +127,6 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
-    private void sendOrderItemToVendor(OrderItem orderItem, Orders orders) {
-        User user = userRepository.findByUserId(orders.getUser().getUserId()).orElseThrow(() -> new EwmAppException("Nie znaleziono użytkownika o id"));
-        Material material = materialRepository.findByMaterialId(orderItem.getMaterialId().getMaterialId()).orElseThrow(() -> new EwmAppException("Nie znaleziono materiału o id"));
-        Vendor vendor = vendorRepository.findByVendorId(material.getMaterialVendor().getVendorId()).orElseThrow(() -> new EwmAppException("Nie znaleziono dostawcy o id"));
-        mailService.sendOrderItemToVendor(new NotificationEmail(
-                "Zamówienie: " + orders.getOrderNumber(), vendor.getVendorEmail(),
-                "Nowe zamówienie od: " + user.getFirstName() +
-                        " " + user.getLastName() +
-                        " na materiał: numer artykułu: " +
-                        material.getMaterialNumber() +
-                        " nazwa artykułu:  " +
-                        material.getMaterialName() +
-                        " w ilości: " +
-                        orderItem.getQuantity() +
-                        material.getUnitOfMeasure()));
-    }
-
     private String generateOrderNumber() {
         return UUID.randomUUID().toString();
     }
@@ -116,7 +143,7 @@ public class OrderService {
         }
         orderResponse.setOrdersId(ordersId);
         Status status = statusRepository.findByName("Dostarczono").orElseThrow();
-        orderResponse.setStatus(new StatusDto(status.getStatusId(), status.getName()));
+        orders.setStatus(status);
         orderResponse.setDeliveryDate(deliveryDate);
         if (orders.getDeliveryDate() != null) {
             throw new EwmAppException("Zamówienie zostało już dostarczone");
@@ -125,7 +152,6 @@ public class OrderService {
         ordersMapper.partialUpdate(orderResponse, orders);
         orderRepository.save(orders);
     }
-
 
     private void updateMaterialQuantity(Orders orders) {
         Set<OrderItem> orderItems = orderItemRepository.findByOrders(orders);
@@ -138,15 +164,12 @@ public class OrderService {
         }
     }
 
-
-
     public void cancelOrder(Long ordersId) {
         Orders orders = orderRepository.findByOrdersId(ordersId)
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono zamówienia o id" + ordersId));
         if (orders.getDeliveryDate() == null && !Objects.equals(orders.getStatus().getName(), "Anulowano")){
             Status status = statusRepository.findByName("Anulowano").orElseThrow();
-            orderResponse.setStatus(new StatusDto(status.getStatusId(), status.getName()));
-            ordersMapper.partialUpdate(orderResponse, orders);
+            orders.setStatus(status);
             orderRepository.save(orders);
         }else{
             throw new EwmAppException("Wystąpił bład podczas anulowania zamówienia o id: " + ordersId);

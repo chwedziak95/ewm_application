@@ -8,6 +8,7 @@ const BASE_URL = 'http://localhost:8080/api/v1/internal-orders';
 const CANCEL_URL = `${BASE_URL}/cancel`;
 const READY_URL = `${BASE_URL}/ready`;
 const WITHDRAW_URL = `${BASE_URL}/withdraw`;
+const BY_USER_URL = `${BASE_URL}/by-user`;
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,11 @@ export class InternalOrderService {
 
   getAll(): Observable<Array<InternalOrder>> {
     return this.http.get<Array<InternalOrder>>(BASE_URL);
+  }
+
+  getAllByUser(id: number): Observable<Array<InternalOrder>> {
+    const url = `${BY_USER_URL}/${id}`; 
+    return this.http.get<Array<InternalOrder>>(url);
   }
 
   getOrder(id: number): Observable<HttpResponse<InternalOrder>> {

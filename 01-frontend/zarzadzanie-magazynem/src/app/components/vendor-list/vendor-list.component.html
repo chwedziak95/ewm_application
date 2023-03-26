@@ -1,14 +1,14 @@
-<div style="overflow: auto">
-    <table class="table">
-      <thead class="table-dark">
-        <tr>
-          <th>Nazwa</th>
-          <th>E-mail</th>
-          <th>Telefon Kontaktowy</th>
-          <th>NIP</th>
-          <th></th>
+<div class="main-content">
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr class="align-text-centre">
+          <th scope="col" class="col">Nazwa</th>
+          <th scope="col" class="col">E-mail</th>
+          <th scope="col" class="col">Telefon Kontaktowy</th>
+          <th scope="col" class="col">NIP</th>
         </tr>
-        <tr>
+        <tr class="align-text-centre">
           <th>
             <input type="text" class="form-control" [(ngModel)]="vendorNameFilter" />
           </th>
@@ -31,7 +31,7 @@
             vendorPhone: vendorPhoneFilter,
             vendorNip: vendorNipFilter
           }">
-          <td class="align-middle">{{ vendor.vendorName }}</td>
+          <td class="align-middle"><a [routerLink]="['/vendor/', vendor.vendorId]"> {{ vendor.vendorName }}</a></td>
           <td class="align-middle">{{ vendor.vendorEmail }}</td>
           <td class="align-middle">{{ vendor.vendorPhone }}</td>
           <td class="align-middle">{{ vendor.vendorNip }}</td>

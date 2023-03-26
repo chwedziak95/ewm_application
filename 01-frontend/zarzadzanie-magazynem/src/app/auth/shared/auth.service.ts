@@ -1,5 +1,5 @@
 import { Injectable, Output } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { SignupRequestPayload } from '../signup/signup-request.payload';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { LoginRequestPayload } from '../login/login-request.payload';
@@ -7,6 +7,11 @@ import { LoginResponse } from '../login/login-response.payload';
 import { LocalStorageService } from 'ngx-webstorage';
 import { BehaviorSubject } from 'rxjs';
 
+const loginUrl = 'http://localhost:8080/api/v1/auth/authenticate';
+const refreshTokenUrl = 'http://localhost:8080/api/v1/auth/refresh/token';
+const logoutUrl = 'http://localhost:8080/api/v1/auth/logout';
+const signupUrl = 'http://localhost:8080/api/v1/auth/signup';
+const resetPasswordUrl = 'http://localhost:8080/api/v1/auth/password-reset';
 @Injectable({
   providedIn: 'root',
 })
@@ -21,22 +26,26 @@ export class AuthService {
   authStatus$ = this._authStatus.asObservable();
 
   constructor(
-    private httpClient: HttpClient,
+    private http: HttpClient,
     private localStorage: LocalStorageService
   ) {}
 
   signup(signupRequestPayload: SignupRequestPayload): Observable<any> {
-    return this.httpClient.post(
-      'http://localhost:8080/api/v1/auth/signup',
+    return this.http.post(
+      signupUrl,
       signupRequestPayload,
       { responseType: 'text' }
     );
   }
 
+  resetPassword(email: string): Observable<HttpResponse<any>> {
+    return this.http.post<HttpResponse<any>>(resetPasswordUrl, email,{ observe: 'response' })
+  }
+
   login(loginRequestPayload: LoginRequestPayload, rememberMe: boolean): Observable<boolean> {
-    return this.httpClient
+    return this.http
       .post<LoginResponse>(
-        'http://localhost:8080/api/v1/auth/authenticate',
+        loginUrl,
         loginRequestPayload,
         { observe: 'response' }
       )
@@ -81,9 +90,9 @@ export class AuthService {
       username: this.getUserName(),
     };
   
-    return this.httpClient
+    return this.http
       .post<LoginResponse>(
-        'http://localhost:8080/api/v1/auth/refresh/token',
+        refreshTokenUrl,
         this.refreshTokenPayload
       )
       .pipe(
@@ -99,9 +108,9 @@ export class AuthService {
   
 
   logout() {
-    this.httpClient
+    this.http
       .post(
-        'http://localhost:8080/api/v1/auth/logout',
+        logoutUrl,
         this.refreshTokenPayload,
         {
           responseType: 'text',

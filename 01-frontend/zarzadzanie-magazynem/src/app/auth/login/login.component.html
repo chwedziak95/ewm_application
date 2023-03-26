@@ -41,23 +41,59 @@
                                     </label>
                                 </div>
                             </div>
-
-                            <div class="col">
-                                <!-- Simple link -->
-                                <a href="#!">Forgot password?</a>
-                            </div>
                         </div>
 
                         <!-- Submit button -->
                         <div class="form-group">
+                        
                             <button type="submit" class="btn btn-primary btn-block mb-4">
                                 Zaloguj
                             </button>
                         </div>
+
+                        <button type="button" class="btn btn-warning" (click)="open(resetModal)">
+                            Zapomniałeś hasła?
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
+        <ng-template #resetModal let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-cancel-title">Resetowanie hasła</h4>
+              <button type="button" class="btn-close" aria-label="Close"
+                (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body px-5">
+                <p class="py-2">
+                  Wprowadź adres email, jeśli istnieje w bazie danych wyślemy na niego email z linkiem do resetowania hasła
+                </p>
+                <form [formGroup]="resetPasswordForm">
+                  <div class="form-outline">
+                    <input type="email" id="typeEmail" class="form-control my-3" formControlName="resetEmail" />
+                    <label class="form-label" for="typeEmail">Email</label>
+                    <span *ngIf="!resetPasswordForm.get('resetEmail')?.valid && resetPasswordForm.get('resetEmail')?.touched">
+                      <ng-container *ngIf="resetPasswordForm.get('resetEmail')?.errors?.required">
+                        Proszę wprowadzić adres email
+                      </ng-container>
+                      <ng-container *ngIf="resetPasswordForm.get('resetEmail')?.errors?.email">
+                        Wprowadzony adres email jest nieprawidłowy
+                      </ng-container>
+                    </span>
+                  </div>
+                </form>
+              </div>
+              
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" [disabled]="!resetPasswordForm.valid" (click)="reset(modal)">Wyślij link</button>
+              <button type="button" class="btn btn-outline-secondary"
+                (click)="modal.dismiss('Cross click')">Cofnij</button>
+            </div>
+          </ng-template>
         <div class="col-md-3"></div>
     </div>
 </div>
+
+<!-- Modal -->
+
+
