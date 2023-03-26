@@ -22,7 +22,7 @@ public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    @NotBlank(message = "Hasło jest wymagane")
+
     private String password;
     @Email
     @NotEmpty(message = "Email jest wymagany")

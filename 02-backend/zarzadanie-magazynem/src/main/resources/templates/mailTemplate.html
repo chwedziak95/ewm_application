@@ -1,14 +1,51 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <title>Aplikacja Bazodanowa wspomagająca zarządzanie magazynem</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #F7F7F7;
+            border: 1px solid #CCCCCC;
+            border-radius: 5px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
-<span th:text="${message}"></span>
+<div class="container">
+    <h1>Witaj, <span th:text="${firstName}"></span> <span th:text="${lastName}"></span>!</h1>
+    <p>Proszę kliknąć poniższy link, aby dokończyć rejestrację:</p>
+    <p><a th:href="@{${message}}">Aktywuj konto</a></p>
+    <p>Aplikacjs Bazodanowa wspomagająca zarządzanie magazynem</p>
+</div>
 </body>
 </html>

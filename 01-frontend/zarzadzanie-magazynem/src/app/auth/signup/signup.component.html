@@ -41,16 +41,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-                            <div class="col-md-6">
-                                <input type="password" [formControlName]="'password'"  id="password" class="form-control" name="password" required>
-                                <span *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" class="help-block">
-                                    Proszę wprowadzić hasło
-                                </span>                                
-                            </div>
-                        </div>
-
                         <span class="col-md-6 offset-md-4">
                             <button type="submit" class="sign-up">
                                 Zarejestruj użytkownika

@@ -40,6 +40,7 @@ import { LogoutScreenComponent } from './components/logout-screen/logout-screen.
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SortInternalOrderByDatePipe } from './pipes/sort-internal-order-by-date.pipe';
+import { CompleteRegistrationComponent } from './auth/complete-registration/complete-registration.component';
 
 
 const routes: Routes = [
@@ -59,6 +60,7 @@ const routes: Routes = [
   {path: 'material/:id', component: MaterialDetailsComponent, canActivate: [AuthGuard]},
   {path: 'signup', component: SignupComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
+  {path: 'complete-registration', component: CompleteRegistrationComponent},
   {path: 'logout', component: LogoutScreenComponent}
 ];
 
@@ -90,7 +92,8 @@ const routes: Routes = [
     InternalOrderCartComponent,
     InternalOrderCartStatusComponent,
     InternalOrderItemsComponent,
-    LogoutScreenComponent
+    LogoutScreenComponent,
+    CompleteRegistrationComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

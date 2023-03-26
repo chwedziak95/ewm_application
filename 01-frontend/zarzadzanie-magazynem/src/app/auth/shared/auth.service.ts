@@ -12,6 +12,7 @@ const refreshTokenUrl = 'http://localhost:8080/api/v1/auth/refresh/token';
 const logoutUrl = 'http://localhost:8080/api/v1/auth/logout';
 const signupUrl = 'http://localhost:8080/api/v1/auth/signup';
 const resetPasswordUrl = 'http://localhost:8080/api/v1/auth/password-reset';
+const baseUrl = 'http://localhost:8080/api/v1/auth';
 @Injectable({
   providedIn: 'root',
 })
@@ -36,6 +37,11 @@ export class AuthService {
       signupRequestPayload,
       { responseType: 'text' }
     );
+  }
+  
+
+  completeRegistration(token: string, password: string, confirmPassword: string): Observable<any> {
+    return this.http.post<any>(`${baseUrl}/complete-registration`, { token, password, confirmPassword });
   }
 
   resetPassword(email: string): Observable<HttpResponse<any>> {

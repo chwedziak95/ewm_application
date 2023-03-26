@@ -1,10 +1,12 @@
 package com.kc6379.zarzadzaniemagazynem.service;
 
 import com.kc6379.zarzadzaniemagazynem.dto.AuthenticationRequest;
+import com.kc6379.zarzadzaniemagazynem.dto.CompleteRegistrationRequest;
 import com.kc6379.zarzadzaniemagazynem.dto.RefreshTokenRequest;
 import com.kc6379.zarzadzaniemagazynem.dto.RegisterRequest;
 import com.kc6379.zarzadzaniemagazynem.exceptions.EwmAppException;
 import com.kc6379.zarzadzaniemagazynem.model.NotificationEmail;
+import com.kc6379.zarzadzaniemagazynem.model.RegistrationEmail;
 import com.kc6379.zarzadzaniemagazynem.model.User;
 import com.kc6379.zarzadzaniemagazynem.model.VerificationToken;
 import com.kc6379.zarzadzaniemagazynem.repository.RefreshTokenRepository;
@@ -39,7 +41,7 @@ public class AuthenticationService {
     private final RefreshTokenService refreshTokenService;
 
 
-    public AuthenticationResponse signup(RegisterRequest request) {
+    public void signup(RegisterRequest request) {
 
         var userEmailExist = userRepository.findByEmail(request.getEmail());
         if (userEmailExist.isPresent()) {
@@ -51,7 +53,6 @@ public class AuthenticationService {
         }
 
         var user = User.builder()
-                .password(passwordEncoder.encode(request.getPassword()))
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
@@ -59,22 +60,31 @@ public class AuthenticationService {
                 .enabled(false)
                 .build();
         userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-
 
         var token = generateVerificationToken(user);
-        mailService.sendMail(new NotificationEmail("Proszę potwierdzić swoje konto",
-                user.getEmail(), "Potwierdzamy rejestrację w Aplikacji wspomagającej zarządzanie magazynem, " +
-                "Kliknij w poniższy link aby aktywować swoje konto : " +
-                "http://localhost:8080/api/v1/auth/accountVerification/" + token));
+        mailService.sendMail(new RegistrationEmail("Dokończ rejestrację",
+                user.getEmail(), "http://localhost:4200/complete-registration?token=" + token,
+                user.getFirstName(), user.getLastName()));
 
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .refreshToken(refreshTokenService.generateRefreshToken().getToken())
-                .expiresAt(Instant.now().plusMillis(jwtService.getJwtExpirationInMillis()))
-                .username(user.getUsername())
-                .build();
+
     }
+
+    public String completeRegistration(CompleteRegistrationRequest request) {
+        var verificationToken = verificationTokenRepository.findByToken(request.getToken())
+                .orElseThrow(() -> new EwmAppException("Invalid registration token"));
+        var user = verificationToken.getUser();
+
+        if (request.getPassword().equals(request.getConfirmPassword())) {
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+            user.setEnabled(true);
+            userRepository.save(user);
+
+            return "Registration completed successfully";
+        } else {
+            throw new EwmAppException("Passwords do not match");
+        }
+    }
+
 
     private String generateVerificationToken(User user) {
         String token = UUID.randomUUID().toString();

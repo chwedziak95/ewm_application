@@ -19,38 +19,39 @@ export class SignupComponent implements OnInit {
   isError: boolean = false;
 
   constructor(private authService: AuthService, private router: Router,
-    private toastr: ToastrService){
+    private toastr: ToastrService) {
     this.signupRequestPayload = {
       email: '',
       firstName: '',
-      lastName: '',
-      password: ''
+      lastName: ''
     };
-   }
+  }
 
   ngOnInit() {
     this.signupForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', [Validators.required]),
-      password: new FormControl('', Validators.required),
+      lastName: new FormControl('', [Validators.required])
     });
   }
 
-  signup(){
-    this.signupRequestPayload.email =  this.signupForm.get('email')?.value;
-    this.signupRequestPayload.firstName =  this.signupForm.get('firstName')?.value;
-    this.signupRequestPayload.lastName =  this.signupForm.get('lastName')?.value;
-    this.signupRequestPayload.password =  this.signupForm.get('password')?.value;
 
-    this.authService.signup(this.signupRequestPayload)
-      .subscribe(data => {
-        this.router.navigate(['/login'],
-          { queryParams: { registered: 'true' } });
-      }, error => {
+  signup() {
+    this.signupRequestPayload.email = this.signupForm.get('email')?.value;
+    this.signupRequestPayload.firstName = this.signupForm.get('firstName')?.value;
+    this.signupRequestPayload.lastName = this.signupForm.get('lastName')?.value;
+
+    this.authService.signup(this.signupRequestPayload).subscribe(
+      (response) => {
+        this.toastr.success('Wysłanoemail aktywacyjny na skrzynkę pracownika ' + this.signupRequestPayload.email);
+        this.router.navigate(['/']);
+      },
+      (error) => {
         console.log(error);
-        this.toastr.error('Rejestracja nie powiodła się, proszę spróbować ponownie.');
-      });
+        this.toastr.error('Wystąpił problem podczas rejestarcji');
+      }
+    );
   }
-  
+
+
 }
