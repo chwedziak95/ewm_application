@@ -37,7 +37,6 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final VerificationTokenRepository verificationTokenRepository;
-    private final RefreshTokenRepository refreshTokenRepository;
     private final RefreshTokenService refreshTokenService;
 
 

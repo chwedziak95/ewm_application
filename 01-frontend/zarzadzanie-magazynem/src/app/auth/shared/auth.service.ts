@@ -123,8 +123,7 @@ export class AuthService {
         }
       )
       .subscribe({
-        next: (data) => {
-          console.log(data);
+        next: (_data) => {
         },
         error: (error) => {
           console.error(error);
