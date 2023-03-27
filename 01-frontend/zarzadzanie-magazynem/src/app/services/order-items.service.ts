@@ -2,6 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrderItems } from '../common/order-items/order-items';
+import { environment } from 'src/environments/environment';
+
+const theEndpoint = environment.ewmAppUrl;
+
 
 @Injectable({
   providedIn: 'root'

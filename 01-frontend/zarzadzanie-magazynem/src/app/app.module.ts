@@ -41,7 +41,9 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SortInternalOrderByDatePipe } from './pipes/sort-internal-order-by-date.pipe';
 import { CompleteRegistrationComponent } from './auth/complete-registration/complete-registration.component';
-
+import { RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
+import { environment } from 'src/environments/environment';
+import { FooterComponent } from './components/footer/footer.component';
 
 const routes: Routes = [
   {path: 'create-category', component: CreateCategoryComponent, canActivate: [AuthGuard]},
@@ -93,7 +95,8 @@ const routes: Routes = [
     InternalOrderCartStatusComponent,
     InternalOrderItemsComponent,
     LogoutScreenComponent,
-    CompleteRegistrationComponent
+    CompleteRegistrationComponent,
+    FooterComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -106,10 +109,15 @@ const routes: Routes = [
     FontAwesomeModule,
     FormsModule,
     CommonModule,
-    NgbModule
+    NgbModule,
+    RecaptchaV3Module
   ],
   exports: [RouterModule],
   providers: [
+    {
+      provide: RECAPTCHA_V3_SITE_KEY,
+      useValue: environment.recaptcha.siteKey,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

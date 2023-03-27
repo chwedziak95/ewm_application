@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Vendor } from '../common/vendor/vendor';
 import { CreateVendorPayload } from '../components/create-vendor/create-vendor.payload';
+import { environment } from 'src/environments/environment';
 
+const theEndpoint = environment.ewmAppUrl;
 @Injectable({
   providedIn: 'root'
 })
 export class VendorService {
   
-  private baseUrl = 'http://localhost:8080/api/v1/vendor';
+  private baseUrl = theEndpoint +'/api/v1/vendor';
 
   constructor(private http: HttpClient) { }
 

@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../shared/auth.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginRequestPayload } from './login-request.payload';
-import { HttpResponse } from '@angular/common/http';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private modalService: NgbModal,
+    private recaptchaV3Service: ReCaptchaV3Service
   ) {
     this.loginRequestPayload = {
       email: '',
@@ -64,21 +65,37 @@ export class LoginComponent implements OnInit {
     this.loginRequestPayload.email = this.loginForm.get('email')?.value;
     this.loginRequestPayload.password = this.loginForm.get('password')?.value;
 
-    this.authService.login(this.loginRequestPayload, this.rememberMe).subscribe(
-      (status) => {
-        if (status) {
-          this.isError = false;
-          this.router.navigateByUrl('');
-          this.toastr.success('Zalogowano');
+    this.recaptchaV3Service.execute('importantAction')
+      .subscribe((token: string) => {
+        console.debug(`Token [${token}] generated`);
+      });
+
+    this.recaptchaV3Service.execute('login').subscribe(
+      (captchaResponse: string | null) => {
+        if (captchaResponse) {
+          this.authService.login(this.loginRequestPayload, this.rememberMe).subscribe(
+            (status) => {
+              if (status) {
+                this.isError = false;
+                this.router.navigateByUrl('');
+                this.toastr.success('Zalogowano');
+              } else {
+                this.toastr.error('Błędne dane logowania');
+              }
+            },
+            (error) => {
+              console.error('Błąd logowania:', error);
+              if (error) {
+                this.toastr.error('Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.');
+              }
+            }
+          );
         } else {
-          this.toastr.error('Błędne dane logowania');
+          this.toastr.error('Weryfikacja reCAPTCHA nie powiodła się. Spróbuj ponownie.');
         }
       },
       (error) => {
-        console.error('Błąd logowania:', error);
-        if (error) {
-          this.toastr.error('Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.');
-        }
+        this.toastr.error('Wystąpił błąd podczas weryfikacji reCAPTCHA. Spróbuj ponownie.');
       }
     );
   }

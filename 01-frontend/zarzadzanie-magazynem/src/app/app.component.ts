@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/shared/auth.service';
-import { Subscription } from 'rxjs';
 import { CartService } from './services/cart.service';
 import { Router } from '@angular/router';
-import { InternalCartService } from './services/internal-cart.service';
+
 
 
 @Component({
@@ -17,10 +16,11 @@ export class AppComponent implements OnInit {
   private logoutTimer: any;
 
 
-  constructor(private authService: AuthService,
+  constructor(
+    private authService: AuthService,
     private cartService: CartService,
-    private internalCartService: InternalCartService,
-    private router: Router) {}
+    private router: Router,
+    ) {}
 
   ngOnInit() {
     document.addEventListener('mousemove', this.resetTimer.bind(this));

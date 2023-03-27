@@ -3,8 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { InternalOrder } from '../common/internal-order/internal-order';
+import { environment } from 'src/environments/environment';
 
-const BASE_URL = 'http://localhost:8080/api/v1/internal-orders';
+const theEndpoint = environment.ewmAppUrl;
+const BASE_URL = theEndpoint + '/internal-orders';
 const CANCEL_URL = `${BASE_URL}/cancel`;
 const READY_URL = `${BASE_URL}/ready`;
 const WITHDRAW_URL = `${BASE_URL}/withdraw`;

@@ -6,13 +6,15 @@ import { LoginRequestPayload } from '../login/login-request.payload';
 import { LoginResponse } from '../login/login-response.payload';
 import { LocalStorageService } from 'ngx-webstorage';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
-const loginUrl = 'http://localhost:8080/api/v1/auth/authenticate';
-const refreshTokenUrl = 'http://localhost:8080/api/v1/auth/refresh/token';
-const logoutUrl = 'http://localhost:8080/api/v1/auth/logout';
-const signupUrl = 'http://localhost:8080/api/v1/auth/signup';
-const resetPasswordUrl = 'http://localhost:8080/api/v1/auth/password-reset';
-const baseUrl = 'http://localhost:8080/api/v1/auth';
+const theEndpoint = environment.ewmAppUrl;
+const loginUrl = theEndpoint + '/auth/authenticate';
+const refreshTokenUrl = theEndpoint + '/auth/refresh/token';
+const logoutUrl = theEndpoint + '/auth/logout';
+const signupUrl = theEndpoint + '/auth/signup';
+const resetPasswordUrl = theEndpoint + '/auth/password-reset';
+const baseUrl = theEndpoint + '/auth';
 @Injectable({
   providedIn: 'root',
 })

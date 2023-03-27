@@ -846,29 +846,35 @@ a.primary-btn:hover{
  * ----------------------------
  */
 
-footer ul li a{
-    color:#fff
-}
-footer{
-    background:#232324;
-    z-index:1;
-    text-align:center;
+ footer ul li a {
+    color: #fff;
+  }
+  footer {
+    background: #232324;
+    z-index: 1000;
+    text-align: center;
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
     text-align: center;
     padding: 10px;
-}
-footer li a{
-    color:#313131;
-    font-weight:500
-}
-footer ul li{
-    display:inline-block;
-    font-size:14px;
-    padding:10px 20px
-}
+  }
+  footer li a {
+    color: #313131;
+    font-weight: 500;
+  }
+  footer ul li {
+    display: inline-block;
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+  
+  /* Add this to your CSS */
+  .grecaptcha-badge {
+    z-index: 1001;
+    margin-bottom: 50px;
+  }
 
 /* 
  * ----------------------------
