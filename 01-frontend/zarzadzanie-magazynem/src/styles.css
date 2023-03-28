@@ -853,7 +853,6 @@ a.primary-btn:hover{
     background: #232324;
     z-index: 1000;
     text-align: center;
-    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;

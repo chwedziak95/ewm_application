@@ -1,1 +1,170 @@
-<p>vendor-details works!</p>
+<div class="detail-section">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-6">
+          <table class="table table-striped table-bordered table-hover">
+            <tbody>
+                <tr>
+                    <th>Nazwa</th>
+                    <td>
+                      <span *ngIf="isEditMode == false">{{ vendor.vendorName }}</span>
+                      <input
+                        [(ngModel)]="vendorPayload.vendorName"
+                        [disabled]="!isEditMode"
+                        *ngIf="isEditMode"
+                      />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Adres</th>
+                    <td>
+                      <span *ngIf="isEditMode == false">{{ vendor.vendorAddress }}</span>
+                      <input
+                        [(ngModel)]="vendorPayload.vendorAddress"
+                        [disabled]="!isEditMode"
+                        *ngIf="isEditMode"
+                      />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Miasto</th>
+                    <td>
+                      <span *ngIf="isEditMode == false">{{ vendor.vendorCity }}</span>
+                      <input
+                        [(ngModel)]="vendorPayload.vendorCity"
+                        [disabled]="!isEditMode"
+                        *ngIf="isEditMode"
+                      />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Kod pocztowy</th>
+                    <td>
+                      <span *ngIf="isEditMode == false">{{ vendor.vendorPostalCode }}</span>
+                      <input
+                        [(ngModel)]="vendorPayload.vendorPostalCode"
+                        [disabled]="!isEditMode"
+                        *ngIf="isEditMode"
+                      />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Państwo</th>
+                    <td>
+                      <span *ngIf="isEditMode == false">{{ vendor.vendorCountry }}</span>
+                      <input
+                        [(ngModel)]="vendorPayload.vendorCountry"
+                        [disabled]="!isEditMode"
+                        *ngIf="isEditMode"
+                      />
+                    </td>
+                </tr>
+                <tr>
+                    <th>E=mail</th>
+                    <td>
+                      <span *ngIf="isEditMode == false">{{ vendor.vendorEmail }}</span>
+                      <input
+                        [(ngModel)]="vendorPayload.vendorEmail"
+                        [disabled]="!isEditMode"
+                        *ngIf="isEditMode"
+                      />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Telefon</th>
+                    <td>
+                      <span *ngIf="isEditMode == false">{{ vendor.vendorPhone }}</span>
+                      <input
+                        [(ngModel)]="vendorPayload.vendorPhone"
+                        [disabled]="!isEditMode"
+                        *ngIf="isEditMode"
+                      />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Nip</th>
+                    <td>
+                      <span *ngIf="isEditMode == false">{{ vendor.vendorNip }}</span>
+                      <input
+                        [(ngModel)]="vendorPayload.vendorNip"
+                        [disabled]="!isEditMode"
+                        *ngIf="isEditMode"
+                      />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Regon</th>
+                    <td>
+                      <span *ngIf="isEditMode == false">{{ vendor.vendorRegon }}</span>
+                      <input
+                        [(ngModel)]="vendorPayload.vendorRegon"
+                        [disabled]="!isEditMode"
+                        *ngIf="isEditMode"
+                      />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Krs</th>
+                    <td>
+                      <span *ngIf="isEditMode == false">{{ vendor.vendorKrs }}</span>
+                      <input
+                        [(ngModel)]="vendorPayload.vendorKrs"
+                        [disabled]="!isEditMode"
+                        *ngIf="isEditMode"
+                      />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Numer konta bankowego</th>
+                    <td>
+                      <span *ngIf="isEditMode == false">{{ vendor.vendorBankAccount }}</span>
+                      <input
+                        [(ngModel)]="vendorPayload.vendorBankAccount"
+                        [disabled]="!isEditMode"
+                        *ngIf="isEditMode"
+                      />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Nazwa Banku Dostawcy</th>
+                    <td>
+                      <span *ngIf="isEditMode == false">{{ vendor.vendorBankName }}</span>
+                      <input
+                        [(ngModel)]="vendorPayload.vendorBankName"
+                        [disabled]="!isEditMode"
+                        *ngIf="isEditMode"
+                      />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button
+            *ngIf="!isEditMode"
+            (click)="toggleEditMode()"
+            class="btn btn-primary btn-sm"
+          >
+            Edytuj
+          </button>
+          <button
+            *ngIf="isEditMode"
+            (click)="saveChanges()"
+            class="btn btn-success btn-sm"
+          >
+            Zapisz
+          </button>
+          <button
+            *ngIf="isEditMode"
+            (click)="cancelChanges()"
+            class="btn btn-secondary btn-sm"
+          >
+            Anuluj
+          </button>
+          <a routerLink="/vendor" class="btn btn-secondary btn-sm">Powrót do listy dostawców</a>
+      </div>
+    </div>
+  </div>
+</div>
+

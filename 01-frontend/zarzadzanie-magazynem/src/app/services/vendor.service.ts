@@ -6,25 +6,29 @@ import { CreateVendorPayload } from '../components/create-vendor/create-vendor.p
 import { environment } from 'src/environments/environment';
 
 const theEndpoint = environment.ewmAppUrl;
+const baseUrl = theEndpoint +'/vendor';
 @Injectable({
   providedIn: 'root'
 })
 export class VendorService {
-  
-  private baseUrl = theEndpoint +'/api/v1/vendor';
 
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Array<Vendor>> {
-    return this.http.get<Array<Vendor>>(this.baseUrl);
+    return this.http.get<Array<Vendor>>(baseUrl);
   }
 
   createVendor(vendorPayload: CreateVendorPayload): Observable<any> {
-    return this.http.post(this.baseUrl, vendorPayload);
+    return this.http.post(baseUrl, vendorPayload);
+  }
+
+  updateVendor(id: number, vendorPayload: CreateVendorPayload): Observable<any>{
+    const url = `${baseUrl}/update/${id}`;
+    return this.http.post<Vendor>(url, vendorPayload, { observe: 'response' });
   }
 
   getVendor(id: number): Observable<Vendor> {
-    const vendorUrl = `${this.baseUrl}/${id}`;
+    const vendorUrl = `${baseUrl}/${id}`;
     return this.http.get<Vendor>(vendorUrl);
   }
 

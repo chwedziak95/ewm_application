@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
   isError: boolean = false;
   rememberMe: boolean = false;
   closeResult = '';
+  emailFocused = false;
+passwordFocused = false;
   resetPasswordForm: FormGroup = new FormGroup({});
 
 
@@ -143,5 +145,21 @@ export class LoginComponent implements OnInit {
         this.toastr.error('Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.');
       }
     );
+  }
+
+  onEmailFocus() {
+    this.emailFocused = true;
+  }
+  
+  onEmailBlur() {
+    this.emailFocused = false;
+  }
+  
+  onPasswordFocus() {
+    this.passwordFocused = true;
+  }
+  
+  onPasswordBlur() {
+    this.passwordFocused = false;
   }
 }

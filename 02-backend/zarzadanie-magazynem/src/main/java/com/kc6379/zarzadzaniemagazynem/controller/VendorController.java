@@ -23,9 +23,9 @@ public class VendorController {
                 .body(vendorService.save(vendorDto));
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<VendorDto> updateVendor(@RequestBody VendorDto vendorDto){
-        vendorService.updateVendor(vendorDto);
+    @PostMapping("/update/{id}")
+    public ResponseEntity<VendorDto> updateVendor(@PathVariable Long id,@RequestBody VendorDto vendorDto){
+        vendorService.updateVendor(id, vendorDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

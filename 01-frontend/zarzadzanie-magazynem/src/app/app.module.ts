@@ -57,7 +57,7 @@ const routes: Routes = [
   {path: 'internal-orders', component: InternalOrderListComponent, canActivate: [AuthGuard]},
   {path: 'internal-orders/:id', component: InternalOrderDetailsComponent, canActivate: [AuthGuard]},
   {path: 'vendor', component: VendorListComponent, canActivate: [AuthGuard]},
-  {path: 'vendor/:vendorId', component: VendorDetailsComponent, canActivate: [AuthGuard]},
+  {path: 'vendor/:id', component: VendorDetailsComponent, canActivate: [AuthGuard]},
   {path: 'material', component: MaterialListComponent, canActivate: [AuthGuard]},
   {path: 'material/:id', component: MaterialDetailsComponent, canActivate: [AuthGuard]},
   {path: 'signup', component: SignupComponent, canActivate: [AuthGuard]},

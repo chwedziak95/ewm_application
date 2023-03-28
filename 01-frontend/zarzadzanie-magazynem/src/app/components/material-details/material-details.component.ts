@@ -14,30 +14,31 @@ import { UpdateMaterialPayload } from '../create-material/update-material.payloa
 @Component({
   selector: 'app-material-details',
   templateUrl: './material-details.component.html',
-  styleUrls: ['./material-details.component.css']
+  styleUrls: ['./material-details.component.css'],
 })
 export class MaterialDetailsComponent implements OnInit {
-
   categories: Category[];
   vendors: Vendor[];
   material: Material;
   selectedVendor: Vendor;
   isEditMode: boolean = false;
-  materialPayload: UpdateMaterialPayload; // Add this line
+  materialPayload: UpdateMaterialPayload;
 
-  constructor(private materialService: MaterialService,
-              private router: Router,
-              private toastr: ToastrService,
-              private cartService: CartService,
-              private route: ActivatedRoute,
-              private categoryService: CategoryService,
-              private vendorService: VendorService) {
-                this.selectedVendor = {} as Vendor;
-                this.material = {} as Material;
-                this.categories = [];
-                this.vendors = [];
-                this.materialPayload = {} as UpdateMaterialPayload; // Add this line
-               }
+  constructor(
+    private materialService: MaterialService,
+    private router: Router,
+    private toastr: ToastrService,
+    private cartService: CartService,
+    private route: ActivatedRoute,
+    private categoryService: CategoryService,
+    private vendorService: VendorService
+  ) {
+    this.selectedVendor = {} as Vendor;
+    this.material = {} as Material;
+    this.categories = [];
+    this.vendors = [];
+    this.materialPayload = {} as UpdateMaterialPayload;
+  }
 
   ngOnInit() {
     this.getMaterialDetails(this.route.snapshot.params['id']);
@@ -46,46 +47,42 @@ export class MaterialDetailsComponent implements OnInit {
   }
 
   addToCart() {
-
     console.log(`Adding to cart: ${this.material.materialId}`);
     const theCartItem = new CartItem(this.material);
     this.cartService.addToCart(theCartItem);
-    
   }
 
   getMaterialDetails(id: number) {
-    this.materialService.getMaterial(id).subscribe(
-      material => this.material = material
-    );
+    this.materialService
+      .getMaterial(id)
+      .subscribe((material) => (this.material = material));
   }
 
   getCategories() {
-    this.categoryService.getAll().subscribe(
-      categories => this.categories = categories
-    );
+    this.categoryService
+      .getAll()
+      .subscribe((categories) => (this.categories = categories));
   }
 
   getVendors() {
-    this.vendorService.getAll().subscribe(
-      vendors => this.vendors = vendors
-    );
+    this.vendorService
+      .getAll()
+      .subscribe((vendors) => (this.vendors = vendors));
   }
 
   saveChanges() {
     this.isEditMode = false;
-    // Update the material object with the new payload values
-    console.log("updating material : " + this.materialPayload);
     Object.assign(this.material, this.materialPayload);
-    this.materialService.updateMaterial(this.material.materialId, this.materialPayload).subscribe(
-      (response) => {
-        if(response.status == 200 || response.status == 201){
-          this.toastr.success("Zapisano zmiany");
+    this.materialService
+      .updateMaterial(this.material.materialId, this.materialPayload)
+      .subscribe((response) => {
+        if (response.status == 200 || response.status == 201) {
+          this.toastr.success('Zapisano zmiany');
           this.updateData();
-        }else{
-          this.toastr.error("Wystąpił bład");
+        } else {
+          this.toastr.error('Wystąpił bład');
         }
-      }
-    );
+      });
   }
 
   editVendor(): void {
@@ -94,12 +91,13 @@ export class MaterialDetailsComponent implements OnInit {
 
   toggleStatus(): void {
     this.material.materialStatus = !this.material.materialStatus;
-    this.materialService.updateMaterial(this.material.materialId, this.materialPayload).subscribe();
+    this.materialService
+      .updateMaterial(this.material.materialId, this.materialPayload)
+      .subscribe();
   }
 
   toggleEditMode(): void {
     this.isEditMode = true;
-    // Reset the material payload when entering edit mode
     this.materialPayload = {
       materialName: this.material.materialName,
       materialPrice: this.material.materialPrice,
@@ -112,15 +110,13 @@ export class MaterialDetailsComponent implements OnInit {
     };
   }
 
-
   cancelChanges(): void {
     this.isEditMode = false;
   }
 
-  updateData(){
+  updateData() {
     this.getMaterialDetails(this.material.materialId);
     this.getCategories();
     this.getVendors();
   }
-  
 }

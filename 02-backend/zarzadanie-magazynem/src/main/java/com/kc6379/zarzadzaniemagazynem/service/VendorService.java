@@ -50,8 +50,8 @@ public class VendorService {
         return vendorDto;
     }
 
-    public void updateVendor(VendorDto vendorDto){
-        Vendor vendor = vendorRepository.findByVendorId(vendorDto.getVendorId())
+    public void updateVendor(Long id, VendorDto vendorDto){
+        Vendor vendor = vendorRepository.findByVendorId(id)
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono dostawcy o id: " + vendorDto.getVendorId()));
         vendorRepository.save(vendorMapper.partialUpdate(vendorDto, vendor));
 

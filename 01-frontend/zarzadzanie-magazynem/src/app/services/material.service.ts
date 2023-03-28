@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Material } from '../common/material/material';
 import { CreateMaterialPayload } from '../components/create-material/create-material.payload';
 import { UpdateMaterialPayload } from '../components/create-material/update-material.payload';
@@ -31,16 +31,6 @@ export class MaterialService {
   updateMaterial(id: number, materialPayload: UpdateMaterialPayload): Observable<any> {
     const url = `${baseUrl}/update/${id}`;
     return this.http.post<Material>(url, materialPayload, { observe: 'response' });
-  }
-
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-
-  private handleError(error: any) {
-    console.error(error);
-    return throwError(() => error);
-  }
-  
+  }  
   
 }
