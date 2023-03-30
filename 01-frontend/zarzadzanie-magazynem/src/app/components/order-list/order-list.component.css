@@ -1,0 +1,10 @@
+a:link, a:visited {
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  a:hover, a:active {
+  border: 2px solid green;
+  }

@@ -70,7 +70,8 @@ public class OrderService {
     }
 
     private void sendOrderItemsToVendor(Vendor vendor, List<OrderItem> orderItems, Orders orders) {
-        User user = userRepository.findByUserId(orders.getUser().getUserId()).orElseThrow(() -> new EwmAppException("Nie znaleziono użytkownika o id"));
+        User user = userRepository.findByUserId(orders.getUser().getUserId())
+                .orElseThrow(() -> new EwmAppException("Nie znaleziono użytkownika o id"));
 
         List<OrderItemDto> orderItemsDto = convertOrderItemsToDto(orderItems);
 
@@ -80,9 +81,6 @@ public class OrderService {
                         " " + user.getLastName() +
                         "\nNumer zamówienia: " + orders.getOrderNumber()), orderItemsDto);
     }
-
-
-
 
     private List<OrderItemDto> convertOrderItemsToDto(List<OrderItem> orderItems) {
         List<OrderItemDto> orderItemDtos = new ArrayList<>();

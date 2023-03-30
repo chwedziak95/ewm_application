@@ -48,10 +48,10 @@
           <td>{{ material.materialCategory.name }}</td>
           <td>{{ material.materialVendor.vendorName }}</td>
           <td>
-            <span *ngIf="material.materialLocation !== ''">
+            <span *ngIf="material.materialLocation !== null">
               {{ material.materialLocation }}
             </span>
-            <span>
+            <span *ngIf="material.materialLocation === null">
               Magazyn(nm)
             </span>
           </td>

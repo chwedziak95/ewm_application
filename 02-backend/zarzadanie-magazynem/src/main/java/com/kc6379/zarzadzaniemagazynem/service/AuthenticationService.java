@@ -62,7 +62,7 @@ public class AuthenticationService {
 
         var token = generateVerificationToken(user);
         mailService.sendMail(new RegistrationEmail("Dokończ rejestrację",
-                user.getEmail(), "http://localhost:4200/complete-registration?token=" + token,
+                user.getEmail(), "https://localhost:4200/complete-registration?token=" + token,
                 user.getFirstName(), user.getLastName()));
 
 

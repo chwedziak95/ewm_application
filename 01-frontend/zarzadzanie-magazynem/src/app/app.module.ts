@@ -15,8 +15,6 @@ import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.com
 import { FilterByPipe } from './pipes/filter-by.pipe';
 import { VendorListComponent } from './components/vendor-list/vendor-list.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
-import { OrderItemsListComponent } from './components/order-items-list/order-items-list.component';
-import { UserListComponent } from './components/user-list/user-list.component';
 import { MaterialDetailsComponent } from './components/material-details/material-details.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
@@ -32,10 +30,7 @@ import { CreateCategoryComponent } from './components/create-category/create-cat
 import { CustomDatePipe } from './pipes/custom.datepipe';
 import { VendorDetailsComponent } from './components/vendor-details/vendor-details.component';
 import { InternalOrderListComponent } from './components/internal-order-list/internal-order-list.component';
-import { InternalOrderDetailsComponent } from './components/internal-order-details/internal-order-details.component';
 import { InternalOrderCartComponent } from './components/internal-order-cart/internal-order-cart.component';
-import { InternalOrderCartStatusComponent } from './components/internal-order-cart-status/internal-order-cart-status.component';
-import { InternalOrderItemsComponent } from './components/internal-order-items/internal-order-items.component';
 import { LogoutScreenComponent } from './components/logout-screen/logout-screen.component';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -55,7 +50,6 @@ const routes: Routes = [
   {path: 'orders', component: OrderListComponent, canActivate: [AuthGuard]},
   {path: 'orders/:id', component: OrderDetailsComponent, canActivate: [AuthGuard]},
   {path: 'internal-orders', component: InternalOrderListComponent, canActivate: [AuthGuard]},
-  {path: 'internal-orders/:id', component: InternalOrderDetailsComponent, canActivate: [AuthGuard]},
   {path: 'vendor', component: VendorListComponent, canActivate: [AuthGuard]},
   {path: 'vendor/:id', component: VendorDetailsComponent, canActivate: [AuthGuard]},
   {path: 'material', component: MaterialListComponent, canActivate: [AuthGuard]},
@@ -76,8 +70,6 @@ const routes: Routes = [
     FilterByPipe,
     VendorListComponent,
     OrderListComponent,
-    OrderItemsListComponent,
-    UserListComponent,
     MaterialDetailsComponent,
     OrderDetailsComponent,
     CartDetailsComponent,
@@ -90,10 +82,7 @@ const routes: Routes = [
     SortInternalOrderByDatePipe,
     VendorDetailsComponent,
     InternalOrderListComponent,
-    InternalOrderDetailsComponent,
     InternalOrderCartComponent,
-    InternalOrderCartStatusComponent,
-    InternalOrderItemsComponent,
     LogoutScreenComponent,
     CompleteRegistrationComponent,
     FooterComponent

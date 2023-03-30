@@ -15,7 +15,9 @@
             <tr>
               <th>Nazwa</th>
               <td>
-                <span *ngIf="isEditMode == false">{{ material.materialName }}</span>
+                <span *ngIf="isEditMode == false">{{
+                  material.materialName
+                }}</span>
                 <input
                   [(ngModel)]="materialPayload.materialName"
                   [disabled]="!isEditMode"
@@ -26,7 +28,9 @@
             <tr>
               <th>Cena</th>
               <td>
-                <span *ngIf="isEditMode == false">{{ material.materialPrice }}</span>
+                <span *ngIf="isEditMode == false">{{
+                  material.materialPrice
+                }}</span>
                 <input
                   [(ngModel)]="materialPayload.materialPrice"
                   [disabled]="!isEditMode"
@@ -48,7 +52,9 @@
             <tr>
               <th>Ilość</th>
               <td>
-                <span *ngIf="isEditMode == false">{{ material.materialQuantity }}</span>
+                <span *ngIf="isEditMode == false">{{
+                  material.materialQuantity
+                }}</span>
                 <input
                   [(ngModel)]="materialPayload.materialQuantity"
                   [disabled]="!isEditMode"
@@ -59,7 +65,9 @@
             <tr>
               <th>Jednostka miary</th>
               <td>
-                <span *ngIf="isEditMode == false">{{ material.unitOfMeasure }}</span>
+                <span *ngIf="isEditMode == false">{{
+                  material.unitOfMeasure
+                }}</span>
                 <input
                   [(ngModel)]="materialPayload.unitOfMeasure"
                   [disabled]="!isEditMode"
@@ -78,7 +86,9 @@
             <tr>
               <th>Minimalny stan magazynowy</th>
               <td>
-                <span *ngIf="isEditMode == false">{{ material.materialSafetyStock }}</span>
+                <span *ngIf="isEditMode == false">{{
+                  material.materialSafetyStock
+                }}</span>
                 <input
                   [(ngModel)]="materialPayload.materialSafetyStock"
                   [disabled]="!isEditMode"
@@ -89,7 +99,9 @@
             <tr>
               <th>Opis</th>
               <td>
-                <span *ngIf="isEditMode == false">{{ material.materialDescription }}</span>
+                <span *ngIf="isEditMode == false">{{
+                  material.materialDescription
+                }}</span>
                 <input
                   [(ngModel)]="materialPayload.materialDescription"
                   [disabled]="!isEditMode"
@@ -110,7 +122,9 @@
             <tr>
               <th>Dostawca</th>
               <td>
-                <span *ngIf="isEditMode == false">{{ material.materialVendor?.vendorName }}</span>
+                <span *ngIf="isEditMode == false">{{
+                  material.materialVendor?.vendorName
+                }}</span>
                 <select
                   [(ngModel)]="materialPayload.materialVendor"
                   [disabled]="!isEditMode"
@@ -120,7 +134,11 @@
                     {{ vendor?.vendorName }}
                   </option>
                 </select>
-                <button *ngIf="isEditMode" class="btn btn-secondary btn-sm" (click)="editVendor()">
+                <button
+                  *ngIf="isEditMode"
+                  class="btn btn-secondary btn-sm"
+                  (click)="editVendor()"
+                >
                   <i class="fa fa-edit"></i>
                 </button>
               </td>
@@ -177,4 +195,3 @@
     </div>
   </div>
 </div>
-

@@ -142,7 +142,6 @@ export class CreateMaterialComponent implements OnInit {
 
     if (this.createMaterialForm.invalid) {
       this.createMaterialForm.markAllAsTouched();
-      console.log('Wystąpił bład z invalid');
       Object.keys(this.createMaterialForm.controls).forEach((key) => {
         const control = this.createMaterialForm.controls[key];
         if (control.invalid) {

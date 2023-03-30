@@ -33,7 +33,6 @@ input.ng-invalid.ng-touched {
 
 .login,
 .signup {
-  /* add margin-right for space to the right */
   margin-right: 16px;
   background-color: transparent;
   border-color: #0079D3;
@@ -72,17 +71,9 @@ input.ng-invalid.ng-touched {
     margin-right: 0.3rem;
   }
 
-/*
--------- custom ---------------
-*/
 body {
     overflow-x: hidden;
 }
-/* 
- * ----------------------------
- * Common CSS
- * ----------------------------
- */
 
  *{
     margin:0;
@@ -179,7 +170,6 @@ a,a:hover{
     transition:all .3s ease
 }
 
-/*Layout Css*/
 .section-content-p35{
     padding:0 35px
 }
@@ -206,12 +196,6 @@ aside.menu-sidebar.d-none.d-lg-block.clr{
     height:75px;
     box-shadow:-2px 0 4px #0000003b
 }
-
-/* 
- * ----------------------------
- * Header Desktop Section
- * ----------------------------
- */
 
 .header-desktop{
     background:#0da8e4;
@@ -387,12 +371,6 @@ input.au-input.au-input-xl{
     transform:translate(-50%,-50%)
 }
 
-/* 
- * ----------------------------
- * Left Menu Bar
- * ----------------------------
- */
-
 .menu-sidebar{
     width:200px;
     position:fixed;
@@ -406,7 +384,7 @@ input.au-input.au-input-xl{
 .menu-sidebar .logo{
     background:#fff;
     height:75px;
-    padding:0 35px;
+    padding:0 60px;
     display:-webkit-box;
     display:-webkit-flex;
     display:-moz-box;
@@ -424,48 +402,6 @@ input.au-input.au-input-xl{
     position:relative;
     z-index:3
 }
-
-.menu-sidebar .navbar-list .navbar-sub-list{
-    display:none;
-    padding-left:34px
-}
-
-.menu-sidebar .navbar-list .navbar-sub-list li a{
-    padding:11.5px 0
-}
-
-.menu-sidebar-content{
-    position:relative;
-    height:-webkit-calc(100vh - 75px);
-    height:-moz-calc(100vh - 75px);
-    height:calc(100vh - 75px)
-}
-
-.navbar-sidebar{
-    padding:35px;
-    padding-bottom:0
-}
-
-.navbar-sidebar .navbar-list li a{
-    display:block;
-    color:#555;
-    font-size:16px;
-    padding:5px 0
-}
-
-.navbar-sidebar .navbar-list li a i{
-    margin-right:19px
-}
-
-.navbar-sidebar .navbar-list li a:hover{
-    color:#0da8e4
-}
-
-/* 
- * ----------------------------
- * Header Mobile Section
- * ----------------------------
- */
 
 .header-mobile{
     position:absolute;
@@ -597,11 +533,6 @@ input.au-input.au-input-xl{
     padding:2% 30% 10% 5%
 }
 
-/* 
- * ----------------------------
- * Products List
- * ----------------------------
- */
 
 .product-box img {
     width: 150px;
@@ -639,11 +570,6 @@ input.au-input.au-input-xl{
     color:#585858
 }
 
-/* 
- * ----------------------------
- * Shopping Cart Checkout
- * ----------------------------
- */
 
 .form-area{
     background:#e5e5e5;
@@ -753,12 +679,6 @@ select{
     color:#828482
 }
 
-/* 
- * ----------------------------
- * Shopping Cart Details
- * ----------------------------
- */
-
 .table{
     margin:0
 }
@@ -787,12 +707,6 @@ table.table.table-bordered th{
     outline:0;
     margin-left:5px
 }
-
-/* 
- * ----------------------------
- * Product Details
- * ----------------------------
- */
 
  .price{
     margin:15px 0 0;
@@ -840,12 +754,6 @@ a.primary-btn:hover{
   font-weight: bold;
 }
 
-/* 
- * ----------------------------
- * Footer section
- * ----------------------------
- */
-
  footer ul li a {
     color: #fff;
   }
@@ -869,7 +777,6 @@ a.primary-btn:hover{
     padding: 10px 20px;
   }
   
-  /* Add this to your CSS */
   .grecaptcha-badge {
     z-index: 1001;
     margin-bottom: 50px;

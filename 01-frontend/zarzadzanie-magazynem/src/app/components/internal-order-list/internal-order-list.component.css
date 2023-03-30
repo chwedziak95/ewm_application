@@ -10,6 +10,5 @@
 
 .scrollable-card-body {
     height: 7rem;
-    /* Adjust the height according to your preference */
     overflow-y: auto;
 }
