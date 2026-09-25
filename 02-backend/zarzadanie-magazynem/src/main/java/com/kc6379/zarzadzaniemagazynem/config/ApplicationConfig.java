@@ -1,7 +1,6 @@
 package com.kc6379.zarzadzaniemagazynem.config;
 
 
-import com.kc6379.zarzadzaniemagazynem.dto.*;
 import com.kc6379.zarzadzaniemagazynem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -44,31 +43,5 @@ public class ApplicationConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
-    @Bean
-    public OrdersResponse ordersResponse() {
-        return new OrdersResponse();
-    }
-
-    @Bean
-    public MaterialDto materialDto() {
-        return new MaterialDto();
-    }
-
-    @Bean
-    public InternalOrderResponse internalOrderResponse() {return new InternalOrderResponse();}
-
-    @Bean
-    public OrderRequest orderRequest() {return new OrderRequest();}
-
-    @Bean
-    public OrderItemRequest orderItemRequest() {return new OrderItemRequest();}
-
-    @Bean
-    public StatusDto statusDto() {return new StatusDto();}
-
-    @Bean
-    public VendorDto vendorDto() {return new VendorDto();}
 
 }

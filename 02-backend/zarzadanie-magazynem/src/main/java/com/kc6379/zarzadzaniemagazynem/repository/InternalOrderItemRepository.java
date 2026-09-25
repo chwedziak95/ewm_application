@@ -9,7 +9,5 @@ import java.util.Set;
 
 @Repository
 public interface InternalOrderItemRepository extends JpaRepository<InternalOrderItem, Long> {
-    Set<InternalOrderItem> findByInternalOrder (InternalOrder internalOrder);
-
-    Set<InternalOrderItem> findAllByInternalOrder(InternalOrder internalOrder);
+    Set<InternalOrderItem> findByInternalOrder(InternalOrder internalOrder);
 }

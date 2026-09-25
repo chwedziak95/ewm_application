@@ -13,5 +13,11 @@ public interface VendorRepository extends JpaRepository<Vendor, Long> {
 
     Optional<Vendor> findByVendorId(Long vendorId);
 
-    Optional<Vendor> findByVendorEmailOrVendorNipOrVendorRegonOrVendorKrs(String vendorEmail, String vendorNip, String vendorRegon, String vendorKrs);
+    boolean existsByVendorEmail(String vendorEmail);
+
+    boolean existsByVendorNip(String vendorNip);
+
+    boolean existsByVendorRegon(String vendorRegon);
+
+    boolean existsByVendorKrs(String vendorKrs);
 }

@@ -142,12 +142,6 @@ export class CreateMaterialComponent implements OnInit {
 
     if (this.createMaterialForm.invalid) {
       this.createMaterialForm.markAllAsTouched();
-      Object.keys(this.createMaterialForm.controls).forEach((key) => {
-        const control = this.createMaterialForm.controls[key];
-        if (control.invalid) {
-          console.log(key, control.errors);
-        }
-      });
       return;
     }
 

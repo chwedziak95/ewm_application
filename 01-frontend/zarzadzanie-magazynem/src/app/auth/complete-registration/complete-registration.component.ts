@@ -42,7 +42,6 @@ export class CompleteRegistrationComponent implements OnInit {
       .completeRegistration(token, password, confirmPassword)
       .subscribe(
         (response) => {
-          console.log("odpowiedź:", response);
           this.toastr.success(response.message);
           this.router.navigate(['/login']);
         },

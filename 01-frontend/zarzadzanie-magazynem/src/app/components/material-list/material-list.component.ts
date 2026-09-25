@@ -23,7 +23,7 @@ export class MaterialListComponent implements OnInit {
 
   internalCartItemsCount: number = 0;
   cartItemsCount: number = 0;
-  internalCartSubscription: Subscription;
+  private subscriptions = new Subscription();
 
   material$: Array<Material> = [];
   constructor(
@@ -32,17 +32,17 @@ export class MaterialListComponent implements OnInit {
     private internalCartService: InternalCartService) {
     this.materialService.getAll().subscribe(material => {
       this.material$ = material;
-    }),
-      this.internalCartSubscription = this.internalCartService.internalCartItems$.subscribe(internalCartItems => {
-        this.internalCartItemsCount = internalCartItems.reduce((acc, item) => acc + item.quantity, 0);
-      }),
-      this.cartService.totalPrice.subscribe(
-        data => this.cartItemsCount = data
-      );
+    });
+    this.subscriptions.add(this.internalCartService.internalCartItems$.subscribe(internalCartItems => {
+      this.internalCartItemsCount = internalCartItems.reduce((acc, item) => acc + item.quantity, 0);
+    }));
+    this.subscriptions.add(this.cartService.totalQuantity.subscribe(
+      data => this.cartItemsCount = data
+    ));
   }
 
   ngOnDestroy() {
-    this.internalCartSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
   ngOnInit() { }

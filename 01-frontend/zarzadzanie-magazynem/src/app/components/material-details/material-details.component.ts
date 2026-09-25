@@ -47,7 +47,6 @@ export class MaterialDetailsComponent implements OnInit {
   }
 
   addToCart() {
-    console.log(`Adding to cart: ${this.material.materialId}`);
     const theCartItem = new CartItem(this.material);
     this.cartService.addToCart(theCartItem);
   }

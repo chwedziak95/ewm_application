@@ -30,7 +30,7 @@ export class UserProfileComponent implements OnInit {
   orderItems: OrderItems;
   internalOrderItem: InternalOrderItem;
   vendorTotalValues: Map<string, number> = new Map();
-  maxTotalValue: number;
+  maxTotalValue = 0;
   closeResult = '';
   deliveryDateFrom: NgbDate | null = null;
   deliveryDateTo: NgbDate | null = null;
@@ -63,6 +63,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   calculateVendorTotalValues() {
+    // Recalculate from scratch; updateData() runs again after every cancellation.
+    this.vendorTotalValues = new Map();
+    this.maxTotalValue = 0;
     this.orders$.forEach(order => {
       order.orderItems.forEach(orderItem => {
         const vendor = orderItem.materialId.materialVendor;
