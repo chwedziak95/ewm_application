@@ -15,11 +15,17 @@
     <description>zarzadanie-magazynem</description>
     <properties>
         <java.version>19</java.version>
+        <!-- Boot 3.0.3 pins Lombok 1.18.26, which crashes on JDK 21+ -->
+        <lombok.version>1.18.34</lombok.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
