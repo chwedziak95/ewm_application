@@ -3,7 +3,6 @@ package com.kc6379.zarzadzaniemagazynem.service;
 import com.kc6379.zarzadzaniemagazynem.dto.*;
 import com.kc6379.zarzadzaniemagazynem.exceptions.EwmAppException;
 import com.kc6379.zarzadzaniemagazynem.mapper.InternalOrderMapper;
-import com.kc6379.zarzadzaniemagazynem.mapper.MaterialMapper;
 import com.kc6379.zarzadzaniemagazynem.model.*;
 import com.kc6379.zarzadzaniemagazynem.repository.*;
 import lombok.AllArgsConstructor;
@@ -31,12 +30,7 @@ public class InternalOrderService {
     private final InternalOrderItemRepository internalOrderItemRepository;
     private final AuthenticationService authenticationService;
     private final InternalOrderMapper internalOrderMapper;
-    private final InternalOrderResponse internalOrderResponse;
-    private final MaterialDto materialDto;
-    private final MaterialMapper materialMapper;
-    private OrderRequest orderRequest;
     private final OrderService orderService;
-    private OrderItemRequest orderItemRequest;
 
     public void save(InternalOrderRequest internalOrderRequest){
         Status status = statusRepository.findByName("Utworzono").orElseThrow(() -> new EwmAppException("Nie znakleziono statusu o nazwie Utworzono"));
@@ -71,7 +65,6 @@ public class InternalOrderService {
     }
     @Transactional
     public List<InternalOrderResponse> getAll() {
-        System.out.println(internalOrderRepository.findAll());
         return internalOrderRepository.findAll()
                 .stream()
                 .map(internalOrderMapper::toInternalOrderResponse)
@@ -93,15 +86,10 @@ public class InternalOrderService {
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono zamówienia do magazynu o id: " + id));
         if (internalOrder.getPickDate() != null){
             throw new EwmAppException("Wygląda na to, że zamówienie " + id + " zostało już wydane");
-        }else{
-            updateMaterialQuantity(internalOrder);
-            internalOrderResponse.setPickDate(LocalDateTime.now());
-            Status status = statusRepository.findByName("Wydane").orElseThrow();
-            internalOrderResponse.setStatus(status);
-            internalOrderMapper.partialUpdate(internalOrderResponse, internalOrder);
-            internalOrderRepository.save(internalOrder);
         }
-        internalOrderMapper.partialUpdate(internalOrderResponse, internalOrder);
+        updateMaterialQuantity(internalOrder);
+        internalOrder.setPickDate(LocalDateTime.now());
+        internalOrder.setStatus(statusRepository.findByName("Wydane").orElseThrow());
         internalOrderRepository.save(internalOrder);
     }
 
@@ -110,8 +98,7 @@ public class InternalOrderService {
         for(InternalOrderItem internalOrderItem : orderItems){
             Material material = materialRepository.findByMaterialId(internalOrderItem.getMaterialId().getMaterialId())
                     .orElseThrow(() -> new EwmAppException("Nie znaleziono materiału o id"));
-            materialDto.setMaterialQuantity(material.getMaterialQuantity() - internalOrderItem.getQuantity());
-            materialMapper.partialUpdate(materialDto, material);
+            material.setMaterialQuantity(material.getMaterialQuantity() - internalOrderItem.getQuantity());
             materialRepository.save(material);
             needCheck(material, internalOrder.getInternalOrderId());
         }
@@ -120,12 +107,10 @@ public class InternalOrderService {
     private void needCheck(Material material, Long id) {
         if(material.getMaterialQuantity() < material.getMaterialSafetyStock()){
             Integer qty = material.getMaterialSafetyStock() - material.getMaterialQuantity();
-            orderItemRequest = new OrderItemRequest(material.getMaterialId(), qty);
             Set<OrderItemRequest> set = new HashSet<>();
-            set.add(orderItemRequest);
+            set.add(new OrderItemRequest(material.getMaterialId(), qty));
             String com = "Zamówienie stworzone automatycznie, podczas wydania: " + id + ". Stan magazynowy spadł poniżej ustawionego minimum";
-            orderRequest = new OrderRequest(null, null,com,set);
-            orderService.save(orderRequest);
+            orderService.save(new OrderRequest(null, null, com, set));
         }
     }
 
@@ -146,15 +131,12 @@ public class InternalOrderService {
     }
 
     private void changeStatus(InternalOrder internalOrder, Status status){
-        internalOrderResponse.setStatus(status);
-        internalOrderResponse.setPickDate(null);
-        internalOrderMapper.partialUpdate(internalOrderResponse, internalOrder);
+        internalOrder.setStatus(status);
         internalOrderRepository.save(internalOrder);
-        System.out.println(internalOrder);
     }
 
     public InternalOrderResponse getInternalOrder(Long id) {
-        InternalOrder internalOrder = internalOrderRepository.findAllByInternalOrderId(id)
+        InternalOrder internalOrder = internalOrderRepository.findByInternalOrderId(id)
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono wewnętrznego zamówienia o id: " +id));
         return internalOrderMapper.toInternalOrderResponse(internalOrder);
     }

@@ -107,13 +107,6 @@ export class CreateVendorComponent implements OnInit{
     
     if (this.createVendorForm.invalid){
       this.createVendorForm.markAllAsTouched();
-      console.log(`Wystąpił błąd z invalid`);
-      Object.keys(this.createVendorForm.controls).forEach((key) =>{
-        const control = this.createVendorForm.controls[key];
-        if (control.invalid){
-          console.log(key, control.errors);
-        }
-      });
       return;
     }
 

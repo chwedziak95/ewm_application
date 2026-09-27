@@ -30,16 +30,22 @@ export class TokenInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    // Login, refresh and logout are public; never send (or refresh) a JWT for them,
+    // otherwise a failing refresh call would wait on itself forever.
+    if (req.url.includes('/auth/')) {
+      return next.handle(req);
+    }
     const token = this.authService.getToken();
     if (token) {
-      this.addToken(req, token);
+      // HttpRequest is immutable: addToken returns a new request that must be used.
+      req = this.addToken(req, token);
     }
     return next.handle(req).pipe(
       catchError((error) => {
-        if (error instanceof HttpErrorResponse && error.status === 403) {
+        if (error instanceof HttpErrorResponse && error.status === 403 && token) {
           return this.handleAuthErrors(req, next);
         } else {
-          return throwError(error);
+          return throwError(() => error);
         }
       })
     );
@@ -54,6 +60,12 @@ export class TokenInterceptor implements HttpInterceptor {
       this.refreshTokenSubject.next(null);
 
       return this.authService.refreshToken().pipe(
+        catchError((error) => {
+          // Refresh token rejected: reset so later requests can retry, and end the session.
+          this.isTokenRefreshing = false;
+          this.authService.logout();
+          return throwError(() => error);
+        }),
         switchMap((refreshTokenResponse: LoginResponse) => {
           this.isTokenRefreshing = false;
           this.refreshTokenSubject.next(

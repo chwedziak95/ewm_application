@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
+import static org.springframework.util.StringUtils.hasText;
 
 @Service
 @AllArgsConstructor
@@ -33,27 +34,21 @@ public class MaterialService {
 
 
     public void save(MaterialDto materialDto){
-        var existingMaterial = materialRepository.findByMaterialNumberOrMaterialNameOrMaterialEAN(materialDto.getMaterialNumber(), materialDto.getMaterialName(), materialDto.getMaterialEAN());
-        if (existingMaterial.isPresent()) {
-            Material existing = existingMaterial.get();
-            List<String> alreadyExistProperties = new ArrayList<>();
-
-            if (existing.getMaterialNumber().equals(materialDto.getMaterialNumber())) {
-                alreadyExistProperties.add("Numer Materiału");
-            }
-
-            if (existing.getMaterialName().equals(materialDto.getMaterialName())) {
-                alreadyExistProperties.add("Nazwa Materiału");
-            }
-
-            if (!materialDto.getMaterialEAN().isEmpty() && existing.getMaterialEAN().equals(materialDto.getMaterialEAN())) {
-                alreadyExistProperties.add("EAN materiału");
-            }
-
-            if (!alreadyExistProperties.isEmpty()) {
-                String message = "W bazie danych znajduje się materiał o tych parametrach: " + String.join(", ", alreadyExistProperties);
-                throw new EwmAppException(message);
-            }
+        // Check each unique field on its own: the old combined OR query matched every
+        // material with an empty EAN and failed when more than one row matched.
+        List<String> alreadyExistProperties = new ArrayList<>();
+        if (hasText(materialDto.getMaterialNumber()) && materialRepository.existsByMaterialNumber(materialDto.getMaterialNumber())) {
+            alreadyExistProperties.add("Numer Materiału");
+        }
+        if (hasText(materialDto.getMaterialName()) && materialRepository.existsByMaterialName(materialDto.getMaterialName())) {
+            alreadyExistProperties.add("Nazwa Materiału");
+        }
+        if (hasText(materialDto.getMaterialEAN()) && materialRepository.existsByMaterialEAN(materialDto.getMaterialEAN())) {
+            alreadyExistProperties.add("EAN materiału");
+        }
+        if (!alreadyExistProperties.isEmpty()) {
+            String message = "W bazie danych znajduje się materiał o tych parametrach: " + String.join(", ", alreadyExistProperties);
+            throw new EwmAppException(message);
         }
         materialRepository.save(materialMapper.toEntity(materialDto));
     }
@@ -87,15 +82,7 @@ public class MaterialService {
         return materials.stream().map(materialMapper::toDto).collect(toList());
     }
 
-    public MaterialResponse getMaterialByName(String name) {
-        Material material = materialRepository.findByMaterialName(name)
-                .orElseThrow(() -> new EwmAppException("Nie znaleziono materiału o nazwie - " + name));
-        return materialMapper.toDto(material);
-    }
-
-
     public void update(Long id, MaterialDto materialDto) {
-        System.out.println("received update data" + materialDto.getMaterialName());
         Material material = materialRepository.findByMaterialId(id)
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono materiału o id : " + id));
         materialMapper.partialUpdate(materialDto, material);

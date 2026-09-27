@@ -44,7 +44,6 @@ export class OrderDetailsComponent implements OnInit {
   getOrderDetails(id: number) {
     this.orderService.getOrder(id).subscribe(
       orders => {
-        console.log(orders);
         this.orders = orders;
         this.orderItems$ = orders.orderItems;
       }
@@ -64,12 +63,14 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   confirmDeliveryAndCloseModal(modal) {
-    this.orders.deliveryDate = new Date(Date.UTC(this.deliveryDate.year, this.deliveryDate.month - 1, this.deliveryDate.day));
-    this.orderService.deliveryOrder(this.orders.ordersId, this.orders.deliveryDate).subscribe(
+    // Only show the order as delivered once the server has accepted it.
+    const deliveryDate = new Date(Date.UTC(this.deliveryDate.year, this.deliveryDate.month - 1, this.deliveryDate.day));
+    this.orderService.deliveryOrder(this.orders.ordersId, deliveryDate).subscribe(
       (response) => {
         if (response.status === 200 || response.status === 204) {
           this.toastr.success('Potwierdzono dostawę');
           modal.close();
+          this.updateOrderData();
         } else {
           this.toastr.error('Wystąpił nieoczekiwany błąd. Spróbuj ponownie później.');
         }
@@ -139,13 +140,12 @@ export class OrderDetailsComponent implements OnInit {
       this.deliveryDate.day
     );
 
-    const orderDateObj = new Date(this.orders.orderDate);
+    const delivery = deliveryDateObj.setHours(0, 0, 0, 0);
+    const ordered = new Date(this.orders.orderDate).setHours(0, 0, 0, 0);
+    const today = new Date().setHours(0, 0, 0, 0);
 
-    if (deliveryDateObj.setHours(0, 0, 0, 0) >= orderDateObj.setHours(0, 0, 0, 0) && deliveryDateObj.setHours(0,0,0,0) <= orderDateObj.setHours(0,0,0,0)) {
-      this.isDeliveryDateValid = true;
-    } else {
-      this.isDeliveryDateValid = false;
-    }
+    // Same rule as the backend: between the order date and today, inclusive.
+    this.isDeliveryDateValid = delivery >= ordered && delivery <= today;
   }
 }
 

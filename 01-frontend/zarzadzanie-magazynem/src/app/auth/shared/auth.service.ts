@@ -1,7 +1,7 @@
 import { Injectable, Output } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { SignupRequestPayload } from '../signup/signup-request.payload';
-import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { catchError, finalize, map, Observable, tap, throwError } from 'rxjs';
 import { LoginRequestPayload } from '../login/login-request.payload';
 import { LoginResponse } from '../login/login-response.payload';
 import { LocalStorageService } from 'ngx-webstorage';
@@ -59,7 +59,6 @@ export class AuthService {
       )
       .pipe(
         map((response) => {
-          console.log("response : " + response)
           const data = response.body;
           this.localStorage.store("token", data.token);
           this.localStorage.store('refreshToken', data.refreshToken);
@@ -116,6 +115,12 @@ export class AuthService {
   
 
   logout() {
+    // Build the payload now: the field captured at startup is stale after a fresh login.
+    this.refreshTokenPayload = {
+      refreshToken: this.getRefreshToken(),
+      username: this.getUserName(),
+    };
+
     this.http
       .post(
         logoutUrl,
@@ -124,19 +129,20 @@ export class AuthService {
           responseType: 'text',
         }
       )
-      .subscribe({
-        next: (_data) => {
-        },
-        error: (error) => {
-          console.error(error);
-        },
-        complete: () => {
+      .pipe(
+        // Clear the local session even if the server call fails.
+        finalize(() => {
           this.localStorage.clear('token');
           this.localStorage.clear('username');
           this.localStorage.clear('refreshToken');
           this.localStorage.clear('expiresAt');
-  
+
           this._authStatus.next(false);
+        })
+      )
+      .subscribe({
+        error: (error) => {
+          console.error(error);
         }
       });
   }

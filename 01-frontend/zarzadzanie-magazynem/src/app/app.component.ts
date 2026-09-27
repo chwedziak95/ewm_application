@@ -50,6 +50,9 @@ export class AppComponent implements OnInit {
   }
 
   resetTimer() {
-    this.startTimer();
+    // Only track inactivity for a logged-in user.
+    if (this.authService.isLoggedIn()) {
+      this.startTimer();
+    }
   }
 }

@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import java.util.Collections;
 
@@ -43,14 +43,6 @@ public class AuthController {
     public ResponseEntity<?> completeRegistration(@RequestBody CompleteRegistrationRequest request) {
         authenticationService.completeRegistration(request);
         return ResponseEntity.ok(Collections.singletonMap("message", "Pomyślnie dokończono rejestrację"));
-    }
-
-    @GetMapping("/accountVerification/{token}")
-    public ResponseEntity<String> verifyAccount(
-            @PathVariable String token
-    ) {
-        authenticationService.verifyAccount(token);
-        return ResponseEntity.ok("Konto zostało pomyślnie zweryfikowane");
     }
 
     @PostMapping("/refresh/token")

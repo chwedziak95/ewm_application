@@ -38,13 +38,6 @@ export class CreateCategoryComponent implements OnInit{
 
     if(this.createCategoryForm.invalid){
       this.createCategoryForm.markAllAsTouched();
-      console.log(`Wystąpił błąd z invalid`);
-      Object.keys(this.createCategoryForm.controls).forEach((key) => {
-        const control = this.createCategoryForm.controls[key];
-        if(control.invalid){
-          console.log(key, control.errors);
-        }
-      });
       return;
     }
 

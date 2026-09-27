@@ -13,11 +13,13 @@ public interface MaterialRepository extends JpaRepository<Material, Long> {
 
     Optional<Material> findByMaterialId(Long materialId);
 
-    Optional<Material> findByMaterialName(String materialName);
-
     List<Material> findAllByMaterialCategory(Category materialCategory);
 
     List<Material> findAllByMaterialVendor(Vendor materialVendor);
 
-    Optional<Material> findByMaterialNumberOrMaterialNameOrMaterialEAN(String materialNumber, String materialName, String materialEAN);
+    boolean existsByMaterialNumber(String materialNumber);
+
+    boolean existsByMaterialName(String materialName);
+
+    boolean existsByMaterialEAN(String materialEAN);
 }

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
+import static org.springframework.util.StringUtils.hasText;
 
 @Service
 @AllArgsConstructor
@@ -21,26 +22,25 @@ import static java.util.stream.Collectors.toList;
 public class VendorService {
     private final VendorRepository vendorRepository;
     private final VendorMapper vendorMapper;
-    private VendorDto vendorDto;
 
     @Transactional
     public VendorDto save(VendorDto vendorDto) {
-        var existingVendor = vendorRepository.findByVendorEmailOrVendorNipOrVendorRegonOrVendorKrs(vendorDto.getVendorEmail(), vendorDto.getVendorNip(), vendorDto.getVendorRegon(), vendorDto.getVendorKrs());
-        if (existingVendor.isPresent()) {
-            Vendor existing = existingVendor.get();
-            List<String> alreadyExistProperties = new ArrayList<>();
-            if (existing.getVendorEmail().equals(vendorDto.getVendorEmail())) {
-                alreadyExistProperties.add("Email");
-            }
-            if (existing.getVendorNip().equals(vendorDto.getVendorNip())) {
-                alreadyExistProperties.add("NIP");
-            }
-            if (existing.getVendorRegon().equals(vendorDto.getVendorRegon())) {
-                alreadyExistProperties.add("REGON");
-            }
-            if (existing.getVendorKrs().equals(vendorDto.getVendorKrs())) {
-                alreadyExistProperties.add("KRS");
-            }
+        // Check each identifier on its own and skip empty optional ones (NIP/REGON/KRS),
+        // so a vendor without e.g. a KRS number is not reported as a duplicate.
+        List<String> alreadyExistProperties = new ArrayList<>();
+        if (hasText(vendorDto.getVendorEmail()) && vendorRepository.existsByVendorEmail(vendorDto.getVendorEmail())) {
+            alreadyExistProperties.add("Email");
+        }
+        if (hasText(vendorDto.getVendorNip()) && vendorRepository.existsByVendorNip(vendorDto.getVendorNip())) {
+            alreadyExistProperties.add("NIP");
+        }
+        if (hasText(vendorDto.getVendorRegon()) && vendorRepository.existsByVendorRegon(vendorDto.getVendorRegon())) {
+            alreadyExistProperties.add("REGON");
+        }
+        if (hasText(vendorDto.getVendorKrs()) && vendorRepository.existsByVendorKrs(vendorDto.getVendorKrs())) {
+            alreadyExistProperties.add("KRS");
+        }
+        if (!alreadyExistProperties.isEmpty()) {
             String message = "W bazie danych znajduje się dostawca o tych parametrach: " + String.join(", ", alreadyExistProperties);
             throw new EwmAppException(message);
         }
@@ -52,7 +52,7 @@ public class VendorService {
 
     public void updateVendor(Long id, VendorDto vendorDto){
         Vendor vendor = vendorRepository.findByVendorId(id)
-                .orElseThrow(() -> new EwmAppException("Nie znaleziono dostawcy o id: " + vendorDto.getVendorId()));
+                .orElseThrow(() -> new EwmAppException("Nie znaleziono dostawcy o id: " + id));
         vendorRepository.save(vendorMapper.partialUpdate(vendorDto, vendor));
 
     }

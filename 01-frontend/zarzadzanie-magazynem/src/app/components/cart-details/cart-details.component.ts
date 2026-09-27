@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { CartItem } from 'src/app/common/cart-item/cart-item';
 import { Orders } from 'src/app/common/orders/orders';
 import { CartService } from 'src/app/services/cart.service';
@@ -12,7 +13,9 @@ import { OrderService } from 'src/app/services/order.service';
   templateUrl: './cart-details.component.html',
   styleUrls: ['./cart-details.component.css']
 })
-export class CartDetailsComponent implements OnInit {
+export class CartDetailsComponent implements OnInit, OnDestroy {
+
+  private subscriptions = new Subscription();
 
   commentForm: FormGroup;
 
@@ -29,22 +32,26 @@ export class CartDetailsComponent implements OnInit {
     private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.listCartDetails(),
-      this.commentForm = new FormGroup({
-        commenttext: new FormControl('')
-      });
+    this.listCartDetails();
+    this.commentForm = new FormGroup({
+      commenttext: new FormControl('')
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   listCartDetails() {
     this.cartItems = this.cartService.cartItems;
 
-    this.cartService.totalPrice.subscribe(
+    this.subscriptions.add(this.cartService.totalPrice.subscribe(
       data => this.totalPrice = data
-    );
+    ));
 
-    this.cartService.totalQuantity.subscribe(
+    this.subscriptions.add(this.cartService.totalQuantity.subscribe(
       data => this.totalQuantity = data
-    );
+    ));
 
     this.cartService.computeCartTotals();
 

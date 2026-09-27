@@ -5,16 +5,13 @@ import com.kc6379.zarzadzaniemagazynem.dto.CompleteRegistrationRequest;
 import com.kc6379.zarzadzaniemagazynem.dto.RefreshTokenRequest;
 import com.kc6379.zarzadzaniemagazynem.dto.RegisterRequest;
 import com.kc6379.zarzadzaniemagazynem.exceptions.EwmAppException;
-import com.kc6379.zarzadzaniemagazynem.model.NotificationEmail;
 import com.kc6379.zarzadzaniemagazynem.model.RegistrationEmail;
 import com.kc6379.zarzadzaniemagazynem.model.User;
 import com.kc6379.zarzadzaniemagazynem.model.VerificationToken;
-import com.kc6379.zarzadzaniemagazynem.repository.RefreshTokenRepository;
 import com.kc6379.zarzadzaniemagazynem.repository.UserRepository;
 import com.kc6379.zarzadzaniemagazynem.repository.VerificationTokenRepository;
 import com.kc6379.zarzadzaniemagazynem.security.AuthenticationResponse;
 import com.kc6379.zarzadzaniemagazynem.security.JwtService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,8 +20,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -46,10 +43,6 @@ public class AuthenticationService {
         if (userEmailExist.isPresent()) {
             throw new EwmAppException("Email jest już zajęty");
         }
-        var UserEmailNameSurname = userRepository.findByEmailAndLastNameAndFirstName(request.getEmail(), request.getLastName(), request.getFirstName());
-        if (UserEmailNameSurname.isPresent()) {
-            throw new EwmAppException("Użytkownik o podanych danych już istnieje");
-        }
 
         var user = User.builder()
                 .firstName(request.getFirstName())
@@ -68,6 +61,7 @@ public class AuthenticationService {
 
     }
 
+    @Transactional
     public String completeRegistration(CompleteRegistrationRequest request) {
         var verificationToken = verificationTokenRepository.findByToken(request.getToken())
                 .orElseThrow(() -> new EwmAppException("Invalid registration token"));
@@ -77,6 +71,8 @@ public class AuthenticationService {
             user.setPassword(passwordEncoder.encode(request.getPassword()));
             user.setEnabled(true);
             userRepository.save(user);
+            // Registration links are single-use; otherwise the link could reset the password later.
+            verificationTokenRepository.delete(verificationToken);
 
             return "Registration completed successfully";
         } else {
@@ -108,7 +104,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
-                .refreshToken(refreshTokenService.generateRefreshToken().getToken())
+                .refreshToken(refreshTokenService.generateRefreshToken(user).getToken())
                 .expiresAt(Instant.now().plusMillis(jwtService.getJwtExpirationInMillis()))
                 .username(user.getUsername())
                 .build();
@@ -126,34 +122,15 @@ public class AuthenticationService {
 
 
     public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
-        refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
-        var user = userRepository.findByEmail(refreshTokenRequest.getUsername())
-                .orElseThrow();
+        // Issue the JWT for the token's owner, never for the username the client sends.
+        User user = refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
         String token = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(token)
                 .refreshToken(refreshTokenRequest.getRefreshToken())
                 .expiresAt(Instant.now().plusMillis(jwtService.getJwtExpirationInMillis()))
-                .username(refreshTokenRequest.getUsername())
+                .username(user.getUsername())
                 .build();
-    }
-
-    public void verifyAccount(String token) {
-        Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);
-        fetchUserAndEnable(verificationToken.orElseThrow(() -> new EwmAppException("Niepoprawny token")));
-    }
-
-    @Transactional
-    private void fetchUserAndEnable(VerificationToken verificationToken) {
-        String email = verificationToken.getUser().getEmail();
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new EwmAppException("Nie znaleziono użytkownika o adresie email: " + email));
-        user.setEnabled(true);
-        userRepository.save(user);
-    }
-
-    public boolean isLoggedIn() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }
 
 }

@@ -14,7 +14,5 @@ public interface InternalOrderRepository extends JpaRepository<InternalOrder, Lo
     @EntityGraph(attributePaths = {"orderItems"})
     Optional<InternalOrder> findByInternalOrderId(Long internalOrderId);
 
-    Optional<InternalOrder> findAllByInternalOrderId(Long internalOrderId);
-
     List<InternalOrder> findAllByUser(User user);
 }

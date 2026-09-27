@@ -29,7 +29,6 @@ public class OrderService {
     private final AuthenticationService authenticationService;
     private final OrdersMapper ordersMapper;
     private final MailService mailService;
-    private final OrdersResponse orderResponse;
 
     public void save(OrderRequest orderRequest){
         Status status = statusRepository.findByStatusId(1).orElseThrow(() -> new EwmAppException("Nie znaleziono statusu o id"));
@@ -132,22 +131,24 @@ public class OrderService {
     public void deliveryOrder(Long ordersId, OrdersResponse ordersResponse) {
         Orders orders = orderRepository.findByOrdersId(ordersId)
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono zamówienia o id" + ordersId));
+        if (orders.getDeliveryDate() != null) {
+            throw new EwmAppException("Zamówienie zostało już dostarczone");
+        }
+        if (Objects.equals(orders.getStatus().getName(), "Anulowano")) {
+            throw new EwmAppException("Nie można przyjąć dostawy anulowanego zamówienia");
+        }
         LocalDate orderDate = orders.getOrderDate();
         LocalDate deliveryDate = ordersResponse.getDeliveryDate();
-        if (deliveryDate.isBefore(orderDate)) {
+        if (deliveryDate == null) {
+            throw new EwmAppException("Data dostawy jest wymagana");
+        } else if (deliveryDate.isBefore(orderDate)) {
             throw new EwmAppException("Data dostawy nie może być wcześniejsza niż data zamówienia");
         } else if (deliveryDate.isAfter(LocalDate.now())) {
             throw new EwmAppException("Data dostawy nie może być późniejsza niż dzisiaj");
         }
-        orderResponse.setOrdersId(ordersId);
-        Status status = statusRepository.findByName("Dostarczono").orElseThrow();
-        orders.setStatus(status);
-        orderResponse.setDeliveryDate(deliveryDate);
-        if (orders.getDeliveryDate() != null) {
-            throw new EwmAppException("Zamówienie zostało już dostarczone");
-        }
         updateMaterialQuantity(orders);
-        ordersMapper.partialUpdate(orderResponse, orders);
+        orders.setStatus(statusRepository.findByName("Dostarczono").orElseThrow());
+        orders.setDeliveryDate(deliveryDate);
         orderRepository.save(orders);
     }
 
@@ -175,7 +176,7 @@ public class OrderService {
     }
 
     public OrdersResponse getOrder(Long id) {
-        Orders orders = orderRepository.findAllByOrdersId(id)
+        Orders orders = orderRepository.findByOrdersId(id)
                 .orElseThrow(() -> new EwmAppException("Nie znaleziono zamówienia o id: " + id));
         return ordersMapper.toOrdersResponse(orders);
     }
